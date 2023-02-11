@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
 	GameObject gate, unbuiltTower;
 	Orbit unbuiltTowerOrbit;
 
-	public GameObject Sun;
+	public GameObject Sun, TargetPlanet;
 
 	RaycastHit mouseHit;
 
@@ -170,11 +170,11 @@ public class GameController : MonoBehaviour
 		float angle = Random.Range(0.0f, Mathf.PI * 2);
 		Vector3 V = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
 		V *= wavesSettings.gateDistance;
-		Vector3 gateLocation = V + Sun.transform.position;
+		Vector3 gateLocation = V + TargetPlanet.transform.position;
 
 		gate = Instantiate(gatePrefab, gateLocation, transform.rotation);
 		Orbit gateOrbit = gate.GetComponent<Orbit>();
-		gateOrbit.principle = Sun.GetComponent<CelestialBody>();
+		gateOrbit.principle = TargetPlanet.GetComponent<CelestialBody>();
 		gateOrbit.axisVector = new Vector2(wavesSettings.gateDistance, wavesSettings.gateDistance);
 		gateOrbit.RestartOrbit();
 	}
