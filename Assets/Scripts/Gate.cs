@@ -39,7 +39,7 @@ public class Gate : MonoBehaviour
 			{
 				for(int j = 0; j < wave.enemiesPerBurst; j++)
 				{
-					Enemy enemy = Instantiate(enemyPrefab, transform.position, transform.rotation).GetComponent<Enemy>();
+					Enemy enemy = Instantiate(enemyPrefab, transform.position, transform.rotation, target.transform).GetComponent<Enemy>();
 					yield return new WaitForSeconds(wave.enemiesCooldown);
 				}	
 				yield return new WaitForSeconds(wave.burstsCooldown);

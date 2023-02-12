@@ -52,7 +52,8 @@ MonoBehaviour:
   orbitPath: {fileID: 0}
   principle: {fileID: 0}
   axisVector: {x: 2, y: 2}
-  speed: 25
+  baseSpeed: 10
+  currentSpeed: 10
   resolution: 1000
 --- !u!135 &4617483409382487399
 SphereCollider:
@@ -65,7 +66,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.5
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4617483409382487396
 MonoBehaviour:

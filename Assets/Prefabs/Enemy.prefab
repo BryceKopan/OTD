@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceValue: 0.25
-  speed: 0.1
+  speed: 0.5
   deltaSpeed: 0.1
   ang: 0
 --- !u!54 &4095526914806602999
