@@ -10,6 +10,7 @@ public class RangeToolTip : MonoBehaviour
 
 	public int resolution = 500;
 	public Material rangeIndicatoMaterial;
+	public Color color = Color.white;
 
 	private Ellipse rangeIndicator;
 	private LineRenderer line;
@@ -48,8 +49,8 @@ public class RangeToolTip : MonoBehaviour
 		line.material = rangeIndicatoMaterial;
 		line.sortingOrder = -1;
 
-		line.startColor = Color.blue;
-		line.endColor = Color.blue;
+		line.startColor = color;
+		line.endColor = color;
 
 		AnimationCurve widthCurve = new AnimationCurve();
 		widthCurve.AddKey(0f, .1f);

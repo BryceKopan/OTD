@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour
 	{
 		if(other.gameObject.tag == "Enemy")
 		{
-			gameController.AddResources(other.gameObject.GetComponent<Enemy>().resourceValue);
+			//gameController.AddResources(other.gameObject.GetComponent<Enemy>().resourceValue);
 			Destroy(other.transform.gameObject);
 			Destroy(gameObject);
 		}

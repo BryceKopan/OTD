@@ -28,10 +28,11 @@ public class GameController : MonoBehaviour
 	public bool pause = true;
 	private float timeScale;
 
-	public GameObject waveCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, endGameUI;
+	public GameObject waveCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, endGameUI;
 
-	public GameObject gatePrefab, tower1Prefab;
+	public GameObject gatePrefab, tower1Prefab, tower2Prefab;
 	GameObject gate, unbuiltTower;
+	float unbuiltTowerCost;
 	Orbit unbuiltTowerOrbit;
 
 	public GameObject Sun, TargetPlanet;
@@ -103,9 +104,11 @@ public class GameController : MonoBehaviour
 		resourceCounter.GetComponent<UnityEngine.UI.Text>().text = "Resources: " + resources;
 		if(resources >= 1)
 			tower1Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
+		if(resources >= 3)
+			tower2Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
 	}
 
-	public void BuildTower()
+	private void BuildObject(GameObject prefab)
 	{
 		if(!pause)
 			Pause();
@@ -113,10 +116,22 @@ public class GameController : MonoBehaviour
 		if(unbuiltTower)
 			Destroy(unbuiltTower);
 
-		unbuiltTower = Instantiate(tower1Prefab, transform.position, transform.rotation);
+		unbuiltTower = Instantiate(prefab, transform.position, transform.rotation);
 		unbuiltTowerOrbit = unbuiltTower.GetComponent<Orbit>();
 		unbuiltTowerOrbit.followOrbit = false;
 		unbuiltTowerOrbit.principle = GetClosestCelestialBody(unbuiltTower);
+	}
+
+	public void BuildTower()
+	{
+		BuildObject(tower1Prefab);
+		unbuiltTowerCost = 1;
+	}
+
+	public void BuildTower2()
+	{
+		BuildObject(tower2Prefab);
+		unbuiltTowerCost = 3;
 	}
 
 	public void LeftClick(InputAction.CallbackContext context)
@@ -127,9 +142,11 @@ public class GameController : MonoBehaviour
 			{
 				unbuiltTowerOrbit.RestartOrbit();
 				unbuiltTower = null;
-				AddResources(-1);
+				AddResources(-unbuiltTowerCost);
 				if(resources < 1)
 					tower1Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
+				if(resources < 3)
+					tower2Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
 			}
 			else if(mouseHit.transform)
 			{

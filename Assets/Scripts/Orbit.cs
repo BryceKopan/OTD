@@ -8,6 +8,7 @@ public class Orbit : MonoBehaviour
 
 	//Visual Elements of Orbit
 	public Material orbitPathMaterial;
+	public Color color = Color.white;
 	public Ellipse orbitPath;
 
 	public CelestialBody principle;
@@ -69,6 +70,9 @@ public class Orbit : MonoBehaviour
 		orbitPath = gameObject.AddComponent<Ellipse>();
 		line.material = orbitPathMaterial;
 		line.sortingOrder = -2;
+
+		line.startColor = color;
+		line.endColor = color;
 
 		AnimationCurve curve = new AnimationCurve();
 		curve.AddKey(0f, .1f);

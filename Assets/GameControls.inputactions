@@ -30,6 +30,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Tower 2",
+                    "type": "Button",
+                    "id": "609512ba-8891-4fc7-ac8c-e351698cad00",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Pan Up",
                     "type": "Button",
                     "id": "48243c9e-b5ee-4cd1-a4c5-fa7b48b04f2c",
@@ -200,6 +208,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4da6672f-0e74-4981-9634-cb7123063570",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tower 2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
