@@ -7,11 +7,6 @@ public class Planet : MonoBehaviour
 	public int population = 3;
 	public GameObject healthText;
 
-	private void FixedUpdate()
-	{
-		
-	}
-
 	private void OnCollisionEnter(Collision collision)
 	{
 		if(collision.transform.gameObject.tag == "Enemy")

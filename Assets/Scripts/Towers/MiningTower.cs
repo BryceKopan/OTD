@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiningTower : MonoBehaviour
+public class MiningTower : Tower
 {
-	public string displayName = "Mining Tower";
 	public GameObject shipPrefab;
-	public float cooldown = 5f;
-	private bool readyToMine = false;
 
 	private GameController gameController;
 	private GameObject target;
@@ -18,16 +15,10 @@ public class MiningTower : MonoBehaviour
 	float lerpT = 0;
 	public float speed = 1;
 
-	public int prestige = 0;
-	public float prestigeProgress = 0;
-
-	public float rangeGrowth, cooldownGrowth;
-
 	private void Start()
 	{
 		gameController = FindObjectOfType<GameController>();
-		if(!readyToMine)
-			StartCoroutine(MineCooldown());
+		StartCoroutine(FireCooldown());
 	}
 
 	private void Update()
@@ -57,41 +48,11 @@ public class MiningTower : MonoBehaviour
 		}
 	}
 
-	private void OnTriggerStay(Collider other)
-	{
-		if(other.transform.gameObject.tag == "Asteroid" && readyToMine)
-		{
-			Mine(other.transform.gameObject);
-		}
-	}
-
-	private void Mine(GameObject asteroid)
+	public override void FireAt(GameObject asteroid)
 	{
 		target = asteroid;
 		startPosition = transform.position;
 		ship = Instantiate(shipPrefab, transform.position, transform.rotation);
-		StartCoroutine(MineCooldown());
 		lerpT = 0;
-	}
-
-	IEnumerator MineCooldown()
-	{
-		readyToMine = false;
-		yield return new WaitForSeconds(cooldown);
-		readyToMine = true;
-	}
-
-	public void GetXP()
-	{
-		prestigeProgress += 1f / (10f + 10f * prestige);
-
-		if(prestigeProgress >= 1 && prestige < 10)
-		{
-			prestige++;
-			prestigeProgress = 0;
-
-			cooldown -= cooldownGrowth;
-			GetComponent<SphereCollider>().radius += rangeGrowth;
-		}
 	}
 }

@@ -29,9 +29,9 @@ public class GameController : MonoBehaviour
 	public bool showAllRanges = false;
 	private float timeScale;
 
-	public GameObject waveCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, endGameUI;
+	public GameObject waveCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, tower3Button, endGameUI;
 
-	public GameObject gatePrefab, tower1Prefab, tower2Prefab;
+	public GameObject gatePrefab, tower1Prefab, tower2Prefab, tower3Prefab;
 	GameObject gate, unbuiltTower;
 	float unbuiltTowerCost;
 	Orbit unbuiltTowerOrbit;
@@ -134,6 +134,8 @@ public class GameController : MonoBehaviour
 			tower1Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
 		if(resources >= 2)
 			tower2Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
+		if(resources >= 3)
+			tower3Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
 	}
 
 	private void BuildObject(GameObject prefab)
@@ -152,14 +154,23 @@ public class GameController : MonoBehaviour
 
 	public void BuildTower()
 	{
-		BuildObject(tower1Prefab);
 		unbuiltTowerCost = 1;
+		if(resources >= unbuiltTowerCost)
+			BuildObject(tower1Prefab);
 	}
 
 	public void BuildTower2()
 	{
-		BuildObject(tower2Prefab);
 		unbuiltTowerCost = 2;
+		if(resources >= unbuiltTowerCost)
+			BuildObject(tower2Prefab);
+	}
+
+	public void BuildTower3()
+	{
+		unbuiltTowerCost = 3;
+		if(resources >= unbuiltTowerCost)
+			BuildObject(tower3Prefab);
 	}
 
 	public void LeftClick(InputAction.CallbackContext context)
@@ -175,6 +186,8 @@ public class GameController : MonoBehaviour
 					tower1Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
 				if(resources < 2)
 					tower2Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
+				if(resources < 3)
+					tower3Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
 			}
 			else if(mouseHit.transform)
 			{
@@ -184,6 +197,15 @@ public class GameController : MonoBehaviour
 					Select(obj);
 				}
 			}
+		}
+	}
+
+	public void RightClick(InputAction.CallbackContext context)
+	{
+		if(context.started)
+		{
+			Destroy(unbuiltTower);
+			unbuiltTower = null;
 		}
 	}
 
@@ -258,6 +280,13 @@ public class GameController : MonoBehaviour
 
 	private void Select(GameObject obj)
 	{
+		if(obj == null)
+		{
+			selectedObject = null;
+			window.SetActive(false);
+			return;
+		}
+
 		if(obj.GetComponent<RangeToolTip>())
 			obj = obj.transform.parent.gameObject;
 		selectedObject = obj;
@@ -300,5 +329,13 @@ public class GameController : MonoBehaviour
 			towerPrestige.GetComponent<UnityEngine.UI.Text>().text = "Prestige: " + tower.prestige;
 			towerProgress.GetComponent<UnityEngine.UI.Text>().text = "Progress: " + tower.prestigeProgress.ToString("n2");
 		}
+	}
+
+	public void DeleteSelectedTower()
+	{
+		Tower tower = selectedObject.GetComponent<Tower>();
+		if(tower)
+			Destroy(tower.gameObject);
+		Select(null);
 	}
 }

@@ -45,7 +45,10 @@ public class Bullet : MonoBehaviour
 	{
 		if(other.gameObject.tag == "Enemy")
 		{
-			tower.GetComponent<Tower>().GetXP();
+			if(tower.GetComponent<Tower>())
+				tower.GetComponent<Tower>().GetXP();
+			else if(tower.GetComponent<SentryTower>())
+				tower.GetComponent<SentryTower>().GetXP();
 			Destroy(other.transform.gameObject);
 			Destroy(gameObject);
 		}

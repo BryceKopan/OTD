@@ -22,17 +22,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Tower 1",
+                    "name": "Right Click",
                     "type": "Button",
-                    "id": "0ac935ad-4602-4627-87d0-8ff77b3af97c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Tower 2",
-                    "type": "Button",
-                    "id": "609512ba-8891-4fc7-ac8c-e351698cad00",
+                    "id": "595a1163-91c5-4426-bf4f-a1740a3d8348",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -84,6 +76,30 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Tower 2",
+                    "type": "Button",
+                    "id": "609512ba-8891-4fc7-ac8c-e351698cad00",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Tower 1",
+                    "type": "Button",
+                    "id": "0ac935ad-4602-4627-87d0-8ff77b3af97c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Tower3",
+                    "type": "Button",
+                    "id": "dd8f1ed0-9bf8-4fe3-afbb-561607e8bbf8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -106,17 +122,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Click",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "bd0d8d4a-2ee0-41cd-9a90-36650256a24d",
-                    "path": "<Keyboard>/1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Tower 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -221,6 +226,39 @@
                 },
                 {
                     "name": "",
+                    "id": "3a36f54d-44ea-45d9-9229-dd3acae76318",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Show Ranges",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ec75ae8a-878f-470c-bb32-b9027cad4953",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tower3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd0d8d4a-2ee0-41cd-9a90-36650256a24d",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tower 1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "4da6672f-0e74-4981-9634-cb7123063570",
                     "path": "<Keyboard>/2",
                     "interactions": "",
@@ -232,12 +270,12 @@
                 },
                 {
                     "name": "",
-                    "id": "3a36f54d-44ea-45d9-9229-dd3acae76318",
-                    "path": "<Keyboard>/shift",
+                    "id": "292473c7-5c51-4728-8b8f-635a949bf86a",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Show Ranges",
+                    "action": "Right Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

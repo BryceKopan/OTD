@@ -166,13 +166,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Mining Tower
-  shipPrefab: {fileID: 7248295991880098620, guid: 286073f0ea3f15f47ac17a4c41347459, type: 3}
   cooldown: 4
-  speed: 1
   prestige: 0
   prestigeProgress: 0
   rangeGrowth: 0.5
   cooldownGrowth: 0.01
+  targetTag: Asteroid
+  shipPrefab: {fileID: 7248295991880098620, guid: 286073f0ea3f15f47ac17a4c41347459, type: 3}
+  speed: 1
 --- !u!1 &2149784465484495624
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +186,7 @@ GameObject:
   - component: {fileID: 345374728641776548}
   - component: {fileID: 7828281216665395424}
   - component: {fileID: 1552044105120855573}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ToolTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
