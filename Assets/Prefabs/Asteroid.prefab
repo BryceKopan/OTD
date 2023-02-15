@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 2812926712943735351}
   - component: {fileID: 837449658776601865}
   - component: {fileID: 4264373049076458802}
-  m_Layer: 0
+  - component: {fileID: 3234894542278867619}
+  m_Layer: 6
   m_Name: Asteroid
   m_TagString: Asteroid
   m_Icon: {fileID: 0}
@@ -47,8 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followOrbit: 1
+  useStartingPositionAsOrbit: 1
   orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
+  trailLength: 0.05
   orbitPath: {fileID: 0}
   principle: {fileID: 0}
   axisVector: {x: 7.5, y: 7.5}
@@ -84,6 +87,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &3234894542278867619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848635077564441197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 281447922d2a89a45a832294af788ed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minResourceCount: 3
+  maxResourceCount: 6
+  resourceCount: 0
 --- !u!1 &5787864096747453110
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5211796841793164852}
   - component: {fileID: 71624774966617913}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

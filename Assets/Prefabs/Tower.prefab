@@ -48,7 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followOrbit: 1
+  useStartingPositionAsOrbit: 0
   orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  trailLength: 0.33
   orbitPath: {fileID: 0}
   principle: {fileID: 0}
   axisVector: {x: 2, y: 2}
@@ -80,8 +83,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9005013bab8a454c95439f760debadf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayName: Laser Tower
   bulletPrefab: {fileID: 6211998665189431076, guid: 1a6365efa111c674a8c426400894dbe5, type: 3}
-  cooldown: 0.33
+  cooldown: 1
+  prestige: 0
+  prestigeProgress: 0
+  rangeGrowth: 0.25
+  cooldownGrowth: 0.01
 --- !u!1 &5076007389857162918
 GameObject:
   m_ObjectHideFlags: 0

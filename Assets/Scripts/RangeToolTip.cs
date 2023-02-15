@@ -16,10 +16,11 @@ public class RangeToolTip : MonoBehaviour
 	private LineRenderer line;
 	private Vector2 axisVector;
 
+	private GameController GC;
+
 	private void Start()
 	{
-		range = GetComponentInParent<SphereCollider>().radius;
-		axisVector = new Vector2(range, range);
+		GC = FindObjectOfType<GameController>();
 		SetupLine();
 		CalculateRange();
 		rangeIndicator.DrawEllipse();
@@ -27,16 +28,16 @@ public class RangeToolTip : MonoBehaviour
 
 	private void Update()
 	{
-		if(!indicatorIsActive)
-		{
-			line.enabled = false;
-			Physics.SyncTransforms();
-		}
-		else
+		if(indicatorIsActive || GC.showAllRanges)
 		{
 			line.enabled = true;
 			CalculateRange();
 			rangeIndicator.DrawEllipse();
+		}
+		else
+		{
+			line.enabled = false;
+			Physics.SyncTransforms();
 		}
 
 		indicatorIsActive = false;
@@ -60,6 +61,8 @@ public class RangeToolTip : MonoBehaviour
 
 	private void CalculateRange()
 	{
+		range = GetComponentInParent<SphereCollider>().radius;
+		axisVector = new Vector2(range, range);
 		rangeIndicator.axisVector = axisVector;
 		rangeIndicator.center = new Vector2(transform.position.x, transform.position.z);
 		rangeIndicator.resolution = resolution;

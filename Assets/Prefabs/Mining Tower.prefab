@@ -130,8 +130,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followOrbit: 1
+  useStartingPositionAsOrbit: 0
   orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
+  trailLength: 0.33
   orbitPath: {fileID: 0}
   principle: {fileID: 0}
   axisVector: {x: 2, y: 2}
@@ -149,7 +151,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.5
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-2325381665763909986
 MonoBehaviour:
@@ -163,9 +165,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e865b4ddc73b24438bdd6fd53e9b81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayName: Mining Tower
   shipPrefab: {fileID: 7248295991880098620, guid: 286073f0ea3f15f47ac17a4c41347459, type: 3}
-  cooldown: 5
+  cooldown: 4
   speed: 1
+  prestige: 0
+  prestigeProgress: 0
+  rangeGrowth: 0.5
+  cooldownGrowth: 0.01
 --- !u!1 &2149784465484495624
 GameObject:
   m_ObjectHideFlags: 0

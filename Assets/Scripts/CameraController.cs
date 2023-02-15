@@ -8,15 +8,16 @@ public class CameraController : MonoBehaviour
 	public float panSpeed = 1;
 	Vector3 deltaPosition = new Vector3(0, 0, 0);
 
-	public float zoomSpeed = 1;
-	private Vector3 startingPosition;
+	public float minZoomSpeed = 1, maxZoomSpeed = 1;
+	public float minHeight, maxHeight;
+	float currentZoomSpeed;
 
 	GameController GC;
 
 	private void Start()
 	{
-		startingPosition = transform.position;
 		GC = FindObjectOfType<GameController>();
+		SetZoomSpeed();
 	}
 
 	private void Update()
@@ -78,13 +79,21 @@ public class CameraController : MonoBehaviour
 	{
 		float scrollValue = context.ReadValue<float>();
 
-		if(scrollValue > 0 && transform.position.y > 1)
+		if(scrollValue > 0 && transform.position.y > minHeight)
 		{
-			transform.position += new Vector3(0, -1, 0) * zoomSpeed;
+			transform.position += new Vector3(0, -1, 0) * currentZoomSpeed;
 		}
-		else if(scrollValue < 0)
+		else if(scrollValue < 0 && transform.position.y < maxHeight)
 		{
-			transform.position += new Vector3(0, 1, 0) * zoomSpeed;
+			transform.position += new Vector3(0, 1, 0) * currentZoomSpeed;
 		}
+
+		SetZoomSpeed();
+	}
+
+	private void SetZoomSpeed()
+	{
+		float currentZoomRatio = (transform.position.y - minHeight) / (maxHeight - minHeight);
+		currentZoomSpeed = currentZoomRatio * (maxZoomSpeed - minZoomSpeed) + minZoomSpeed;
 	}
 }

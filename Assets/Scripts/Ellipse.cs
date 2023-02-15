@@ -25,7 +25,7 @@ public class Ellipse : MonoBehaviour
 	public Vector3 GetPositionOnEllipse(float angle)
 	{
 		angle = angle * Mathf.Deg2Rad;
-		return new Vector3(axisVector.x * Mathf.Cos(angle), 0.0f, axisVector.y * Mathf.Sin(angle));
+		return new Vector3(axisVector.x * Mathf.Cos(angle) + center.x, 0.0f, axisVector.y * Mathf.Sin(angle) + center.y);
 	}
 
 	public void RecalculateEllipse()

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MiningTower : MonoBehaviour
 {
+	public string displayName = "Mining Tower";
 	public GameObject shipPrefab;
 	public float cooldown = 5f;
 	private bool readyToMine = false;
@@ -16,6 +17,11 @@ public class MiningTower : MonoBehaviour
 	Vector3 startPosition;
 	float lerpT = 0;
 	public float speed = 1;
+
+	public int prestige = 0;
+	public float prestigeProgress = 0;
+
+	public float rangeGrowth, cooldownGrowth;
 
 	private void Start()
 	{
@@ -35,6 +41,7 @@ public class MiningTower : MonoBehaviour
 
 			if(ship.transform.position == target.transform.position && !hasResources)
 			{
+				target.GetComponent<Asteroid>().GatherResources(.25f);
 				hasResources = true;
 				target = gameObject;
 				startPosition = ship.transform.position;
@@ -42,7 +49,8 @@ public class MiningTower : MonoBehaviour
 			}
 			else if (ship.transform.position == target.transform.position && hasResources)
 			{
-				gameController.AddResources(1);
+				GetXP();
+				gameController.AddResources(.25f);
 				Destroy(ship);
 				hasResources = false;
 			}
@@ -71,5 +79,19 @@ public class MiningTower : MonoBehaviour
 		readyToMine = false;
 		yield return new WaitForSeconds(cooldown);
 		readyToMine = true;
+	}
+
+	public void GetXP()
+	{
+		prestigeProgress += 1f / (10f + 10f * prestige);
+
+		if(prestigeProgress >= 1 && prestige < 10)
+		{
+			prestige++;
+			prestigeProgress = 0;
+
+			cooldown -= cooldownGrowth;
+			GetComponent<SphereCollider>().radius += rangeGrowth;
+		}
 	}
 }

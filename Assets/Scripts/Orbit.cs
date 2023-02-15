@@ -5,10 +5,12 @@ using UnityEngine;
 public class Orbit : MonoBehaviour
 {
 	public bool followOrbit = true;
+	public bool useStartingPositionAsOrbit = false;
 
 	//Visual Elements of Orbit
 	public Material orbitPathMaterial;
 	public Color color = Color.white;
+	public float trailLength = .33f;
 	public Ellipse orbitPath;
 
 	public CelestialBody principle;
@@ -28,6 +30,12 @@ public class Orbit : MonoBehaviour
 
 		SetupLine();
 		RenderOrbitPath();
+
+		if(useStartingPositionAsOrbit && principle)
+		{
+			float orbitSize = Vector3.Distance(transform.position, principle.transform.position);
+			axisVector = new Vector2(orbitSize, orbitSize);
+		}
 	}
 
 	private void Update()
@@ -39,7 +47,7 @@ public class Orbit : MonoBehaviour
 
 		//orbitPath.RecalculateEllipse();
 		if(followOrbit)
-			transform.position = orbitPath.GetPositionOnEllipse(targetAngle) + principle.transform.position;
+			transform.position = orbitPath.GetPositionOnEllipse(targetAngle);
 
 		RenderOrbitPath();
 	}
@@ -76,11 +84,11 @@ public class Orbit : MonoBehaviour
 
 		AnimationCurve curve = new AnimationCurve();
 		curve.AddKey(0f, .1f);
-		curve.AddKey(.33f, 0f);
+		curve.AddKey(trailLength, 0f);
 		line.widthCurve = curve;
 	}
 
-	private float GetCurrentAngle()
+	public float GetCurrentAngle()
 	{
 		Vector3 principleDiff = transform.position - principle.transform.position;
 		float ang = Vector2.Angle(new Vector2(1, 0), new Vector2(principleDiff.x, principleDiff.z));
@@ -102,5 +110,10 @@ public class Orbit : MonoBehaviour
 	{
 		float distanceRatio = 1 - (Vector3.Distance(transform.position, principle.transform.position) / principle.gravityRadius);
 		currentSpeed = baseSpeed * (distanceRatio * 2);
+	}
+
+	public Vector3 GetCurrentEllipsePosition()
+	{
+		return orbitPath.GetPositionOnEllipse(GetCurrentAngle());
 	}
 }

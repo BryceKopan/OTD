@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+	public GameObject tower;
 	Vector3 startPosition;
 	public GameObject target;
-	float lerpT = 0;
 	public float speed = 1;
 
 	private GameController gameController;
+
+	Vector3 lastDeltaPosition;
 
 	// Start is called before the first frame update
 	void Start()
@@ -22,14 +24,20 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		lerpT += Time.deltaTime * speed;
-
 		if(!target)
-			Destroy(gameObject);
+		{
+			transform.position = transform.position + lastDeltaPosition;
+
+			if(!GetComponentInChildren<SpriteRenderer>().isVisible)
+				Destroy(gameObject);
+		}
 		else
 		{
-			transform.position = Vector3.Lerp(startPosition, target.transform.position, lerpT);
+			Vector3 directionUnit = (target.transform.position - transform.position).normalized;
+			Vector3 deltaPosition = directionUnit * Time.deltaTime * speed;
+			transform.position = transform.position + deltaPosition;
 			transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, new Vector3(0, 1, 0));
+			lastDeltaPosition = deltaPosition;
 		}
 	}
 
@@ -37,7 +45,7 @@ public class Bullet : MonoBehaviour
 	{
 		if(other.gameObject.tag == "Enemy")
 		{
-			//gameController.AddResources(other.gameObject.GetComponent<Enemy>().resourceValue);
+			tower.GetComponent<Tower>().GetXP();
 			Destroy(other.transform.gameObject);
 			Destroy(gameObject);
 		}

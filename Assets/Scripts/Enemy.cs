@@ -24,9 +24,10 @@ public class Enemy : MonoBehaviour
 
 	private void Update()
 	{
-		lerpT += Time.deltaTime * speed;
+		Vector3 directionUnit = (target.transform.position - transform.position).normalized;
+		Vector3 deltaPosition = directionUnit * Time.deltaTime * speed;
 		speed += Time.deltaTime * deltaSpeed;
-		transform.position = Vector3.Lerp(startPosition, target.transform.position, lerpT);
+		transform.position = transform.position + deltaPosition;
 
 		transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, new Vector3(0, 1, 0));
 	}

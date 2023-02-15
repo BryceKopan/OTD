@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
 	public float resources = 1f;
 
 	public bool pause = true;
+	public bool showAllRanges = false;
 	private float timeScale;
 
 	public GameObject waveCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, endGameUI;
@@ -38,6 +39,10 @@ public class GameController : MonoBehaviour
 	public GameObject Sun, TargetPlanet;
 
 	RaycastHit mouseHit;
+
+	public float orbitIncrement, angleIncrement;
+
+	public GameObject window, towerWindow, towerName, towerRange, towerSpeed, towerPrestige, towerProgress;
 
 	// Start is called before the first frame update
 	void Start()
@@ -72,9 +77,32 @@ public class GameController : MonoBehaviour
 			mousePosition.y = 0;
 			unbuiltTower.transform.position = mousePosition;
 			float orbitSize = Vector3.Distance(unbuiltTower.transform.position, unbuiltTowerOrbit.principle.transform.position);
+
+			float orbitOffset = orbitSize % orbitIncrement;
+			if(orbitOffset >= orbitIncrement / 2)
+				orbitSize += orbitIncrement - orbitOffset;
+			else
+				orbitSize -= orbitOffset;
+
 			unbuiltTowerOrbit.axisVector = new Vector2(orbitSize, orbitSize);
 			unbuiltTowerOrbit.principle = GetClosestCelestialBody(unbuiltTower);
+			if(unbuiltTowerOrbit.orbitPath)
+			{
+				float angle = unbuiltTowerOrbit.GetCurrentAngle();
+				float angleOffset = angle % angleIncrement;
+
+				if(angleOffset >= angleIncrement / 2)
+					angle += angleIncrement - angleOffset;
+				else
+					angle -= angleOffset;
+
+				unbuiltTower.transform.position = unbuiltTowerOrbit.orbitPath.GetPositionOnEllipse(angle);
+			}
+				
 		}
+
+		if(selectedObject)
+			UpdateSelectedUI();
 	}
 
 	public void Pause()
@@ -104,7 +132,7 @@ public class GameController : MonoBehaviour
 		resourceCounter.GetComponent<UnityEngine.UI.Text>().text = "Resources: " + resources;
 		if(resources >= 1)
 			tower1Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
-		if(resources >= 3)
+		if(resources >= 2)
 			tower2Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
 	}
 
@@ -131,7 +159,7 @@ public class GameController : MonoBehaviour
 	public void BuildTower2()
 	{
 		BuildObject(tower2Prefab);
-		unbuiltTowerCost = 3;
+		unbuiltTowerCost = 2;
 	}
 
 	public void LeftClick(InputAction.CallbackContext context)
@@ -145,7 +173,7 @@ public class GameController : MonoBehaviour
 				AddResources(-unbuiltTowerCost);
 				if(resources < 1)
 					tower1Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
-				if(resources < 3)
+				if(resources < 2)
 					tower2Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
 			}
 			else if(mouseHit.transform)
@@ -153,7 +181,7 @@ public class GameController : MonoBehaviour
 				GameObject obj = mouseHit.transform.gameObject;
 				if(obj)
 				{
-					selectedObject = obj;
+					Select(obj);
 				}
 			}
 		}
@@ -218,5 +246,59 @@ public class GameController : MonoBehaviour
 	{
 		yield return new WaitForSeconds(wavesSettings.waveCooldown);
 		SpawnGate();
+	}
+
+	public void ToggleRanges(InputAction.CallbackContext context)
+	{
+		if(context.started)
+			showAllRanges = true;
+		else if(context.canceled)
+			showAllRanges = false;
+	}
+
+	private void Select(GameObject obj)
+	{
+		if(obj.GetComponent<RangeToolTip>())
+			obj = obj.transform.parent.gameObject;
+		selectedObject = obj;
+
+		if(obj.GetComponent<Tower>())
+		{
+			Tower tower = obj.GetComponent<Tower>();
+			window.SetActive(true);
+			towerWindow.SetActive(true);
+			towerName.GetComponent<UnityEngine.UI.Text>().text = tower.displayName;
+		}
+		else if(obj.GetComponent<MiningTower>())
+		{
+			MiningTower tower = obj.GetComponent<MiningTower>();
+			window.SetActive(true);
+			towerWindow.SetActive(true);
+			towerName.GetComponent<UnityEngine.UI.Text>().text = tower.displayName;
+		}
+		else
+		{
+			window.SetActive(false);
+		}
+	}
+
+	private void UpdateSelectedUI()
+	{
+		if(selectedObject.GetComponent<Tower>())
+		{
+			Tower tower = selectedObject.GetComponent<Tower>();
+			towerRange.GetComponent<UnityEngine.UI.Text>().text = "Range: " + tower.GetComponent<SphereCollider>().radius;
+			towerSpeed.GetComponent<UnityEngine.UI.Text>().text = "Speed: " + (1 / tower.cooldown).ToString("n2") + "/s";
+			towerPrestige.GetComponent<UnityEngine.UI.Text>().text = "Prestige: " + tower.prestige;
+			towerProgress.GetComponent<UnityEngine.UI.Text>().text = "Progress: " + tower.prestigeProgress.ToString("n2");
+		}
+		else if(selectedObject.GetComponent<MiningTower>())
+		{
+			MiningTower tower = selectedObject.GetComponent<MiningTower>();
+			towerRange.GetComponent<UnityEngine.UI.Text>().text = "Range: " + tower.GetComponent<SphereCollider>().radius;
+			towerSpeed.GetComponent<UnityEngine.UI.Text>().text = "Speed: " + (1 / tower.cooldown).ToString("n2") + "/s";
+			towerPrestige.GetComponent<UnityEngine.UI.Text>().text = "Prestige: " + tower.prestige;
+			towerProgress.GetComponent<UnityEngine.UI.Text>().text = "Progress: " + tower.prestigeProgress.ToString("n2");
+		}
 	}
 }
