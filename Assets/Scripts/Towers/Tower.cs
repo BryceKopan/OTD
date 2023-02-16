@@ -14,13 +14,49 @@ public abstract class Tower : MonoBehaviour
 
 	public string targetTag = "Enemy";
 
+	List<GameObject> targetsInRange = new List<GameObject>();
 
-	private void OnTriggerStay(Collider other)
+	private void FixedUpdate()
 	{
-		if(other.transform.gameObject.tag == targetTag && readyToFire)
+		for(int i = 0; i < targetsInRange.Count; i++)
 		{
-			FireAt(other.transform.gameObject);
+			if(targetsInRange[i] == null)
+			{
+				targetsInRange.RemoveAt(i);
+				i--;
+			}
+		}
+
+		if(readyToFire && targetsInRange.Count > 0)
+		{
+			GameObject farthestTarget = targetsInRange[0];
+			Vector3 planetPosition = FindObjectOfType<Planet>().transform.position;
+
+			for(int i = 0; i < targetsInRange.Count; i++)
+			{
+				if(Vector3.Distance(targetsInRange[i].transform.position, planetPosition) < Vector3.Distance(farthestTarget.transform.position, planetPosition))
+				{
+					farthestTarget = targetsInRange[i];
+				}
+			}
+
+			FireAt(farthestTarget);
 			StartCoroutine(FireCooldown());
+		}
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if(other.transform.gameObject.tag == targetTag)
+		{
+			targetsInRange.Add(other.transform.gameObject);		
+		}
+	}
+	private void OnTriggerExit(Collider other)
+	{
+		if(other.transform.gameObject.tag == targetTag)
+		{
+			targetsInRange.Remove(other.transform.gameObject);
 		}
 	}
 
