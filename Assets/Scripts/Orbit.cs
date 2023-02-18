@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Orbit : MonoBehaviour
 {
-	public bool followOrbit = true;
+	public bool followOrbit = true, varySpeed = true;
 	public bool useStartingPositionAsOrbit = false;
 
 	//Visual Elements of Orbit
@@ -28,7 +28,8 @@ public class Orbit : MonoBehaviour
 	{
 		targetAngle = GetCurrentAngle();
 
-		SetupLine();
+		if(!orbitPath)
+			SetupLine();
 		RenderOrbitPath();
 
 		if(useStartingPositionAsOrbit && principle)
@@ -40,7 +41,8 @@ public class Orbit : MonoBehaviour
 
 	private void Update()
 	{
-		CalculateSpeed();
+		if(varySpeed)
+			CalculateSpeed();
 		targetAngle -= Time.deltaTime * currentSpeed;
 		if(targetAngle < 0)
 			targetAngle = 360 + targetAngle;
@@ -72,7 +74,7 @@ public class Orbit : MonoBehaviour
 		orbitPath.RecalculateEllipse();
 	}
 
-	private void SetupLine()
+	public void SetupLine()
 	{
 		LineRenderer line = gameObject.AddComponent<LineRenderer>();
 		orbitPath = gameObject.AddComponent<Ellipse>();

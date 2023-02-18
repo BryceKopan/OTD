@@ -4,37 +4,35 @@ using UnityEngine;
 
 public class Gate : MonoBehaviour
 {
+	private int originSeason = 0;
 	public GameObject enemyPrefab;
-	//Path path;
 	private GameObject target;
 
 	private GameController GC;
+	private WaveController WC;
 
-	// Start is called before the first frame update
 	void Start()
     {
 		GC = FindObjectOfType<GameController>();
+		WC = FindObjectOfType<WaveController>();
 		target = FindObjectOfType<Planet>().gameObject;
 		StartCoroutine(SpawnEnemy());
-		//path = gameObject.GetComponentInChildren<Path>();
-		//path.target = target;
+		originSeason = GC.season;
 	}
 
-    // Update is called once per frame
     void Update()
     {
 		transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, new Vector3(0, 1, 0));
-		//path.DrawPath();
 	}
 
 	IEnumerator SpawnEnemy()
 	{
-		WaveSettings wave = GC.wavesSettings;
+		WaveSettings wave = WC.wavesSettings;
 		yield return new WaitForSeconds(wave.waveCooldown);
 
 		while(true)
 		{
-			wave = GC.wavesSettings;
+			wave = WC.wavesSettings;
 			for(int i = 0; i < wave.burstsPerWave; i++)
 			{
 				for(int j = 0; j < wave.enemiesPerBurst; j++)
@@ -45,7 +43,6 @@ public class Gate : MonoBehaviour
 				yield return new WaitForSeconds(wave.burstsCooldown);
 			}
 
-			GC.WaveComplete();
 			yield return new WaitForSeconds(wave.waveCooldown);
 		}
 	}

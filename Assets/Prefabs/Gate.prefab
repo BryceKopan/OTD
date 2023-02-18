@@ -128,12 +128,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followOrbit: 1
+  varySpeed: 0
+  useStartingPositionAsOrbit: 0
   orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  trailLength: 0.33
   orbitPath: {fileID: 0}
   principle: {fileID: 0}
   axisVector: {x: 12, y: 12}
-  baseSpeed: 10
-  currentSpeed: 10
+  baseSpeed: 5
+  currentSpeed: 5
   resolution: 1000
 --- !u!114 &8975761159560236540
 MonoBehaviour:

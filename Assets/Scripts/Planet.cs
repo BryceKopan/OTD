@@ -7,6 +7,28 @@ public class Planet : MonoBehaviour
 	public int population = 3;
 	public GameObject healthText;
 
+	private GameController GC;
+	private Orbit planetOrbit;
+
+	float nextSeasonAngle = 360;
+
+	private void Start()
+	{
+		GC = FindObjectOfType<GameController>();
+		planetOrbit = GetComponent<Orbit>();
+	}
+
+	private void FixedUpdate()
+	{
+		if(planetOrbit.GetCurrentAngle() <= nextSeasonAngle)
+		{
+			nextSeasonAngle -= 90;
+			if(nextSeasonAngle < 0)
+				nextSeasonAngle = 360;
+			GC.StartNextSeason();
+		}
+	}
+
 	private void OnCollisionEnter(Collision collision)
 	{
 		if(collision.transform.gameObject.tag == "Enemy")

@@ -4,24 +4,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-[System.Serializable]
-public struct WaveSettings
-{
-	public float gateDistance;
-	public int wave;
-	public int burstsPerWave;
-	public int enemiesPerBurst;
-	public float gateDistanceGrowth;
-	public float waveCooldown;
-	public float burstsCooldown;
-	public float enemiesCooldown;
-}
-
 public class GameController : MonoBehaviour
 {
 	public GameObject selectedObject;
 
-	public WaveSettings wavesSettings;
+	private WaveController WC;
+	public int season = 0;
 
 	public float resources = 1f;
 
@@ -29,10 +17,10 @@ public class GameController : MonoBehaviour
 	public bool showAllRanges = false;
 	private float timeScale;
 
-	public GameObject waveCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, tower3Button, endGameUI;
+	public GameObject seasonCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, tower3Button, endGameUI;
 
-	public GameObject gatePrefab, tower1Prefab, tower2Prefab, tower3Prefab;
-	GameObject gate, unbuiltTower;
+	public GameObject tower1Prefab, tower2Prefab, tower3Prefab;
+	GameObject unbuiltTower;
 	float unbuiltTowerCost;
 	Orbit unbuiltTowerOrbit;
 
@@ -42,7 +30,9 @@ public class GameController : MonoBehaviour
 
 	public float orbitIncrement, angleIncrement;
 
-	public GameObject window, towerWindow, towerName, towerRange, towerSpeed, towerPrestige, towerProgress;
+	public GameObject window, towerWindow, towerName, towerRange, towerSpeed, towerPrestige, towerProgress, sentryTower, maxSentries, buildSpeed, planetWindow, population;
+
+	public GameObject ark;
 
 	// Start is called before the first frame update
 	void Start()
@@ -54,8 +44,7 @@ public class GameController : MonoBehaviour
 		}
 
 		resourceCounter.GetComponent<UnityEngine.UI.Text>().text = "Resources: " + resources;
-
-		SpawnGate();
+		WC = FindObjectOfType<WaveController>();
 	}
 
     // Update is called once per frame
@@ -173,6 +162,15 @@ public class GameController : MonoBehaviour
 			BuildObject(tower3Prefab);
 	}
 
+	public void BuildArk()
+	{
+		if(resources > 100)
+		{
+			ark.SetActive(true);
+			resources -= 100;
+		}
+	}
+
 	public void LeftClick(InputAction.CallbackContext context)
 	{
 		if(context.started)
@@ -232,44 +230,6 @@ public class GameController : MonoBehaviour
 		SceneManager.LoadScene(scene.name);
 	}
 
-	void SpawnGate()
-	{
-		float angle = Random.Range(0.0f, Mathf.PI * 2);
-		Vector3 V = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
-		V *= wavesSettings.gateDistance;
-		Vector3 gateLocation = V + TargetPlanet.transform.position;
-
-		gate = Instantiate(gatePrefab, gateLocation, transform.rotation);
-		Orbit gateOrbit = gate.GetComponent<Orbit>();
-		gateOrbit.principle = TargetPlanet.GetComponent<CelestialBody>();
-		gateOrbit.axisVector = new Vector2(wavesSettings.gateDistance, wavesSettings.gateDistance);
-		gateOrbit.RestartOrbit();
-	}
-
-	public void WaveComplete()
-	{
-		if(wavesSettings.wave % 2 == 0)
-			wavesSettings.burstsPerWave++;
-		else
-			wavesSettings.enemiesPerBurst++;
-
-		wavesSettings.wave++;
-		waveCounter.GetComponent<UnityEngine.UI.Text>().text = "Wave: " + (wavesSettings.wave + 1);
-
-		if(wavesSettings.wave % 3 == 0)
-		{
-			wavesSettings.gateDistance += wavesSettings.gateDistanceGrowth;
-			Destroy(gate.gameObject);
-			StartCoroutine(DelayedSpawn());
-		}
-	}
-
-	IEnumerator DelayedSpawn()
-	{
-		yield return new WaitForSeconds(wavesSettings.waveCooldown);
-		SpawnGate();
-	}
-
 	public void ToggleRanges(InputAction.CallbackContext context)
 	{
 		if(context.started)
@@ -293,21 +253,24 @@ public class GameController : MonoBehaviour
 
 		if(obj.GetComponent<Tower>())
 		{
+			sentryTower.SetActive(false);
+			planetWindow.SetActive(false);
+
 			Tower tower = obj.GetComponent<Tower>();
 			window.SetActive(true);
 			towerWindow.SetActive(true);
 			towerName.GetComponent<UnityEngine.UI.Text>().text = tower.displayName;
 		}
-		else if(obj.GetComponent<MiningTower>())
+		if(obj.GetComponent<SentryTower>())
 		{
-			MiningTower tower = obj.GetComponent<MiningTower>();
-			window.SetActive(true);
-			towerWindow.SetActive(true);
-			towerName.GetComponent<UnityEngine.UI.Text>().text = tower.displayName;
+			sentryTower.SetActive(true);
 		}
-		else
+		if(obj.GetComponent<Planet>())
 		{
-			window.SetActive(false);
+			window.SetActive(true);
+			towerWindow.SetActive(false);
+
+			planetWindow.SetActive(true);
 		}
 	}
 
@@ -321,13 +284,16 @@ public class GameController : MonoBehaviour
 			towerPrestige.GetComponent<UnityEngine.UI.Text>().text = "Prestige: " + tower.prestige;
 			towerProgress.GetComponent<UnityEngine.UI.Text>().text = "Progress: " + tower.prestigeProgress.ToString("n2");
 		}
-		else if(selectedObject.GetComponent<MiningTower>())
+		if(selectedObject.GetComponent<SentryTower>())
 		{
-			MiningTower tower = selectedObject.GetComponent<MiningTower>();
-			towerRange.GetComponent<UnityEngine.UI.Text>().text = "Range: " + tower.GetComponent<SphereCollider>().radius;
-			towerSpeed.GetComponent<UnityEngine.UI.Text>().text = "Speed: " + (1 / tower.cooldown).ToString("n2") + "/s";
-			towerPrestige.GetComponent<UnityEngine.UI.Text>().text = "Prestige: " + tower.prestige;
-			towerProgress.GetComponent<UnityEngine.UI.Text>().text = "Progress: " + tower.prestigeProgress.ToString("n2");
+			SentryTower tower = selectedObject.GetComponent<SentryTower>();
+			maxSentries.GetComponent<UnityEngine.UI.Text>().text = "Max Sentries: " + tower.maxSentries;
+			buildSpeed.GetComponent<UnityEngine.UI.Text>().text = "Build Speed: " + (1 / tower.buildCooldown).ToString("n2") + "/s";
+		}
+		if(selectedObject.GetComponent<Planet>())
+		{
+			Planet planet = FindObjectOfType<Planet>();
+			population.GetComponent<UnityEngine.UI.Text>().text = "Population: " + planet.population;
 		}
 	}
 
@@ -337,5 +303,20 @@ public class GameController : MonoBehaviour
 		if(tower)
 			Destroy(tower.gameObject);
 		Select(null);
+	}
+
+	public void StartNextSeason()
+	{
+		season++;
+
+		if(WC.wavesSettings.wave % 2 == 0)
+			WC.wavesSettings.burstsPerWave++;
+		else
+			WC.wavesSettings.enemiesPerBurst++;
+
+		WC.wavesSettings.wave++;
+		seasonCounter.GetComponent<UnityEngine.UI.Text>().text = "Season: " + season;
+
+		WC.StartWave();
 	}
 }

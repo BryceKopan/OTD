@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Laser Tower
-  cooldown: 1
+  cooldown: 0.5
   prestige: 0
   prestigeProgress: 0
   rangeGrowth: 0.25
