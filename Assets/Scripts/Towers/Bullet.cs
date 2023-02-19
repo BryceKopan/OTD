@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
 
 	private GameController gameController;
 
-	Vector3 lastDeltaPosition;
+	public Vector3 lastDeltaPosition;
 
 	// Start is called before the first frame update
 	void Start()
@@ -27,10 +27,10 @@ public class Bullet : MonoBehaviour
     {
 		if(!target && isTriggered)
 		{
-			transform.position = transform.position + lastDeltaPosition;
+			transform.position = transform.position + lastDeltaPosition * Time.deltaTime * speed;
 
-			if(!GetComponentInChildren<SpriteRenderer>().isVisible)
-				Destroy(gameObject);
+			//if(!GetComponentInChildren<SpriteRenderer>().isVisible)
+				//Destroy(gameObject);
 		}
 		else if(isTriggered)
 		{

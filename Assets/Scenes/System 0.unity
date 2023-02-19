@@ -9476,7 +9476,7 @@ MonoBehaviour:
   tower3Prefab: {fileID: 775847189971516288, guid: dee96985824dbd440aab66341a566c68, type: 3}
   tower4Prefab: {fileID: 5002169109029168752, guid: 4e418d54798777240b52513b94accc40, type: 3}
   tower5Prefab: {fileID: 4220545702867308774, guid: 5e9f64cde65c16a48b3a0c78f28df951, type: 3}
-  tower6Prefab: {fileID: 0}
+  tower6Prefab: {fileID: 4893545198040699694, guid: eaea3880744d6bf489c0f89d1fdef532, type: 3}
   Sun: {fileID: 1580974474}
   TargetPlanet: {fileID: 528901110}
   orbitIncrement: 1
