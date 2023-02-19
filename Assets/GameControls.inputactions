@@ -78,14 +78,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Tower 2",
-                    "type": "Button",
-                    "id": "609512ba-8891-4fc7-ac8c-e351698cad00",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Tower 1",
                     "type": "Button",
                     "id": "0ac935ad-4602-4627-87d0-8ff77b3af97c",
@@ -94,9 +86,41 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Tower 2",
+                    "type": "Button",
+                    "id": "609512ba-8891-4fc7-ac8c-e351698cad00",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Tower3",
                     "type": "Button",
                     "id": "dd8f1ed0-9bf8-4fe3-afbb-561607e8bbf8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Tower4",
+                    "type": "Button",
+                    "id": "846bbe83-9ad4-40ec-b57b-1f2b2657a878",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Tower5",
+                    "type": "Button",
+                    "id": "8ddeeacc-4a34-4638-a2dc-19c931b26dc0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Tower6",
+                    "type": "Button",
+                    "id": "b2c741c5-64c4-4e22-a281-e8a4631fe2f9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -259,23 +283,56 @@
                 },
                 {
                     "name": "",
-                    "id": "4da6672f-0e74-4981-9634-cb7123063570",
-                    "path": "<Keyboard>/2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Tower 2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "292473c7-5c51-4728-8b8f-635a949bf86a",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Right Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6c86f60b-afb3-4ba8-95ed-0b0fdcfb4624",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tower4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb03840c-29cd-4cca-88b8-fd51839059e2",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tower5",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "792f4943-e8e1-4222-af16-947c833a1c58",
+                    "path": "<Keyboard>/6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tower6",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4da6672f-0e74-4981-9634-cb7123063570",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tower 2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

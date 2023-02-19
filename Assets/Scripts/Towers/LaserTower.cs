@@ -10,7 +10,7 @@ public class LaserTower : Tower
 	{
 		GameObject bulletObject = Instantiate(bulletPrefab, transform.position, transform.rotation, FindObjectOfType<Planet>().transform);
 		Bullet bullet = bulletObject.GetComponent<Bullet>();
-		bullet.tower = gameObject;
+		bullet.tower = GetComponent<Tower>();
 		bullet.target = target;
 	}
 }

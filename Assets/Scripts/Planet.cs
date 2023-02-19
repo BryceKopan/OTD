@@ -20,11 +20,11 @@ public class Planet : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if(planetOrbit.GetCurrentAngle() <= nextSeasonAngle)
+		if(planetOrbit.GetCurrentAngle() <= nextSeasonAngle || nextSeasonAngle == 0 && planetOrbit.GetCurrentAngle() > 90)
 		{
-			nextSeasonAngle -= 90;
-			if(nextSeasonAngle < 0)
+			if(nextSeasonAngle == 0)
 				nextSeasonAngle = 360;
+			nextSeasonAngle -= 90;
 			GC.StartNextSeason();
 		}
 	}

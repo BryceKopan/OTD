@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-	public GameObject tower;
+	public Tower tower;
 	Vector3 startPosition;
 	public GameObject target;
 	public float speed = 1;
+
+	public bool isTriggered = true;
 
 	private GameController gameController;
 
@@ -16,7 +18,6 @@ public class Bullet : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		//orbit = gameObject.GetComponent<Orbit>();
 		startPosition = transform.position;
 		gameController = FindObjectOfType<GameController>();
 	}
@@ -24,14 +25,14 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if(!target)
+		if(!target && isTriggered)
 		{
 			transform.position = transform.position + lastDeltaPosition;
 
 			if(!GetComponentInChildren<SpriteRenderer>().isVisible)
 				Destroy(gameObject);
 		}
-		else
+		else if(isTriggered)
 		{
 			Vector3 directionUnit = (target.transform.position - transform.position).normalized;
 			Vector3 deltaPosition = directionUnit * Time.deltaTime * speed;
@@ -41,15 +42,13 @@ public class Bullet : MonoBehaviour
 		}
 	}
 
-	private void OnTriggerEnter(Collider other)
+	protected virtual void OnCollisionEnter(Collision collision)
 	{
-		if(other.gameObject.tag == "Enemy")
+		if(collision.gameObject.tag == "Enemy")
 		{
 			if(tower.GetComponent<Tower>())
 				tower.GetComponent<Tower>().GetXP();
-			else if(tower.GetComponent<SentryTower>())
-				tower.GetComponent<SentryTower>().GetXP();
-			Destroy(other.transform.gameObject);
+			Destroy(collision.transform.gameObject);
 			Destroy(gameObject);
 		}
 	}

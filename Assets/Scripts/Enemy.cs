@@ -5,30 +5,26 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-	public float resourceValue = .5f;
-
-	//Orbit orbit;
-	Vector3 startPosition;
 	GameObject target;
-	float lerpT = 0;
-	public float speed = 1;
-	public float deltaSpeed = .1f;
-	public float ang;
+	public Vector3 directionUnit;
+	public float speed;
+	public float acceleration;
+	public float turnSpeed;
+	public float turnAcceleration;
 
 	private void Start()
 	{
-		//orbit = gameObject.GetComponent<Orbit>();
-		startPosition = transform.position;
 		target = FindObjectOfType<Planet>().gameObject;
 	}
 
 	private void Update()
 	{
-		Vector3 directionUnit = (target.transform.position - transform.position).normalized;
 		Vector3 deltaPosition = directionUnit * Time.deltaTime * speed;
-		speed += Time.deltaTime * deltaSpeed;
 		transform.position = transform.position + deltaPosition;
+		transform.rotation = Quaternion.LookRotation(directionUnit, new Vector3(0, 1, 0));
 
-		transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, new Vector3(0, 1, 0));
+		directionUnit = Vector3.RotateTowards(directionUnit, (target.transform.position - transform.position), turnSpeed * Time.deltaTime, 0).normalized;
+		speed += Time.deltaTime * acceleration;
+		turnSpeed += Time.deltaTime * turnAcceleration;
 	}
 }

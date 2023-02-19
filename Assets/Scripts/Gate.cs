@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gate : MonoBehaviour
 {
-	private int originSeason = 0;
+	public int originSeason = 0;
 	public GameObject enemyPrefab;
 	private GameObject target;
 
@@ -16,7 +16,6 @@ public class Gate : MonoBehaviour
 		GC = FindObjectOfType<GameController>();
 		WC = FindObjectOfType<WaveController>();
 		target = FindObjectOfType<Planet>().gameObject;
-		StartCoroutine(SpawnEnemy());
 		originSeason = GC.season;
 	}
 
@@ -25,25 +24,30 @@ public class Gate : MonoBehaviour
 		transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, new Vector3(0, 1, 0));
 	}
 
-	IEnumerator SpawnEnemy()
+	public IEnumerator SpawnWave(int enemyQuantity, WavePattern pattern)
 	{
-		WaveSettings wave = WC.wavesSettings;
-		yield return new WaitForSeconds(wave.waveCooldown);
+		int enemiesSpawned = 0;
+		enemyQuantity = Mathf.RoundToInt((pattern.enemyQuantityWeight * enemyQuantity));
 
-		while(true)
+		while(enemiesSpawned < enemyQuantity)
 		{
-			wave = WC.wavesSettings;
-			for(int i = 0; i < wave.burstsPerWave; i++)
+			yield return new WaitForSeconds(pattern.enemySpawnInterval);
+			for(int i = 0; i < pattern.enemiesPerSpawn; i ++)
 			{
-				for(int j = 0; j < wave.enemiesPerBurst; j++)
-				{
-					Enemy enemy = Instantiate(enemyPrefab, transform.position, transform.rotation, target.transform).GetComponent<Enemy>();
-					yield return new WaitForSeconds(wave.enemiesCooldown);
-				}	
-				yield return new WaitForSeconds(wave.burstsCooldown);
+				Enemy enemy = Instantiate(enemyPrefab, transform.position, transform.rotation, target.transform).GetComponent<Enemy>();
+				enemy.speed = pattern.enemyStartSpeed;
+				enemy.acceleration = pattern.enemyAcceleration;
+				enemy.turnSpeed = pattern.enemyTurnSpeed;
+				enemy.turnAcceleration = pattern.enemyTurnAcceleration;
+
+				Vector3 startingDirection = target.transform.position - transform.position;
+				float startAngle = pattern.enemyStartAngle - (((pattern.enemiesPerSpawn - 1) / 2) * pattern.angleBetweenEnemies) + pattern.angleBetweenEnemies * i;
+				startingDirection = Quaternion.Euler(0, startAngle, 0) * startingDirection;
+
+				enemy.directionUnit = startingDirection;
 			}
 
-			yield return new WaitForSeconds(wave.waveCooldown);
+			enemiesSpawned += pattern.enemiesPerSpawn;
 		}
 	}
 }

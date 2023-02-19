@@ -7,14 +7,20 @@ public abstract class Tower : MonoBehaviour
 	public string displayName = "Tower";
 
 	public float cooldown = 1f;
-	private bool readyToFire = true;
+	protected bool readyToFire = true;
 
 	public int prestige = 0;
 	public float prestigeProgress = 0, rangeGrowth, cooldownGrowth;
 
 	public string targetTag = "Enemy";
 
-	List<GameObject> targetsInRange = new List<GameObject>();
+	protected List<GameObject> targetsInRange = new List<GameObject>();
+	protected Orbit orbit;
+
+	private void Start()
+	{
+		orbit = GetComponent<Orbit>();
+	}
 
 	private void FixedUpdate()
 	{
@@ -27,6 +33,11 @@ public abstract class Tower : MonoBehaviour
 			}
 		}
 
+		FireAtFarthestTarget();
+	}
+
+	protected virtual void FireAtFarthestTarget()
+	{
 		if(readyToFire && targetsInRange.Count > 0)
 		{
 			GameObject farthestTarget = targetsInRange[0];

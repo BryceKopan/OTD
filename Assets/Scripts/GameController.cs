@@ -17,9 +17,9 @@ public class GameController : MonoBehaviour
 	public bool showAllRanges = false;
 	private float timeScale;
 
-	public GameObject seasonCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, tower3Button, endGameUI;
+	public GameObject seasonCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, tower3Button, tower4Button, tower5Button, tower6Button, endGameUI;
 
-	public GameObject tower1Prefab, tower2Prefab, tower3Prefab;
+	public GameObject tower1Prefab, tower2Prefab, tower3Prefab, tower4Prefab, tower5Prefab, tower6Prefab;
 	GameObject unbuiltTower;
 	float unbuiltTowerCost;
 	Orbit unbuiltTowerOrbit;
@@ -125,6 +125,12 @@ public class GameController : MonoBehaviour
 			tower2Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
 		if(resources >= 3)
 			tower3Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
+		if(resources >= 5)
+			tower4Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
+		if(resources >= 5)
+			tower5Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
+		if(resources >= 5)
+			tower6Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
 	}
 
 	private void BuildObject(GameObject prefab)
@@ -162,6 +168,27 @@ public class GameController : MonoBehaviour
 			BuildObject(tower3Prefab);
 	}
 
+	public void BuildTower4()
+	{
+		unbuiltTowerCost = 5;
+		if(resources >= unbuiltTowerCost)
+			BuildObject(tower4Prefab);
+	}
+
+	public void BuildTower5()
+	{
+		unbuiltTowerCost = 5;
+		if(resources >= unbuiltTowerCost)
+			BuildObject(tower5Prefab);
+	}
+
+	public void BuildTower6()
+	{
+		unbuiltTowerCost = 5;
+		if(resources >= unbuiltTowerCost)
+			BuildObject(tower6Prefab);
+	}
+
 	public void BuildArk()
 	{
 		if(resources > 100)
@@ -186,6 +213,12 @@ public class GameController : MonoBehaviour
 					tower2Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
 				if(resources < 3)
 					tower3Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
+				if(resources < 5)
+					tower4Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
+				if(resources < 5)
+					tower5Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
+				if(resources < 5)
+					tower6Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
 			}
 			else if(mouseHit.transform)
 			{
@@ -308,15 +341,7 @@ public class GameController : MonoBehaviour
 	public void StartNextSeason()
 	{
 		season++;
-
-		if(WC.wavesSettings.wave % 2 == 0)
-			WC.wavesSettings.burstsPerWave++;
-		else
-			WC.wavesSettings.enemiesPerBurst++;
-
-		WC.wavesSettings.wave++;
 		seasonCounter.GetComponent<UnityEngine.UI.Text>().text = "Season: " + season;
-
 		WC.StartWave();
 	}
 }
