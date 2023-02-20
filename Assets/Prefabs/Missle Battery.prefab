@@ -85,13 +85,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Missle Battery
-  cooldown: 2
+  cooldown: 5
   prestige: 0
   prestigeProgress: 0
   rangeGrowth: 0.1
   cooldownGrowth: 0.1
   targetTag: Enemy
   misslePrefab: {fileID: 2368880725693855904, guid: 834f8d87813d10e46986fcb6d1b3ac74, type: 3}
+  delayBetweenMissles: 0.1
+  spread: 45
   misslesPerVolley: 10
 --- !u!1 &5011481707882856592
 GameObject:

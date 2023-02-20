@@ -8,7 +8,7 @@ public class CelestialBody : MonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		if(collision.transform.gameObject.tag == "Enemy")
+		if(collision.transform.gameObject.tag == "Enemy" || collision.transform.gameObject.tag == "Bullet" || collision.transform.gameObject.tag == "Mine")
 		{
 			Destroy(collision.transform.gameObject);
 		}

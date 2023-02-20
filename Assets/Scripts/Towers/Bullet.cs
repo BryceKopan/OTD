@@ -5,41 +5,42 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 	public Tower tower;
-	Vector3 startPosition;
 	public GameObject target;
 	public float speed = 1;
 
-	public bool isTriggered = true;
+	public bool isTriggered = true, destroyWhenUnseen = true;
 
-	private GameController gameController;
-
-	public Vector3 lastDeltaPosition;
-
-	// Start is called before the first frame update
-	void Start()
-    {
-		startPosition = transform.position;
-		gameController = FindObjectOfType<GameController>();
-	}
+	public Vector3 targetDirectionUnit;
+	Vector3 lastDeltaPosition;
 
     // Update is called once per frame
     void Update()
     {
 		if(!target && isTriggered)
 		{
-			transform.position = transform.position + lastDeltaPosition * Time.deltaTime * speed;
+			MoveWithoutTarget();
 
-			//if(!GetComponentInChildren<SpriteRenderer>().isVisible)
-				//Destroy(gameObject);
+			if(!GetComponentInChildren<SpriteRenderer>().isVisible && destroyWhenUnseen)
+				Destroy(gameObject);
 		}
 		else if(isTriggered)
 		{
-			Vector3 directionUnit = (target.transform.position - transform.position).normalized;
-			Vector3 deltaPosition = directionUnit * Time.deltaTime * speed;
-			transform.position = transform.position + deltaPosition;
-			transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, new Vector3(0, 1, 0));
-			lastDeltaPosition = deltaPosition;
+			MoveTowardsTarget();
 		}
+	}
+
+	protected virtual void MoveTowardsTarget()
+	{
+		targetDirectionUnit = (target.transform.position - transform.position).normalized;
+		Vector3 deltaPosition = targetDirectionUnit * Time.deltaTime * speed;
+		transform.position = transform.position + deltaPosition;
+		transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, new Vector3(0, 1, 0));
+		lastDeltaPosition = deltaPosition;
+	}
+
+	protected virtual void MoveWithoutTarget()
+	{
+		transform.position = transform.position + lastDeltaPosition;
 	}
 
 	protected virtual void OnCollisionEnter(Collision collision)

@@ -228,6 +228,10 @@ public class GameController : MonoBehaviour
 					Select(obj);
 				}
 			}
+			else
+			{
+				Select(null);
+			}
 		}
 	}
 

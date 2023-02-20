@@ -5876,7 +5876,7 @@ MonoBehaviour:
     enemyTurnSpeed: 0.25
     enemyTurnAcceleration: 0.001
   wavePatterns:
-  - enemyQuantityWeight: 1
+  - enemyQuantityWeight: 0.8
     enemySpawnInterval: 0.25
     enemiesPerSpawn: 1
     angleBetweenEnemies: 15
@@ -5885,7 +5885,7 @@ MonoBehaviour:
     enemyAcceleration: 0.01
     enemyTurnSpeed: 0.25
     enemyTurnAcceleration: 0.001
-  - enemyQuantityWeight: 0.9
+  - enemyQuantityWeight: 0.8
     enemySpawnInterval: 0.5
     enemiesPerSpawn: 2
     angleBetweenEnemies: 15
