@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class CameraController : MonoBehaviour
 {
 	public float panSpeed = 1;
+	//Vector3 cameraCelestialOffset = new Vector3();
 	Vector3 deltaPosition = new Vector3(0, 0, 0);
 
 	public float minZoomSpeed = 1, maxZoomSpeed = 1;
@@ -22,13 +23,7 @@ public class CameraController : MonoBehaviour
 
 	private void Update()
 	{
-		if(GC.selectedObject)
-		{
-			Vector3 selectedPosition = GC.selectedObject.transform.position;
-			transform.position = new Vector3(selectedPosition.x, transform.position.y, selectedPosition.z);
-		}
-		else
-			transform.position = transform.position + (deltaPosition * panSpeed);
+		transform.position += deltaPosition * panSpeed;
 	}
 
 	public void PanUp(InputAction.CallbackContext context)

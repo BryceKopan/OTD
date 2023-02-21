@@ -28,7 +28,7 @@ public class Missle : Bullet
 		transform.position = transform.position + deltaPosition;
 		transform.rotation = Quaternion.LookRotation(directionUnit, new Vector3(0, 1, 0));
 
-		directionUnit = Vector3.RotateTowards(directionUnit, directionUnit + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)), turnSpeed * Time.deltaTime, 0).normalized;
+		directionUnit = Vector3.RotateTowards(directionUnit, directionUnit + new Vector3(Random.Range(-1, 1) - Random.Range(-1, 1), 0, Random.Range(-1, 1) - Random.Range(-1, 1)), turnSpeed * Time.deltaTime, 0).normalized;
 	}
 
 	private void FixedUpdate()

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
 	public GameObject selectedObject;
+	//public CelestialBody lastSelectedCelestialBody;
 
 	private WaveController WC;
 	public int season = 0;
@@ -45,6 +46,7 @@ public class GameController : MonoBehaviour
 
 		resourceCounter.GetComponent<UnityEngine.UI.Text>().text = "Resources: " + resources;
 		WC = FindObjectOfType<WaveController>();
+		Camera.main.transform.parent = FindObjectOfType<Planet>().GetComponent<CelestialBody>().transform;
 	}
 
     // Update is called once per frame
@@ -286,8 +288,14 @@ public class GameController : MonoBehaviour
 
 		if(obj.GetComponent<RangeToolTip>())
 			obj = obj.transform.parent.gameObject;
-		selectedObject = obj;
 
+		selectedObject = obj;
+		
+		if(obj.GetComponent<CelestialBody>())
+		{
+			Camera.main.transform.position = new Vector3(obj.transform.position.x, Camera.main.transform.position.y, obj.transform.position.z);
+			Camera.main.transform.parent = obj.transform;//lastSelectedCelestialBody = obj.GetComponent<CelestialBody>();
+		}
 		if(obj.GetComponent<Tower>())
 		{
 			sentryTower.SetActive(false);
