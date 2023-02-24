@@ -124,6 +124,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Show Selected Details",
+                    "type": "Button",
+                    "id": "20fc3662-8d6b-410d-bfdb-5e17246a5ad4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -333,6 +341,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Tower 2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "29900bc1-01a5-4ddb-b930-4412a9083b3b",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Show Selected Details",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

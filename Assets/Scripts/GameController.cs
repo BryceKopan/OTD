@@ -18,10 +18,12 @@ public class GameController : MonoBehaviour
 	public bool showAllRanges = false;
 	private float timeScale;
 
-	public GameObject seasonCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, tower3Button, tower4Button, tower5Button, tower6Button, endGameUI;
+	public GameObject seasonCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, tower3Button, tower4Button, tower5Button, tower6Button, endGameUI, planetDetail;
 
 	public GameObject tower1Prefab, tower2Prefab, tower3Prefab, tower4Prefab, tower5Prefab, tower6Prefab;
 	GameObject unbuiltTower;
+	bool isPlacementValid = true;
+	Color originalColor;
 	float unbuiltTowerCost;
 	Orbit unbuiltTowerOrbit;
 
@@ -31,7 +33,7 @@ public class GameController : MonoBehaviour
 
 	public float orbitIncrement, angleIncrement;
 
-	public GameObject window, towerWindow, towerName, towerRange, towerSpeed, towerPrestige, towerProgress, sentryTower, maxSentries, buildSpeed, planetWindow, population;
+	public GameObject window, towerWindow, towerName, towerRange, towerSpeed, towerPrestige, towerProgress, sentryTower, maxSentries, buildSpeed, population;
 
 	public GameObject ark;
 
@@ -55,7 +57,7 @@ public class GameController : MonoBehaviour
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		if(Physics.Raycast(ray, out mouseHit, Mathf.Infinity, -1, QueryTriggerInteraction.Ignore))
 		{
-			RangeToolTip toolTip = mouseHit.transform.GetComponent<RangeToolTip>();
+			RangeToolTip toolTip = mouseHit.transform.GetComponentInChildren<RangeToolTip>();
 			if(toolTip)
 			{
 				toolTip.indicatorIsActive = true;
@@ -89,7 +91,22 @@ public class GameController : MonoBehaviour
 
 				unbuiltTower.transform.position = unbuiltTowerOrbit.orbitPath.GetPositionOnEllipse(angle);
 			}
-				
+
+			isPlacementValid = true;
+			Vector3 halfExtents = unbuiltTower.GetComponent<BoxCollider>().size/2;
+			Collider[] colliders = Physics.OverlapBox(unbuiltTower.transform.position, halfExtents, Quaternion.identity, ~0, QueryTriggerInteraction.Ignore);
+			foreach(Collider collider in colliders)
+			{
+				if(collider.gameObject != unbuiltTower)
+				{
+					isPlacementValid = false;
+				}
+			}
+
+			if(isPlacementValid)
+				unbuiltTower.GetComponentInChildren<SpriteRenderer>().color = originalColor;
+			else
+				unbuiltTower.GetComponentInChildren<SpriteRenderer>().color = Color.red;
 		}
 
 		if(selectedObject)
@@ -147,6 +164,7 @@ public class GameController : MonoBehaviour
 		unbuiltTowerOrbit = unbuiltTower.GetComponent<Orbit>();
 		unbuiltTowerOrbit.followOrbit = false;
 		unbuiltTowerOrbit.principle = GetClosestCelestialBody(unbuiltTower);
+		originalColor = unbuiltTower.GetComponentInChildren<SpriteRenderer>().color;
 	}
 
 	public void BuildTower()
@@ -204,7 +222,7 @@ public class GameController : MonoBehaviour
 	{
 		if(context.started)
 		{
-			if(unbuiltTower != null)
+			if(unbuiltTower != null && isPlacementValid)
 			{
 				unbuiltTowerOrbit.RestartOrbit();
 				unbuiltTower = null;
@@ -221,6 +239,10 @@ public class GameController : MonoBehaviour
 					tower5Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
 				if(resources < 5)
 					tower6Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
+			}
+			else if(unbuiltTower != null && !isPlacementValid)
+			{
+				Debug.Log("Invalid Placement");
 			}
 			else if(mouseHit.transform)
 			{
@@ -288,18 +310,15 @@ public class GameController : MonoBehaviour
 
 		if(obj.GetComponent<RangeToolTip>())
 			obj = obj.transform.parent.gameObject;
-
-		selectedObject = obj;
 		
 		if(obj.GetComponent<CelestialBody>())
 		{
 			Camera.main.transform.position = new Vector3(obj.transform.position.x, Camera.main.transform.position.y, obj.transform.position.z);
-			Camera.main.transform.parent = obj.transform;//lastSelectedCelestialBody = obj.GetComponent<CelestialBody>();
+			Camera.main.transform.parent = obj.transform;
 		}
 		if(obj.GetComponent<Tower>())
 		{
 			sentryTower.SetActive(false);
-			planetWindow.SetActive(false);
 
 			Tower tower = obj.GetComponent<Tower>();
 			window.SetActive(true);
@@ -310,13 +329,12 @@ public class GameController : MonoBehaviour
 		{
 			sentryTower.SetActive(true);
 		}
-		if(obj.GetComponent<Planet>())
+		if(obj.GetComponent<Planet>() && selectedObject == obj)
 		{
-			window.SetActive(true);
-			towerWindow.SetActive(false);
-
-			planetWindow.SetActive(true);
+			ShowPlanetDetails();
 		}
+
+		selectedObject = obj;
 	}
 
 	private void UpdateSelectedUI()
@@ -355,5 +373,17 @@ public class GameController : MonoBehaviour
 		season++;
 		seasonCounter.GetComponent<UnityEngine.UI.Text>().text = "Season: " + season;
 		WC.StartWave();
+	}
+
+	public void ShowPlanetDetails()
+	{
+		if(!planetDetail.activeSelf)
+		{
+			planetDetail.SetActive(true);
+		}
+		else
+		{
+			planetDetail.SetActive(false);
+		}
 	}
 }

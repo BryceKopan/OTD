@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 775847189971516413}
   - component: {fileID: 775847189971516415}
   - component: {fileID: 775847189971516289}
-  m_Layer: 0
+  - component: {fileID: 6690464547841493520}
+  - component: {fileID: 4697690002739168022}
+  m_Layer: 8
   m_Name: Sentry Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followOrbit: 1
+  varySpeed: 1
   useStartingPositionAsOrbit: 1
   orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
@@ -94,6 +97,35 @@ MonoBehaviour:
   sentryPrefab: {fileID: 2991533358762030055, guid: 1568f23bdd112c54b8996884c767c3b5, type: 3}
   maxSentries: 2
   buildCooldown: 4
+--- !u!54 &6690464547841493520
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775847189971516288}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 84
+  m_CollisionDetection: 0
+--- !u!65 &4697690002739168022
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775847189971516288}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &910111443218442302
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,9 +135,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 498855377906876625}
-  - component: {fileID: 1567191516714211474}
   - component: {fileID: 9067831100539319254}
-  - component: {fileID: 359509508283770147}
   m_Layer: 8
   m_Name: ToolTip
   m_TagString: Untagged
@@ -127,19 +157,6 @@ Transform:
   m_Father: {fileID: 775847189971516290}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1567191516714211474
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 910111443218442302}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9067831100539319254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,22 +173,6 @@ MonoBehaviour:
   resolution: 500
   rangeIndicatoMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   color: {r: 0.52156866, g: 0.050980397, b: 1, a: 1}
---- !u!54 &359509508283770147
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 910111443218442302}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1906731568591548704
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4101175004786502175}
   - component: {fileID: 101263036541322877}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

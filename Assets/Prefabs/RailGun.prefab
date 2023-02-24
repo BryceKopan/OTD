@@ -9,9 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5279152211980442913}
-  - component: {fileID: 6489918803854525794}
   - component: {fileID: 3636783084466318886}
-  - component: {fileID: 5427437179863316691}
   m_Layer: 8
   m_Name: ToolTip
   m_TagString: Untagged
@@ -33,19 +31,6 @@ Transform:
   m_Father: {fileID: 5002169109029168754}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6489918803854525794
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4831877708062176718}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.5, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3636783084466318886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,22 +47,6 @@ MonoBehaviour:
   resolution: 500
   rangeIndicatoMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   color: {r: 0.21176472, g: 0.41176474, b: 1, a: 1}
---- !u!54 &5427437179863316691
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4831877708062176718}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &5002169109029168752
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,7 +59,9 @@ GameObject:
   - component: {fileID: 5002169109029168653}
   - component: {fileID: 5002169109029168655}
   - component: {fileID: 3604901009403996404}
-  m_Layer: 0
+  - component: {fileID: 6991038154812384868}
+  - component: {fileID: 8381827011013423844}
+  m_Layer: 8
   m_Name: RailGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,6 +141,35 @@ MonoBehaviour:
   cooldownGrowth: 0.1
   targetTag: Enemy
   bulletPrefab: {fileID: 3843116758863509713, guid: 317cd691c41ce314fbd7ef9b90964b3c, type: 3}
+--- !u!54 &6991038154812384868
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5002169109029168752}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 84
+  m_CollisionDetection: 0
+--- !u!65 &8381827011013423844
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5002169109029168752}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.5, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6185985354350013648
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8594370390571333615}
   - component: {fileID: 5677025461369920397}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
