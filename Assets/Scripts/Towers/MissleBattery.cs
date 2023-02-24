@@ -16,10 +16,8 @@ public class MissleBattery : Tower
 	IEnumerator FireVolley(GameObject target)
 	{
 		Vector3 direction = (target.transform.position - transform.position).normalized;
-		Debug.Log("firing");
 		for(int i = 0; i < misslesPerVolley; i++)
 		{
-			Debug.Log("pewsh" + i);
 			GameObject bulletObject = Instantiate(misslePrefab, transform.position, transform.rotation, FindObjectOfType<Planet>().transform);
 			Bullet bullet = bulletObject.GetComponent<Bullet>();
 			bullet.tower = GetComponent<Tower>();

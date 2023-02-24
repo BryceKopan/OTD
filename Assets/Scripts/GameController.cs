@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour
 	public bool showAllRanges = false;
 	private float timeScale;
 
-	public GameObject seasonCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, tower3Button, tower4Button, tower5Button, tower6Button, endGameUI, planetDetail;
+	public GameObject seasonCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, tower3Button, tower4Button, tower5Button, tower6Button, endGameUI;
 
 	public GameObject tower1Prefab, tower2Prefab, tower3Prefab, tower4Prefab, tower5Prefab, tower6Prefab;
 	GameObject unbuiltTower;
@@ -33,9 +33,11 @@ public class GameController : MonoBehaviour
 
 	public float orbitIncrement, angleIncrement;
 
-	public GameObject window, towerWindow, towerName, towerRange, towerSpeed, towerPrestige, towerProgress, sentryTower, maxSentries, buildSpeed, population;
-
+	public GameObject window, towerWindow, towerName, towerRange, towerSpeed, towerPrestige, towerProgress, sentryTower, maxSentries, buildSpeed;
+	public GameObject planetDetail, population, ttpg;
 	public GameObject ark;
+
+	List<Planet> populatedBodies = new List<Planet>(); 
 
 	// Start is called before the first frame update
 	void Start()
@@ -49,6 +51,8 @@ public class GameController : MonoBehaviour
 		resourceCounter.GetComponent<UnityEngine.UI.Text>().text = "Resources: " + resources;
 		WC = FindObjectOfType<WaveController>();
 		Camera.main.transform.parent = FindObjectOfType<Planet>().GetComponent<CelestialBody>().transform;
+
+		populatedBodies.Add(FindObjectOfType<Planet>());
 	}
 
     // Update is called once per frame
@@ -357,6 +361,7 @@ public class GameController : MonoBehaviour
 		{
 			Planet planet = FindObjectOfType<Planet>();
 			population.GetComponent<UnityEngine.UI.Text>().text = "Population: " + planet.population;
+			ttpg.GetComponent<UnityEngine.UI.Text>().text = "Time to population growth: " + planet.timeToPopulationGrowth;
 		}
 	}
 
@@ -372,6 +377,12 @@ public class GameController : MonoBehaviour
 	{
 		season++;
 		seasonCounter.GetComponent<UnityEngine.UI.Text>().text = "Season: " + season;
+
+		foreach(Planet planet in populatedBodies)
+		{
+			planet.IncrementSeason();
+		}
+
 		WC.StartWave();
 	}
 
