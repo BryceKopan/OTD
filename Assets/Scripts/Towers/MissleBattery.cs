@@ -18,7 +18,7 @@ public class MissleBattery : Tower
 		Vector3 direction = (target.transform.position - transform.position).normalized;
 		for(int i = 0; i < misslesPerVolley; i++)
 		{
-			GameObject bulletObject = Instantiate(misslePrefab, transform.position, transform.rotation, FindObjectOfType<Planet>().transform);
+			GameObject bulletObject = Instantiate(misslePrefab, transform.position, transform.rotation, GetComponent<Orbit>().principle.transform);
 			Bullet bullet = bulletObject.GetComponent<Bullet>();
 			bullet.tower = GetComponent<Tower>();
 

@@ -27,7 +27,7 @@ public class WaveController : MonoBehaviour
 
 	public List<WavePattern> wavePatterns;
 
-	Dictionary<Planet, List<Gate>> gates = new Dictionary<Planet, List<Gate>>();
+	Dictionary<CelestialBody, List<Gate>> gates = new Dictionary<CelestialBody, List<Gate>>();
 
 	GameController GC;
 
@@ -38,20 +38,20 @@ public class WaveController : MonoBehaviour
 
 	public void StartWave()
 	{
-		Planet[] planets = FindObjectsOfType<Planet>();
+		List<CelestialBody> populatedBodies = GC.populatedBodies;
 
-		for(int i = 0; i < planets.Length; i++)
+		for(int i = 0; i < populatedBodies.Count; i++)
 		{
-			if(!gates.ContainsKey(planets[i]))
+			if(!gates.ContainsKey(populatedBodies[i]))
 			{
-				gates[planets[i]] = new List<Gate>();
-				SpawnGate(planets[i]);
+				gates[populatedBodies[i]] = new List<Gate>();
+				SpawnGate(populatedBodies[i]);
 			}
 
-			Gate firstGate = gates[planets[i]][0];
-			if(GC.season - firstGate.originSeason >= gateSeasonIncrement * gates[planets[i]].Count)
+			Gate firstGate = gates[populatedBodies[i]][0];
+			if(GC.season - firstGate.originSeason >= gateSeasonIncrement * gates[populatedBodies[i]].Count)
 			{
-				SpawnGate(planets[i]);
+				SpawnGate(populatedBodies[i]);
 			}
 		}
 
@@ -84,25 +84,25 @@ public class WaveController : MonoBehaviour
 		return Mathf.RoundToInt(enemyCount);
 	}
 
-	public void SpawnGate(Planet planet)
+	public void SpawnGate(CelestialBody body)
 	{
 		Gate newGate = Instantiate(gatePrefab, transform.position, transform.rotation).GetComponent<Gate>();
-		gates[planet].Add(newGate);
+		gates[body].Add(newGate);
 
 		Orbit newGateOrbit = newGate.GetComponent<Orbit>();
-		newGateOrbit.principle = planet.GetComponent<CelestialBody>();
+		newGateOrbit.principle = body.GetComponent<CelestialBody>();
 		newGateOrbit.axisVector = new Vector2(gateOrbitDistance, gateOrbitDistance);
 		newGateOrbit.SetupLine();
 
-		Orbit firstGateOrbit = gates[planet][0].GetComponent<Orbit>();
+		Orbit firstGateOrbit = gates[body][0].GetComponent<Orbit>();
 
-		float gatePlacementAngle = 360 / (gates[planet].Count);
+		float gatePlacementAngle = 360 / (gates[body].Count);
 
-		for(int i = 0; i < gates[planet].Count; i++)
+		for(int i = 0; i < gates[body].Count; i++)
 		{
-			Orbit orbit = gates[planet][i].GetComponent<Orbit>();
+			Orbit orbit = gates[body][i].GetComponent<Orbit>();
 			orbit.followOrbit = false;
-			gates[planet][i].transform.position = firstGateOrbit.orbitPath.GetPositionOnEllipse((gatePlacementAngle * i) + firstGateOrbit.GetCurrentAngle());
+			gates[body][i].transform.position = firstGateOrbit.orbitPath.GetPositionOnEllipse((gatePlacementAngle * i) + firstGateOrbit.GetCurrentAngle());
 			orbit.RestartOrbit();
 		}
 	}

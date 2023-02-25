@@ -87,7 +87,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Sentry Tower
-  cooldown: 1
+  cooldown: 0.5
   prestige: 0
   prestigeProgress: 0
   rangeGrowth: 0.1

@@ -5,17 +5,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-	GameObject target;
+	public GameObject target;
 	public Vector3 directionUnit;
 	public float speed;
 	public float acceleration;
 	public float turnSpeed;
 	public float turnAcceleration;
-
-	private void Start()
-	{
-		target = FindObjectOfType<Planet>().gameObject;
-	}
 
 	private void Update()
 	{

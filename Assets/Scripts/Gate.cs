@@ -6,7 +6,7 @@ public class Gate : MonoBehaviour
 {
 	public int originSeason = 0;
 	public GameObject enemyPrefab;
-	private GameObject target;
+	private GameObject targetCB;
 
 	private GameController GC;
 	private WaveController WC;
@@ -15,13 +15,13 @@ public class Gate : MonoBehaviour
     {
 		GC = FindObjectOfType<GameController>();
 		WC = FindObjectOfType<WaveController>();
-		target = FindObjectOfType<Planet>().gameObject;
+		targetCB = GetComponent<Orbit>().principle.gameObject;
 		originSeason = GC.season;
 	}
 
     void Update()
     {
-		transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, new Vector3(0, 1, 0));
+		transform.rotation = Quaternion.LookRotation(targetCB.transform.position - transform.position, new Vector3(0, 1, 0));
 	}
 
 	public IEnumerator SpawnWave(int enemyQuantity, WavePattern pattern)
@@ -34,13 +34,14 @@ public class Gate : MonoBehaviour
 			yield return new WaitForSeconds(pattern.enemySpawnInterval);
 			for(int i = 0; i < pattern.enemiesPerSpawn; i ++)
 			{
-				Enemy enemy = Instantiate(enemyPrefab, transform.position, transform.rotation, target.transform).GetComponent<Enemy>();
+				Enemy enemy = Instantiate(enemyPrefab, transform.position, transform.rotation, targetCB.transform).GetComponent<Enemy>();
 				enemy.speed = pattern.enemyStartSpeed;
 				enemy.acceleration = pattern.enemyAcceleration;
 				enemy.turnSpeed = pattern.enemyTurnSpeed;
 				enemy.turnAcceleration = pattern.enemyTurnAcceleration;
+				enemy.target = targetCB;
 
-				Vector3 startingDirection = target.transform.position - transform.position;
+				Vector3 startingDirection = targetCB.transform.position - transform.position;
 				float startAngle = pattern.enemyStartAngle - (((pattern.enemiesPerSpawn - 1) / 2) * pattern.angleBetweenEnemies) + pattern.angleBetweenEnemies * i;
 				startingDirection = Quaternion.Euler(0, startAngle, 0) * startingDirection;
 

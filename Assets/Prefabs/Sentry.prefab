@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followOrbit: 1
+  varySpeed: 1
   useStartingPositionAsOrbit: 0
   orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
@@ -84,7 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Sentry
-  cooldown: 1
+  cooldown: 0.5
   prestige: 0
   prestigeProgress: 0
   rangeGrowth: 0.1

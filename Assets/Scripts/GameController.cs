@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
 	public GameObject selectedObject;
-	//public CelestialBody lastSelectedCelestialBody;
+	public CelestialBody lastSelectedCelestialBody;
 
 	private WaveController WC;
 	public int season = 0;
@@ -34,10 +34,15 @@ public class GameController : MonoBehaviour
 	public float orbitIncrement, angleIncrement;
 
 	public GameObject window, towerWindow, towerName, towerRange, towerSpeed, towerPrestige, towerProgress, sentryTower, maxSentries, buildSpeed;
-	public GameObject planetDetail, population, ttpg;
 	public GameObject ark;
 
-	List<Planet> populatedBodies = new List<Planet>(); 
+	public List<GameObject> tabBodies = new List<GameObject>();
+	public List<GameObject> tabs = new List<GameObject>();
+	public List<CelestialBody> populatedBodies = new List<CelestialBody>(); 
+
+	public GameObject totalHealth, planetDetail, planetDetailName, planetDetailPopulation, planetDetailResourcers, planetDetailResearchers, planetDetailTTPG, planetDetailTransferMessage;
+
+	private bool isTransferingPopulation = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -50,14 +55,23 @@ public class GameController : MonoBehaviour
 
 		resourceCounter.GetComponent<UnityEngine.UI.Text>().text = "Resources: " + resources;
 		WC = FindObjectOfType<WaveController>();
-		Camera.main.transform.parent = FindObjectOfType<Planet>().GetComponent<CelestialBody>().transform;
+		populatedBodies = GetPopulatedBodies();
 
-		populatedBodies.Add(FindObjectOfType<Planet>());
+		Camera.main.transform.parent = populatedBodies[0].transform;
+
+		for(int i = 0; i < tabs.Count; i++)
+		{
+			if(!tabBodies[i].GetComponent<CelestialBody>().isExplored)
+				SetBodyTab(tabs[i], null);
+		}
 	}
 
     // Update is called once per frame
     void Update()
     {
+		populatedBodies = GetPopulatedBodies();
+		UpdateUI();
+
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		if(Physics.Raycast(ray, out mouseHit, Mathf.Infinity, -1, QueryTriggerInteraction.Ignore))
 		{
@@ -269,6 +283,12 @@ public class GameController : MonoBehaviour
 		{
 			Destroy(unbuiltTower);
 			unbuiltTower = null;
+
+			if(isTransferingPopulation)
+			{
+				isTransferingPopulation = false;
+				planetDetailTransferMessage.SetActive(false);
+			}
 		}
 	}
 
@@ -317,8 +337,27 @@ public class GameController : MonoBehaviour
 		
 		if(obj.GetComponent<CelestialBody>())
 		{
+			if(isTransferingPopulation)
+			{
+				isTransferingPopulation = false;
+				planetDetailTransferMessage.SetActive(false);
+
+				lastSelectedCelestialBody.TransferPopulationTo(obj.GetComponent<CelestialBody>());
+			}
+
 			Camera.main.transform.position = new Vector3(obj.transform.position.x, Camera.main.transform.position.y, obj.transform.position.z);
 			Camera.main.transform.parent = obj.transform;
+
+			if(lastSelectedCelestialBody == obj.GetComponent<CelestialBody>() && lastSelectedCelestialBody.isPopulated)
+			{
+				ShowPlanetDetails();
+			}
+			else
+			{
+				planetDetail.SetActive(false);
+			}
+
+			lastSelectedCelestialBody = obj.GetComponent<CelestialBody>();
 		}
 		if(obj.GetComponent<Tower>())
 		{
@@ -332,10 +371,6 @@ public class GameController : MonoBehaviour
 		if(obj.GetComponent<SentryTower>())
 		{
 			sentryTower.SetActive(true);
-		}
-		if(obj.GetComponent<Planet>() && selectedObject == obj)
-		{
-			ShowPlanetDetails();
 		}
 
 		selectedObject = obj;
@@ -357,12 +392,6 @@ public class GameController : MonoBehaviour
 			maxSentries.GetComponent<UnityEngine.UI.Text>().text = "Max Sentries: " + tower.maxSentries;
 			buildSpeed.GetComponent<UnityEngine.UI.Text>().text = "Build Speed: " + (1 / tower.buildCooldown).ToString("n2") + "/s";
 		}
-		if(selectedObject.GetComponent<Planet>())
-		{
-			Planet planet = FindObjectOfType<Planet>();
-			population.GetComponent<UnityEngine.UI.Text>().text = "Population: " + planet.population;
-			ttpg.GetComponent<UnityEngine.UI.Text>().text = "Time to population growth: " + planet.timeToPopulationGrowth;
-		}
 	}
 
 	public void DeleteSelectedTower()
@@ -378,12 +407,32 @@ public class GameController : MonoBehaviour
 		season++;
 		seasonCounter.GetComponent<UnityEngine.UI.Text>().text = "Season: " + season;
 
-		foreach(Planet planet in populatedBodies)
+		foreach(CelestialBody body in populatedBodies)
 		{
-			planet.IncrementSeason();
+			body.IncrementSeason();
 		}
 
 		WC.StartWave();
+	}
+
+	public void SelectPlanet1()
+	{
+		Select(tabBodies[0]);
+	}
+
+	public void SelectPlanet2()
+	{
+		Select(tabBodies[1]);
+	}
+
+	public void SelectPlanet3()
+	{
+		Select(tabBodies[2]);
+	}
+
+	public void SelectPlanet4()
+	{
+		Select(tabBodies[3]);
 	}
 
 	public void ShowPlanetDetails()
@@ -396,5 +445,66 @@ public class GameController : MonoBehaviour
 		{
 			planetDetail.SetActive(false);
 		}
+	}
+
+	public List<CelestialBody> GetPopulatedBodies()
+	{
+		CelestialBody[] cBodies = FindObjectsOfType<CelestialBody>();
+		List<CelestialBody> populatedCBs = new List<CelestialBody>();
+
+		foreach(CelestialBody body in cBodies)
+		{
+			if(body.isPopulated)
+				populatedBodies.Add(body);
+		}
+
+		return populatedCBs;
+	}
+
+	public void UpdateUI()
+	{
+		int health = 0;
+
+		foreach(CelestialBody cb in populatedBodies)
+		{
+			health += cb.Population;
+		}
+
+		totalHealth.GetComponent<UnityEngine.UI.Text>().text = "Health: " + health;
+		planetDetailPopulation.GetComponent<UnityEngine.UI.Text>().text = "Population: " + lastSelectedCelestialBody.Population;
+		planetDetailTTPG.GetComponent<UnityEngine.UI.Text>().text = "Time to population growth: " + lastSelectedCelestialBody.timeToPopulationGrowth;
+		planetDetailResourcers.GetComponent<UnityEngine.UI.Text>().text = "Resource Gatherers: " + lastSelectedCelestialBody.resourcers;
+		planetDetailResearchers.GetComponent<UnityEngine.UI.Text>().text = "Researchers: " + lastSelectedCelestialBody.researchers;
+	}
+
+	public void SetBodyTab(GameObject bodyTab, GameObject celestialBody)
+	{
+		if(celestialBody == null)
+		{
+			bodyTab.transform.GetChild(1).GetComponent<UnityEngine.UI.Image>().color = Color.black;
+			bodyTab.transform.GetChild(2).gameObject.SetActive(false);
+		}
+		else
+		{
+			bodyTab.transform.GetChild(1).GetComponent<UnityEngine.UI.Image>().color = celestialBody.GetComponent<UnityEngine.UI.Image>().color;
+			bodyTab.transform.GetChild(2).gameObject.SetActive(true);
+			celestialBody.GetComponent<CelestialBody>().population1 = bodyTab.transform.GetChild(3).gameObject;
+		}
+	}
+
+	public void IncreaseSelectedCBResourcers()
+	{
+		lastSelectedCelestialBody.IncreaseResourcers();
+	}
+
+	public void IncreaseSelectedCBResearchers()
+	{
+		lastSelectedCelestialBody.IncreaseResearchers();
+	}
+
+	public void TransferPopulation()
+	{
+		planetDetailTransferMessage.SetActive(true);
+		isTransferingPopulation = true;
 	}
 }

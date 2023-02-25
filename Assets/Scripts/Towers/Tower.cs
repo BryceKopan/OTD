@@ -41,7 +41,7 @@ public abstract class Tower : MonoBehaviour
 		if(readyToFire && targetsInRange.Count > 0)
 		{
 			GameObject farthestTarget = targetsInRange[0];
-			Vector3 planetPosition = FindObjectOfType<Planet>().transform.position;
+			Vector3 planetPosition = GetComponent<Orbit>().principle.transform.position;
 
 			for(int i = 0; i < targetsInRange.Count; i++)
 			{

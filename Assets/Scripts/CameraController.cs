@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class CameraController : MonoBehaviour
 {
 	public float panSpeed = 1;
-	//Vector3 cameraCelestialOffset = new Vector3();
 	Vector3 deltaPosition = new Vector3(0, 0, 0);
 
 	public float minZoomSpeed = 1, maxZoomSpeed = 1;
