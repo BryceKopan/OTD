@@ -87,8 +87,8 @@ public class GameController : MonoBehaviour
 				toolTip.indicatorIsActive = true;
 			}
 		}
-
-		if(unbuiltTower != null)
+		
+		if(unbuiltTower != null && !researchPanel.activeSelf)
 		{
 			Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y));
 			mousePosition.y = 0;
@@ -131,6 +131,18 @@ public class GameController : MonoBehaviour
 				unbuiltTower.GetComponentInChildren<SpriteRenderer>().color = originalColor;
 			else
 				unbuiltTower.GetComponentInChildren<SpriteRenderer>().color = Color.red;
+		}
+		else if(unbuiltTower != null)
+		{
+			UnityEngine.UI.Image image = TC.researchTowerImage.GetComponent<UnityEngine.UI.Image>();
+			SpriteRenderer sr = unbuiltTower.GetComponentInChildren<SpriteRenderer>();
+			image.sprite = sr.sprite;
+			image.color = sr.color;
+			if(TC.selectedTower != null)
+				Destroy(TC.selectedTower);
+			TC.selectedTower = unbuiltTower;
+			unbuiltTower.SetActive(false);
+			unbuiltTower = null;
 		}
 
 		if(selectedObject)
@@ -189,11 +201,6 @@ public class GameController : MonoBehaviour
 		unbuiltTowerOrbit.followOrbit = false;
 		unbuiltTowerOrbit.principle = GetClosestCelestialBody(unbuiltTower);
 		originalColor = unbuiltTower.GetComponentInChildren<SpriteRenderer>().color;
-
-		if(prefab.GetComponent<Tower>())
-		{
-			TC.AddTower(prefab.GetComponent<Tower>());
-		}
 	}
 
 	public void BuildTower()
@@ -253,6 +260,11 @@ public class GameController : MonoBehaviour
 		{
 			if(unbuiltTower != null && isPlacementValid)
 			{
+				if(unbuiltTower.GetComponent<Tower>())
+				{
+					TC.AddTower(unbuiltTower.GetComponent<Tower>());
+				}
+
 				unbuiltTowerOrbit.RestartOrbit();
 				unbuiltTower = null;
 				AddResources(-unbuiltTowerCost);
