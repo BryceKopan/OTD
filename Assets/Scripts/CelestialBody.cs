@@ -20,8 +20,19 @@ public class CelestialBody : MonoBehaviour
 		}
 	}
 
+	[SerializeField]
+	private bool isExplored = true;
+	public bool IsExplored
+	{
+		get { return isExplored; }
+		set
+		{
+			isExplored = value;
+		}
+	}
+
 	public float gravityRadius;
-	public bool isPopulated = false, isOrigin = false, isExplored = false;
+	public bool isPopulated = false, isOrigin = false;
 	public int resourcers, researchers;
 	public int timeToPopulationGrowth;
 	public GameObject population1;
@@ -32,6 +43,8 @@ public class CelestialBody : MonoBehaviour
 	float nextSeasonAngle = 360;
 
 	public string planetName;
+
+	public List<GameObject> objectsToHideWithPlanet;
 
 	private void Start()
 	{
@@ -129,5 +142,17 @@ public class CelestialBody : MonoBehaviour
 	{
 		Population--;
 		body.Population++;
+	}
+
+	public void ToggleIsExplored()
+	{
+		if(IsExplored)
+		{
+			//Hide Stuff
+		}
+		else
+		{
+			//UnHide Stuff
+		}
 	}
 }

@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
 	public CelestialBody lastSelectedCelestialBody;
 
 	private WaveController WC;
+	private TechController TC;
 	public int season = 0;
 
 	public float resources = 1f;
@@ -41,6 +42,7 @@ public class GameController : MonoBehaviour
 	public List<CelestialBody> populatedBodies = new List<CelestialBody>(); 
 
 	public GameObject totalHealth, planetDetail, planetDetailName, planetDetailPopulation, planetDetailResourcers, planetDetailResearchers, planetDetailTTPG, planetDetailTransferMessage;
+	public GameObject researchPanel;
 
 	private bool isTransferingPopulation = false;
 
@@ -55,14 +57,18 @@ public class GameController : MonoBehaviour
 
 		resourceCounter.GetComponent<UnityEngine.UI.Text>().text = "Resources: " + resources;
 		WC = FindObjectOfType<WaveController>();
+		TC = FindObjectOfType<TechController>();
 		populatedBodies = GetPopulatedBodies();
 
 		Camera.main.transform.parent = populatedBodies[0].transform;
 
 		for(int i = 0; i < tabs.Count; i++)
 		{
-			if(!tabBodies[i].GetComponent<CelestialBody>().isExplored)
+			if(!tabBodies[i].GetComponent<CelestialBody>().isPopulated)
+			{
+				tabBodies[i].GetComponent<CelestialBody>().IsExplored = false;
 				SetBodyTab(tabs[i], null);
+			}
 		}
 	}
 
@@ -183,6 +189,11 @@ public class GameController : MonoBehaviour
 		unbuiltTowerOrbit.followOrbit = false;
 		unbuiltTowerOrbit.principle = GetClosestCelestialBody(unbuiltTower);
 		originalColor = unbuiltTower.GetComponentInChildren<SpriteRenderer>().color;
+
+		if(prefab.GetComponent<Tower>())
+		{
+			TC.AddTower(prefab.GetComponent<Tower>());
+		}
 	}
 
 	public void BuildTower()
@@ -455,7 +466,7 @@ public class GameController : MonoBehaviour
 		foreach(CelestialBody body in cBodies)
 		{
 			if(body.isPopulated)
-				populatedBodies.Add(body);
+				populatedCBs.Add(body);
 		}
 
 		return populatedCBs;
@@ -506,5 +517,13 @@ public class GameController : MonoBehaviour
 	{
 		planetDetailTransferMessage.SetActive(true);
 		isTransferingPopulation = true;
+	}
+
+	public void ShowResearchPanel()
+	{
+		if(researchPanel.activeSelf)
+			researchPanel.SetActive(false);
+		else
+			researchPanel.SetActive(true);
 	}
 }

@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 5002169109029168754}
   - component: {fileID: 5002169109029168653}
   - component: {fileID: 5002169109029168655}
-  - component: {fileID: 3604901009403996404}
+  - component: {fileID: -4813058396732749319}
   - component: {fileID: 6991038154812384868}
   - component: {fileID: 8381827011013423844}
   m_Layer: 8
@@ -121,7 +121,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3604901009403996404
+--- !u!114 &-4813058396732749319
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,10 +130,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5002169109029168752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 034b0d3cd53210643ac1b7fa7fd4fc12, type: 3}
+  m_Script: {fileID: 11500000, guid: add8e9a8470c3a44ea7d70e643b24cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: Laser Tower
+  displayName: Railgun
   cooldown: 2
   prestige: 0
   prestigeProgress: 0
