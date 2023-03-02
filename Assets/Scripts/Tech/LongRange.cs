@@ -6,11 +6,11 @@ public class LongRange : Technology
 {
 	public override void AddTechnologyTo(Tower tower)
 	{
-		tower.cooldown = tower.cooldown * (3f / 4f);
+		tower.BaseRange = tower.BaseRange * (5f / 4f);
 	}
 
 	public override void RemoveTechnologyFrom(Tower tower)
 	{
-		tower.cooldown = tower.cooldown * (4f / 3f);
+		tower.BaseRange = tower.BaseRange * (4f / 5f);
 	}
 }

@@ -169,9 +169,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Mine Layer
+  baseCooldown: 2
   cooldown: 2
-  prestige: 0
-  prestigeProgress: 0
+  rankProgress: 0
   rangeGrowth: 0.1
   cooldownGrowth: 0.1
   targetTag: Mine

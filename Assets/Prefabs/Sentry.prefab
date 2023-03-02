@@ -85,9 +85,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Sentry
+  baseCooldown: 0.5
   cooldown: 0.5
-  prestige: 0
-  prestigeProgress: 0
+  rankProgress: 0
   rangeGrowth: 0.1
   cooldownGrowth: 0.01
   targetTag: Enemy

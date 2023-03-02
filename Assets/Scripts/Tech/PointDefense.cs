@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PointDefense : MonoBehaviour
+public class PointDefense : Technology
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public override void AddTechnologyTo(Tower tower)
+	{
+		tower.BaseCooldown = tower.BaseCooldown * (1f / 4f);
+		tower.BaseRange = tower.BaseRange * (3f / 4f);
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public override void RemoveTechnologyFrom(Tower tower)
+	{
+		tower.BaseCooldown = tower.BaseCooldown * (4f / 1f);
+		tower.BaseRange = tower.BaseRange * (4f / 3f);
+	}
 }

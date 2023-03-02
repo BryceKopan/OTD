@@ -16,17 +16,42 @@ public class MineLayer : Tower
 		}
 	}
 
-	public override void FireAt(GameObject target)
+	public override IEnumerator FireAt(GameObject target)
 	{
-		if(targetsInRange.Count < maxMineDensity)
+		int curProjectilesPerFire = projectilesPerVolley;
+		int shortShots = 1;
+		if(burstFire)
 		{
-			Vector2 randomPosition = Random.insideUnitCircle * GetComponent<SphereCollider>().radius;
-			Vector3 minePosition = transform.position + new Vector3(randomPosition.x, 0, randomPosition.y);
+			curProjectilesPerFire = curProjectilesPerFire / 3;
+			shortShots = 3;
+		}
 
-			GameObject mineObject = Instantiate(minePrefab, minePosition, transform.rotation);
-			Mine mine = mineObject.GetComponent<Mine>();
-			mine.tower = GetComponent<Tower>();
-			mine.GetComponent<Orbit>().principle = orbit.principle;
+		for(int b = 0; b < shortShots; b++)
+		{
+			if(targetsInRange.Count < maxMineDensity)
+			{
+				List<GameObject> mines = new List<GameObject>();
+
+				Vector2 randomPosition = Random.insideUnitCircle * GetComponent<SphereCollider>().radius;
+				for(int i = 0; i < curProjectilesPerFire; i++)
+				{
+					if(i > 0)
+						randomPosition += Random.insideUnitCircle * distanceBetweenProjectiles;
+					Vector3 minePosition = transform.position + new Vector3(randomPosition.x, 0, randomPosition.y);
+					GameObject mineObject = Instantiate(minePrefab, minePosition, transform.rotation);
+					mines.Add(mineObject);
+				}
+
+				foreach(GameObject mineObject in mines)
+				{
+					Mine mine = mineObject.GetComponent<Mine>();
+					mine.tower = GetComponent<Tower>();
+					mine.GetComponent<Orbit>().principle = orbit.principle;
+				}
+			}
+
+			if(burstFire)
+				yield return new WaitForSeconds(.1f);
 		}
 	}
 

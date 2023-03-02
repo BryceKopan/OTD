@@ -289,9 +289,8 @@ public class TechController : MonoBehaviour
 		techSlot3.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "$" + towerCount * 3;
 	}
 
-	public void SelectRapidFire()
+	public void SelectTech(Technology newTech)
 	{
-		Technology newTech = allTech.Find(x => x.GetComponent<RapidFire>()).GetComponent<Technology>();
 		if(!newTech.isResearched)
 		{
 			SelectedTechnology = newTech;
@@ -300,5 +299,53 @@ public class TechController : MonoBehaviour
 		}
 		else if(settingTowerTech > 0 && selectedTower != null)
 			SetTowerSlot(newTech);
+	}
+
+	public void SelectRapidFire()
+	{
+		Technology newTech = allTech.Find(x => x.GetComponent<RapidFire>()).GetComponent<Technology>();
+		SelectTech(newTech);
+	}
+
+	public void SelectLongRange()
+	{
+		Technology newTech = allTech.Find(x => x.GetComponent<LongRange>()).GetComponent<Technology>();
+		SelectTech(newTech);
+	}
+
+	public void SelectPointDefense()
+	{
+		Technology newTech = allTech.Find(x => x.GetComponent<PointDefense>()).GetComponent<Technology>();
+		SelectTech(newTech);
+	}
+
+	public void SelectAreaDefense()
+	{
+		Technology newTech = allTech.Find(x => x.GetComponent<AreaDefense>()).GetComponent<Technology>();
+		SelectTech(newTech);
+	}
+
+	public void SelectTraining()
+	{
+		Technology newTech = allTech.Find(x => x.GetComponent<Training>()).GetComponent<Technology>();
+		SelectTech(newTech);
+	}
+
+	public void SelectExpertise()
+	{
+		Technology newTech = allTech.Find(x => x.GetComponent<Expertise>()).GetComponent<Technology>();
+		SelectTech(newTech);
+	}
+
+	public void SelectParallelFire()
+	{
+		Technology newTech = allTech.Find(x => x.GetComponent<ParallelFire>()).GetComponent<Technology>();
+		SelectTech(newTech);
+	}
+
+	public void SelectBurstFire()
+	{
+		Technology newTech = allTech.Find(x => x.GetComponent<BurstFire>()).GetComponent<Technology>();
+		SelectTech(newTech);
 	}
 }

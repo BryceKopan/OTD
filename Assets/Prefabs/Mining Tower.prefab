@@ -169,9 +169,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Mining Tower
+  baseCooldown: 4
   cooldown: 4
-  prestige: 0
-  prestigeProgress: 0
+  rankProgress: 0
   rangeGrowth: 0.5
   cooldownGrowth: 0.01
   targetTag: Asteroid

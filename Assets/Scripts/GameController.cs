@@ -407,8 +407,8 @@ public class GameController : MonoBehaviour
 			Tower tower = selectedObject.GetComponent<Tower>();
 			towerRange.GetComponent<UnityEngine.UI.Text>().text = "Range: " + tower.GetComponent<SphereCollider>().radius;
 			towerSpeed.GetComponent<UnityEngine.UI.Text>().text = "Speed: " + (1 / tower.cooldown).ToString("n2") + "/s";
-			towerPrestige.GetComponent<UnityEngine.UI.Text>().text = "Prestige: " + tower.prestige;
-			towerProgress.GetComponent<UnityEngine.UI.Text>().text = "Progress: " + tower.prestigeProgress.ToString("n2");
+			towerPrestige.GetComponent<UnityEngine.UI.Text>().text = "Prestige: " + tower.Rank;
+			towerProgress.GetComponent<UnityEngine.UI.Text>().text = "Progress: " + tower.rankProgress.ToString("n2");
 		}
 		if(selectedObject.GetComponent<SentryTower>())
 		{

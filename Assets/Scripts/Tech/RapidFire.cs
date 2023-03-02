@@ -6,11 +6,11 @@ public class RapidFire : Technology
 {
 	public override void AddTechnologyTo(Tower tower)
 	{
-		tower.cooldown = tower.cooldown * (3f/4f);
+		tower.BaseCooldown = tower.BaseCooldown * (3f/4f);
 	}
 
 	public override void RemoveTechnologyFrom(Tower tower)
 	{
-		tower.cooldown = tower.cooldown * (4f/3f);
+		tower.BaseCooldown = tower.BaseCooldown * (4f/3f);
 	}
 }

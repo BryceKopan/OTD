@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaDefense : MonoBehaviour
+public class AreaDefense : Technology
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public override void AddTechnologyTo(Tower tower)
+	{
+		tower.BaseRange = tower.BaseRange * (7f / 4f);
+		tower.BaseCooldown = tower.BaseCooldown * (5f / 4f);
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public override void RemoveTechnologyFrom(Tower tower)
+	{
+		tower.BaseRange = tower.BaseRange * (4f / 7f);
+		tower.BaseCooldown = tower.BaseCooldown * (4f / 5f);
+	}
 }

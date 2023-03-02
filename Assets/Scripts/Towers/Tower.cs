@@ -6,32 +6,57 @@ public abstract class Tower : MonoBehaviour
 {
 	public string displayName = "Tower";
 
-	public float cooldown = 1f;
+	[SerializeField]
+	private float baseCooldown;
+	public float BaseCooldown
+	{
+		get { return baseCooldown; }
+		set { baseCooldown = value; SetRankStats(); }
+	}
+	[HideInInspector]
+	public float cooldown;
+
 	protected bool readyToFire = true;
 
+	private float baseRange;
+	public float BaseRange
+	{
+		get { return baseRange; }
+		set { baseRange = value; SetRankStats(); }
+	}
 	private float range;
 	public float Range
 	{
 		get { return range; }
-		set
-		{
-			range = value;
-
-
-		}
+		set { targetingCollider.radius = range = value;}
 	}
 
-	public int prestige = 0;
-	public float prestigeProgress = 0, rangeGrowth, cooldownGrowth;
+	public float rankProgress = 0, xpMultiplier = 1, rangeGrowth, cooldownGrowth;
+	private int rank = 0;
+	public int Rank
+	{
+		get { return rank; }
+		set { rank = value; SetRankStats(); }
+	}
 
 	public string targetTag = "Enemy";
 
 	protected List<GameObject> targetsInRange = new List<GameObject>();
 	protected Orbit orbit;
 
+	SphereCollider targetingCollider;
+
+	public bool parallelFire = false, burstFire = false;
+	public int projectilesPerVolley = 1;
+	[SerializeField]
+	protected float distanceBetweenProjectiles = .5f;
+
 	private void Start()
 	{
 		orbit = GetComponent<Orbit>();
+		targetingCollider = GetComponent<SphereCollider>();
+		Range = BaseRange = targetingCollider.radius;
+		cooldown = BaseCooldown;
 	}
 
 	private void FixedUpdate()
@@ -63,8 +88,8 @@ public abstract class Tower : MonoBehaviour
 				}
 			}
 
-			FireAt(farthestTarget);
-			StartCoroutine(FireCooldown());
+			readyToFire = false;
+			StartCoroutine(FireAt(farthestTarget));
 		}
 	}
 
@@ -83,7 +108,7 @@ public abstract class Tower : MonoBehaviour
 		}
 	}
 
-	public abstract void FireAt(GameObject target);
+	public abstract IEnumerator FireAt(GameObject target);
 
 	protected IEnumerator FireCooldown()
 	{
@@ -94,15 +119,27 @@ public abstract class Tower : MonoBehaviour
 
 	public virtual void GetXP()
 	{
-		prestigeProgress += 1f / (10f + 10f * prestige);
+		rankProgress += (1f / (10f + 10f * Rank)) * xpMultiplier;
 
-		if(prestigeProgress >= 1 && prestige < 10)
+		if(rankProgress >= 1 && Rank < 10)
 		{
-			prestige++;
-			prestigeProgress = 0;
-
-			cooldown -= cooldownGrowth;
-			GetComponent<SphereCollider>().radius += rangeGrowth;
+			Rank ++;
+			rankProgress = 0;
 		}
+	}
+
+	public virtual void SetRankStats()
+	{
+		cooldown = BaseCooldown - (cooldownGrowth * rank);
+		Range = BaseRange + (rangeGrowth * rank);
+	}
+
+	protected Vector3 GetParallellFireVector(GameObject target)
+	{
+		Vector3 targetVector = Vector3.Normalize(target.transform.position - transform.position);
+		Vector2 perp = Vector2.Perpendicular(new Vector2(targetVector.x, targetVector.y));
+		Vector3 adjustment = Vector3.Normalize(new Vector3(perp.x, 0, perp.y));
+
+		return adjustment;
 	}
 }

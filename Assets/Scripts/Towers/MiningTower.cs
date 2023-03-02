@@ -48,11 +48,13 @@ public class MiningTower : Tower
 		}
 	}
 
-	public override void FireAt(GameObject asteroid)
+	public override IEnumerator FireAt(GameObject asteroid)
 	{
 		target = asteroid;
 		startPosition = transform.position;
 		ship = Instantiate(shipPrefab, transform.position, transform.rotation);
 		lerpT = 0;
+
+		yield return null;
 	}
 }

@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
 	public bool isTriggered = true, destroyWhenUnseen = true;
 
 	public Vector3 targetDirectionUnit;
-	Vector3 lastDeltaPosition;
+	public Vector3 lastDeltaPosition;
 
     // Update is called once per frame
     void Update()
@@ -32,15 +32,16 @@ public class Bullet : MonoBehaviour
 	protected virtual void MoveTowardsTarget()
 	{
 		targetDirectionUnit = (target.transform.position - transform.position).normalized;
-		Vector3 deltaPosition = targetDirectionUnit * Time.deltaTime * speed;
-		transform.position = transform.position + deltaPosition;
+		Vector3 deltaPosition = targetDirectionUnit;
+		transform.position = transform.position + deltaPosition * Time.deltaTime * speed;
 		transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, new Vector3(0, 1, 0));
 		lastDeltaPosition = deltaPosition;
 	}
 
 	protected virtual void MoveWithoutTarget()
 	{
-		transform.position = transform.position + lastDeltaPosition;
+		transform.rotation = Quaternion.LookRotation(lastDeltaPosition, new Vector3(0, 1, 0));
+		transform.position = transform.position + lastDeltaPosition * Time.deltaTime * speed;
 	}
 
 	protected virtual void OnCollisionEnter(Collision collision)

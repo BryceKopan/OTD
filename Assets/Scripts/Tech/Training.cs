@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Training : MonoBehaviour
+public class Training : Technology
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public override void AddTechnologyTo(Tower tower)
+	{
+		if(tower.Rank < 1)
+			tower.Rank = 1;
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public override void RemoveTechnologyFrom(Tower tower)
+	{
+	}
 }

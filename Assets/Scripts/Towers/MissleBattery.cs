@@ -6,26 +6,53 @@ public class MissleBattery : Tower
 {
 	public GameObject misslePrefab;
 	public float delayBetweenMissles, spread;
-	public int misslesPerVolley;
+	public int baseMisslesPerVolley;
 
-	public override void FireAt(GameObject target)
-	{
-		StartCoroutine(FireVolley(target));
-	}
-
-	IEnumerator FireVolley(GameObject target)
+	public override IEnumerator FireAt(GameObject target)
 	{
 		Vector3 direction = (target.transform.position - transform.position).normalized;
-		for(int i = 0; i < misslesPerVolley; i++)
+		Vector3 adjustment = GetParallellFireVector(target);
+
+		int misslesPerVolley = baseMisslesPerVolley * projectilesPerVolley;
+		int curProjectilesPerFire = projectilesPerVolley;
+		if(burstFire)
+			curProjectilesPerFire = curProjectilesPerFire / 3;
+
+		for(int i = 0; i < misslesPerVolley; i += curProjectilesPerFire)
 		{
-			GameObject bulletObject = Instantiate(misslePrefab, transform.position, transform.rotation, GetComponent<Orbit>().principle.transform);
-			Bullet bullet = bulletObject.GetComponent<Bullet>();
-			bullet.tower = GetComponent<Tower>();
+			List<GameObject> bullets = new List<GameObject>();
 
-			direction = Quaternion.Euler(0, Random.Range(-spread/2, spread/2), 0) * direction;
-			bullet.targetDirectionUnit = direction.normalized;
+			if(parallelFire)
+			{
+				for(int j = 0; j < projectilesPerVolley; j++)
+				{
+					GameObject bulletObject = Instantiate(misslePrefab, transform.position - (adjustment * (distanceBetweenProjectiles / 2)) + (adjustment * distanceBetweenProjectiles * j), transform.rotation, GetComponent<Orbit>().principle.transform);
+					bullets.Add(bulletObject);
+				}
+			}
+			else
+			{
+				GameObject bulletObject = Instantiate(misslePrefab, transform.position, transform.rotation, GetComponent<Orbit>().principle.transform);
+				bullets.Add(bulletObject);
+			}
 
-			yield return new WaitForSeconds(delayBetweenMissles);
+			foreach(GameObject bulletObject in bullets)
+			{
+				Bullet bullet = bulletObject.GetComponent<Bullet>();
+				bullet.tower = GetComponent<Tower>();
+
+				direction = Quaternion.Euler(0, Random.Range(-spread / 2, spread / 2), 0) * direction;
+				bullet.targetDirectionUnit = direction.normalized;
+			}
+
+			float actualDelay = delayBetweenMissles;
+
+			if(!burstFire || burstFire && (i/curProjectilesPerFire) % 3 != 0)
+				yield return new WaitForSeconds(delayBetweenMissles);
+			else
+				yield return new WaitForSeconds(delayBetweenMissles * 3);
 		}
+
+		StartCoroutine(FireCooldown());
 	}
 }

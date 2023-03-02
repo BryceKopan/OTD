@@ -45,16 +45,16 @@ public class SentryTower : LaserTower
 
 	public override void GetXP()
 	{
-		prestigeProgress += 1f / (10f + 10f * prestige);
+		rankProgress += 1f / (10f + 10f * Rank);
 
-		if(prestigeProgress >= 1 && prestige < 10)
+		if(rankProgress >= 1 && Rank < 10)
 		{
-			prestige++;
-			prestigeProgress = 0;
+			Rank++;
+			rankProgress = 0;
 
 			cooldown -= cooldownGrowth;
 			GetComponent<SphereCollider>().radius += rangeGrowth;
-			if(prestige % 2 == 0)
+			if(Rank % 2 == 0)
 				maxSentries++;
 		}
 	}
