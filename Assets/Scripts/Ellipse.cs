@@ -15,7 +15,7 @@ public class Ellipse : MonoBehaviour
 	public void DrawEllipse()
 	{
 		LineRenderer lr = gameObject.GetComponent<LineRenderer>();
-		lr.SetVertexCount(resolution + 1);
+		lr.positionCount = resolution + 1;
 		for(int i = 0; i <= resolution; i++)
 		{
 			lr.SetPosition(i, positions[i]);

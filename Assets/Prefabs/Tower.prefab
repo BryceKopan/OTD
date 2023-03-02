@@ -53,9 +53,14 @@ MonoBehaviour:
   baseCooldown: 0.5
   cooldown: 0.5
   rankProgress: 0
+  xpMultiplier: 1
   rangeGrowth: 0.25
   cooldownGrowth: 0.01
   targetTag: Enemy
+  parallelFire: 0
+  burstFire: 0
+  projectilesPerVolley: 1
+  distanceBetweenProjectiles: 0.5
   bulletPrefab: {fileID: 6211998665189431076, guid: 1a6365efa111c674a8c426400894dbe5, type: 3}
 --- !u!114 &4617483409382487397
 MonoBehaviour:
@@ -119,7 +124,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0

@@ -17,7 +17,6 @@ public class Orbit : MonoBehaviour
 	public Vector2 axisVector;
 	public float baseSpeed = 25f;
 	public float currentSpeed = 25f;
-	private float distanceSpeed = 1f;
 
 	private float targetAngle;
 
@@ -41,6 +40,8 @@ public class Orbit : MonoBehaviour
 
 	private void Update()
 	{
+		CalculatePath();
+
 		if(varySpeed)
 			CalculateSpeed();
 		targetAngle -= Time.deltaTime * currentSpeed;
@@ -51,7 +52,7 @@ public class Orbit : MonoBehaviour
 		if(followOrbit)
 			transform.position = orbitPath.GetPositionOnEllipse(targetAngle);
 
-		RenderOrbitPath();
+		orbitPath.DrawEllipse();
 	}
 
 	private void RenderOrbitPath()

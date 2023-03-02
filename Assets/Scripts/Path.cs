@@ -13,7 +13,7 @@ public class Path : MonoBehaviour
 	private void Start()
 	{
 		lr = gameObject.GetComponent<LineRenderer>();
-		lr.SetVertexCount(resolution + 1);
+		lr.positionCount = resolution + 1;
 	}
 
 	public void DrawPath()

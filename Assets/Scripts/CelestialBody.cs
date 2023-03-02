@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CelestialBody : MonoBehaviour
 {
+	public int maxPopulation;
 	[SerializeField]
 	private int population;
 	public int Population
@@ -12,6 +13,10 @@ public class CelestialBody : MonoBehaviour
 		set
 		{
 			population = value;
+
+			if(population > maxPopulation)
+				population = maxPopulation;
+
 			population1.GetComponent<UnityEngine.UI.Text>().text = "Pop: " + population;
 			if(population > 0)
 				isPopulated = true;
@@ -38,6 +43,7 @@ public class CelestialBody : MonoBehaviour
 	public GameObject population1;
 
 	private GameController GC;
+	private TechController TC;
 	private Orbit planetOrbit;
 
 	float nextSeasonAngle = 360;
@@ -49,6 +55,7 @@ public class CelestialBody : MonoBehaviour
 	private void Start()
 	{
 		GC = FindObjectOfType<GameController>();
+		TC = FindObjectOfType<TechController>();
 		planetOrbit = GetComponent<Orbit>();
 	}
 
@@ -105,6 +112,8 @@ public class CelestialBody : MonoBehaviour
 	public void IncrementSeason()
 	{
 		GC.AddResources(resourcers);
+		if(TC.SelectedTechnology != null)
+			TC.SelectedTechnology.ResearchProgress += researchers;
 
 
 		timeToPopulationGrowth--;

@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
 
 	public float resources = 1f;
 
-	public bool pause = true;
+	public bool pause = true, skipToNextSeason = false;
 	public bool showAllRanges = false;
 	private float timeScale;
 
@@ -49,12 +49,6 @@ public class GameController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		if(pause)
-		{
-			pause = false;
-			Pause();
-		}
-
 		resourceCounter.GetComponent<UnityEngine.UI.Text>().text = "Resources: " + resources;
 		WC = FindObjectOfType<WaveController>();
 		TC = FindObjectOfType<TechController>();
@@ -70,11 +64,20 @@ public class GameController : MonoBehaviour
 				SetBodyTab(tabs[i], null);
 			}
 		}
+
+		if(pause)
+		{
+			pause = false;
+			Pause();
+		}
 	}
 
     // Update is called once per frame
     void Update()
     {
+		if(skipToNextSeason)
+			Time.timeScale += .1f;
+
 		populatedBodies = GetPopulatedBodies();
 		UpdateUI();
 
@@ -428,6 +431,12 @@ public class GameController : MonoBehaviour
 
 	public void StartNextSeason()
 	{
+		if(skipToNextSeason)
+		{
+			Time.timeScale = 1;
+					skipToNextSeason = false;
+		}
+
 		season++;
 		seasonCounter.GetComponent<UnityEngine.UI.Text>().text = "Season: " + season;
 
@@ -495,7 +504,7 @@ public class GameController : MonoBehaviour
 		}
 
 		totalHealth.GetComponent<UnityEngine.UI.Text>().text = "Health: " + health;
-		planetDetailPopulation.GetComponent<UnityEngine.UI.Text>().text = "Population: " + lastSelectedCelestialBody.Population;
+		planetDetailPopulation.GetComponent<UnityEngine.UI.Text>().text = "Population: " + lastSelectedCelestialBody.Population + " / " + lastSelectedCelestialBody.maxPopulation;
 		planetDetailTTPG.GetComponent<UnityEngine.UI.Text>().text = "Time to population growth: " + lastSelectedCelestialBody.timeToPopulationGrowth;
 		planetDetailResourcers.GetComponent<UnityEngine.UI.Text>().text = "Resource Gatherers: " + lastSelectedCelestialBody.resourcers;
 		planetDetailResearchers.GetComponent<UnityEngine.UI.Text>().text = "Researchers: " + lastSelectedCelestialBody.researchers;
@@ -538,5 +547,10 @@ public class GameController : MonoBehaviour
 			researchPanel.SetActive(false);
 		else
 			researchPanel.SetActive(true);
+	}
+
+	public void SkipToNextSeason()
+	{
+		skipToNextSeason = true;
 	}
 }

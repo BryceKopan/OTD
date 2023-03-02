@@ -294,7 +294,6 @@ public class TechController : MonoBehaviour
 		if(!newTech.isResearched)
 		{
 			SelectedTechnology = newTech;
-			SelectedTechnology.ResearchProgress = 10;
 			settingTowerTech = 0;
 		}
 		else if(settingTowerTech > 0 && selectedTower != null)
