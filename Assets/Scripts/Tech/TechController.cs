@@ -51,6 +51,16 @@ public class TechController : MonoBehaviour
 		settingTowerTech = 1;
 	}
 
+	public void SetTowerTech2()
+	{
+		settingTowerTech = 2;
+	}
+
+	public void SetTowerTech3()
+	{
+		settingTowerTech = 3;
+	}
+
 	public void AddTower(Tower tower)
 	{
 		towers.Add(tower);
@@ -98,35 +108,44 @@ public class TechController : MonoBehaviour
 				if(tech != null)
 					tech.AddTechnologyTo(tower);
 		}
+
+		UpdateSelectedTechUI();
 	}
 
 	private void AddTech<T>(int index, Technology tech)
 	{
+		Technology[] techArray = new Technology[0];
+
+		if(typeof(T) == typeof(MiningTower))
+			techArray = miningTech;
+
+		else if(typeof(T) == typeof(SentryTower))
+			techArray = sentryTech;
+
+		else if(typeof(T) == typeof(Railgun))
+			techArray = railgunTech;
+
+		else if(typeof(T) == typeof(MineLayer))
+			techArray = mineTech;
+
+		else if(typeof(T) == typeof(MissleBattery))
+			techArray = missleTech;
+
+		else if(typeof(T) == typeof(LaserTower))
+			techArray = laserTech;
+
 		foreach(Tower tower in towers)
 		{
 			if(tower is T)
 			{
+				if(techArray[index] != null)
+					tech.RemoveTechnologyFrom(tower);
+
 				tech.AddTechnologyTo(tower);
 			}
 		}
 
-		if(typeof(T) == typeof(LaserTower))
-			laserTech[index] = tech;
-
-		if(typeof(T) == typeof(MiningTower))
-			miningTech[index] = tech;
-
-		if(typeof(T) == typeof(SentryTower))
-			sentryTech[index] = tech;
-
-		if(typeof(T) == typeof(Railgun))
-			railgunTech[index] = tech;
-
-		if(typeof(T) == typeof(MineLayer))
-			mineTech[index] = tech;
-
-		if(typeof(T) == typeof(MissleBattery))
-			missleTech[index] = tech;
+		techArray[index] = tech;
 	}
 
 	private void RemoveTech<T>(int index, Technology tech)
@@ -156,18 +175,6 @@ public class TechController : MonoBehaviour
 
 		if(typeof(T) == typeof(MissleBattery))
 			missleTech[index] = null;
-	}
-
-	public void SelectRapidFire()
-	{
-		Technology newTech = allTech.Find(x => x.GetComponent<RapidFire>()).GetComponent<Technology>();
-		if(!newTech.isResearched)
-		{
-			SelectedTechnology = newTech;
-			SelectedTechnology.ResearchProgress = 10;
-		}
-		else if(settingTowerTech > 0 && selectedTower != null)
-			SetTowerSlot(newTech);
 	}
 
 	private void SetTowerSlot(Technology newTech)
@@ -237,10 +244,61 @@ public class TechController : MonoBehaviour
 				AddTech<LaserTower>(settingTowerTech - 1, newTech);
 			}
 		}
+		settingTowerTech = 0;
 	}
 
-	public void UpdateSelectedTech()
-	{ 
+	private int GetSelectedTowerTypeCount()
+	{
+		int towerCount = 0;
 
+		if(selectedTower != null)
+			if(selectedTower.GetComponent<MissleBattery>())
+			{
+				towerCount = missleCount;
+			}
+			else if(selectedTower.GetComponent<MineLayer>())
+			{
+				towerCount = mineCount;
+			}
+			else if(selectedTower.GetComponent<Railgun>())
+			{
+				towerCount = railgunCount;
+			}
+			else if(selectedTower.GetComponent<SentryTower>())
+			{
+				towerCount = sentryCount;
+			}
+			else if(selectedTower.GetComponent<MiningTower>())
+			{
+				towerCount = miningCount;
+			}
+			else if(selectedTower.GetComponent<LaserTower>())
+			{
+				towerCount = laserCount;
+			}
+
+		return towerCount;
+	}
+
+	public void UpdateSelectedTechUI()
+	{
+		int towerCount = GetSelectedTowerTypeCount();
+
+		techSlot1.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "$" + towerCount * 1;
+		techSlot2.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "$" + towerCount * 2;
+		techSlot3.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "$" + towerCount * 3;
+	}
+
+	public void SelectRapidFire()
+	{
+		Technology newTech = allTech.Find(x => x.GetComponent<RapidFire>()).GetComponent<Technology>();
+		if(!newTech.isResearched)
+		{
+			SelectedTechnology = newTech;
+			SelectedTechnology.ResearchProgress = 10;
+			settingTowerTech = 0;
+		}
+		else if(settingTowerTech > 0 && selectedTower != null)
+			SetTowerSlot(newTech);
 	}
 }

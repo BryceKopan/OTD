@@ -143,6 +143,7 @@ public class GameController : MonoBehaviour
 			TC.selectedTower = unbuiltTower;
 			unbuiltTower.SetActive(false);
 			unbuiltTower = null;
+			TC.UpdateSelectedTechUI();
 		}
 
 		if(selectedObject)

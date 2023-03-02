@@ -9,6 +9,18 @@ public abstract class Tower : MonoBehaviour
 	public float cooldown = 1f;
 	protected bool readyToFire = true;
 
+	private float range;
+	public float Range
+	{
+		get { return range; }
+		set
+		{
+			range = value;
+
+
+		}
+	}
+
 	public int prestige = 0;
 	public float prestigeProgress = 0, rangeGrowth, cooldownGrowth;
 

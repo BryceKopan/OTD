@@ -5296,6 +5296,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Empty Slot 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3996392926358189782, guid: acef614bbfdfc2840a25e70b90e06f10, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1220056050}
+    - target: {fileID: 3996392926358189782, guid: acef614bbfdfc2840a25e70b90e06f10, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetTowerTech3
+      objectReference: {fileID: 0}
     - target: {fileID: 3996392926484588267, guid: acef614bbfdfc2840a25e70b90e06f10, type: 3}
       propertyPath: m_Text
       value: Empty
@@ -8627,6 +8635,14 @@ PrefabInstance:
     - target: {fileID: 3996392926358189771, guid: acef614bbfdfc2840a25e70b90e06f10, type: 3}
       propertyPath: m_Name
       value: Empty Slot 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996392926358189782, guid: acef614bbfdfc2840a25e70b90e06f10, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1220056050}
+    - target: {fileID: 3996392926358189782, guid: acef614bbfdfc2840a25e70b90e06f10, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetTowerTech2
       objectReference: {fileID: 0}
     - target: {fileID: 3996392926484588267, guid: acef614bbfdfc2840a25e70b90e06f10, type: 3}
       propertyPath: m_Text
