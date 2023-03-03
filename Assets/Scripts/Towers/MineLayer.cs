@@ -11,8 +11,8 @@ public class MineLayer : Tower
 	{
 		if(readyToFire && Time.timeScale > 0)
 		{
-			FireAt(gameObject);
-			StartCoroutine(FireCooldown());
+			readyToFire = false;
+			StartCoroutine(FireAt(gameObject));
 		}
 	}
 
@@ -51,8 +51,10 @@ public class MineLayer : Tower
 			}
 
 			if(burstFire)
-				yield return new WaitForSeconds(.1f);
+				yield return new WaitForSeconds(.2f);
 		}
+
+		StartCoroutine(FireCooldown());
 	}
 
 	protected override void FireAtFarthestTarget()

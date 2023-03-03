@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
 	public float orbitIncrement, angleIncrement;
 
 	public GameObject window, towerWindow, towerName, towerRange, towerSpeed, towerPrestige, towerProgress, sentryTower, maxSentries, buildSpeed;
-	public GameObject ark;
+	public GameObject ark, arkButton;
 
 	public List<GameObject> tabBodies = new List<GameObject>();
 	public List<GameObject> tabs = new List<GameObject>();
@@ -178,18 +178,6 @@ public class GameController : MonoBehaviour
 	{
 		resources += r;
 		resourceCounter.GetComponent<UnityEngine.UI.Text>().text = "Resources: " + resources;
-		if(resources >= 1)
-			tower1Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
-		if(resources >= 2)
-			tower2Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
-		if(resources >= 3)
-			tower3Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
-		if(resources >= 5)
-			tower4Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
-		if(resources >= 5)
-			tower5Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
-		if(resources >= 5)
-			tower6Button.GetComponent<UnityEngine.UI.Button>().interactable = true;
 	}
 
 	private void BuildObject(GameObject prefab)
@@ -272,18 +260,6 @@ public class GameController : MonoBehaviour
 				unbuiltTowerOrbit.RestartOrbit();
 				unbuiltTower = null;
 				AddResources(-unbuiltTowerCost);
-				if(resources < 1)
-					tower1Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
-				if(resources < 2)
-					tower2Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
-				if(resources < 3)
-					tower3Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
-				if(resources < 5)
-					tower4Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
-				if(resources < 5)
-					tower5Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
-				if(resources < 5)
-					tower6Button.GetComponent<UnityEngine.UI.Button>().interactable = false;
 			}
 			else if(unbuiltTower != null && !isPlacementValid)
 			{
@@ -508,6 +484,15 @@ public class GameController : MonoBehaviour
 		planetDetailTTPG.GetComponent<UnityEngine.UI.Text>().text = "Time to population growth: " + lastSelectedCelestialBody.timeToPopulationGrowth;
 		planetDetailResourcers.GetComponent<UnityEngine.UI.Text>().text = "Resource Gatherers: " + lastSelectedCelestialBody.resourcers;
 		planetDetailResearchers.GetComponent<UnityEngine.UI.Text>().text = "Researchers: " + lastSelectedCelestialBody.researchers;
+
+		//Buttons that grey out from cost
+		tower1Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 1;
+		tower2Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 2;
+		tower3Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 3;
+		tower4Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 5;
+		tower5Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 5;
+		tower6Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 5;
+		arkButton.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 100;
 	}
 
 	public void SetBodyTab(GameObject bodyTab, GameObject celestialBody)

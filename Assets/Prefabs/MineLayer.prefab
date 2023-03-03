@@ -169,13 +169,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Mine Layer
-  baseCooldown: 2
+  baseCooldown: 3
   cooldown: 2
   rankProgress: 0
   xpMultiplier: 1
   rangeGrowth: 0.1
   cooldownGrowth: 0.1
-  targetTag: Mine
+  targetTag: Mine Layer
   parallelFire: 0
   burstFire: 0
   projectilesPerVolley: 1

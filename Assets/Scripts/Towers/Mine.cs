@@ -78,6 +78,7 @@ public class Mine : Bullet
 		}
 		else if(isTriggered)
 		{
+			orbit.SetCurrentPositionAsOrbit();
 			orbit.orbitPath.enabled = true;
 			isTriggered = false;
 			transform.parent = null;

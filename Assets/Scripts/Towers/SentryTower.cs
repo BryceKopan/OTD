@@ -10,8 +10,9 @@ public class SentryTower : LaserTower
 
 	private List<GameObject> sentries = new List<GameObject>();
 
-	private void Start()
+	public new void Start()
 	{
+		base.Start();
 		StartCoroutine(BuildSentry());
 	}
 

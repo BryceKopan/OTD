@@ -48,8 +48,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   target: {fileID: 0}
-  speed: 20
+  speed: 200
   isTriggered: 1
+  destroyWhenUnseen: 1
+  targetDirectionUnit: {x: 0, y: 0, z: 0}
+  lastDeltaPosition: {x: 0, y: 0, z: 0}
 --- !u!65 &4910974852223001994
 BoxCollider:
   m_ObjectHideFlags: 0

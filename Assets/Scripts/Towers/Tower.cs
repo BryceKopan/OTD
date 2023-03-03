@@ -51,7 +51,7 @@ public abstract class Tower : MonoBehaviour
 	[SerializeField]
 	protected float distanceBetweenProjectiles = .5f;
 
-	private void Start()
+	protected void Start()
 	{
 		orbit = GetComponent<Orbit>();
 		targetingCollider = GetComponent<SphereCollider>();

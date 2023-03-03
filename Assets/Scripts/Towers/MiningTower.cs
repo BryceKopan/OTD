@@ -15,8 +15,9 @@ public class MiningTower : Tower
 	float lerpT = 0;
 	public float speed = 1;
 
-	private void Start()
+	private new void Start()
 	{
+		base.Start();
 		gameController = FindObjectOfType<GameController>();
 		StartCoroutine(FireCooldown());
 	}

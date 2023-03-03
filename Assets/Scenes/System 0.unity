@@ -10781,6 +10781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f19234797ce3239499e2a5a0d615c8b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  techDebugging: 0
   selectedTower: {fileID: 0}
   allTech:
   - {fileID: 1703064270}
@@ -15825,6 +15826,7 @@ MonoBehaviour:
   maxSentries: {fileID: 1726900970}
   buildSpeed: {fileID: 1479288598}
   ark: {fileID: 438563468}
+  arkButton: {fileID: 713178830}
   tabBodies:
   - {fileID: 299992633}
   - {fileID: 127676871}

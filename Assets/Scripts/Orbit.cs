@@ -31,11 +31,8 @@ public class Orbit : MonoBehaviour
 			SetupLine();
 		RenderOrbitPath();
 
-		if(useStartingPositionAsOrbit && principle)
-		{
-			float orbitSize = Vector3.Distance(transform.position, principle.transform.position);
-			axisVector = new Vector2(orbitSize, orbitSize);
-		}
+		if(useStartingPositionAsOrbit)
+			SetCurrentPositionAsOrbit();
 	}
 
 	private void Update()
@@ -118,5 +115,14 @@ public class Orbit : MonoBehaviour
 	public Vector3 GetCurrentEllipsePosition()
 	{
 		return orbitPath.GetPositionOnEllipse(GetCurrentAngle());
+	}
+
+	public void SetCurrentPositionAsOrbit()
+	{
+		if(principle)
+		{
+			float orbitSize = Vector3.Distance(transform.position, principle.transform.position);
+			axisVector = new Vector2(orbitSize, orbitSize);
+		}
 	}
 }

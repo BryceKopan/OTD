@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TechController : MonoBehaviour
 {
+	public bool techDebugging = false;
+
 	private Technology selectedTechnology;
 	public Technology SelectedTechnology
 	{
@@ -73,7 +75,7 @@ public class TechController : MonoBehaviour
 				if(tech != null)
 					tech.AddTechnologyTo(tower);
 		}
-		else if(tower is SentryTower)
+		else if(tower is SentryTower || tower is Sentry)
 		{
 			sentryCount++;
 			foreach(Technology tech in sentryTech)
@@ -119,7 +121,7 @@ public class TechController : MonoBehaviour
 		if(typeof(T) == typeof(MiningTower))
 			techArray = miningTech;
 
-		else if(typeof(T) == typeof(SentryTower))
+		else if(typeof(T) == typeof(SentryTower) || typeof(T) == typeof(Sentry))
 			techArray = sentryTech;
 
 		else if(typeof(T) == typeof(Railgun))
@@ -164,7 +166,7 @@ public class TechController : MonoBehaviour
 		if(typeof(T) == typeof(MiningTower))
 			miningTech[index] = null;
 
-		if(typeof(T) == typeof(SentryTower))
+		if(typeof(T) == typeof(SentryTower) || typeof(T) == typeof(Sentry))
 			sentryTech[index] = null;
 
 		if(typeof(T) == typeof(Railgun))
@@ -231,7 +233,7 @@ public class TechController : MonoBehaviour
 			{
 				AddTech<Railgun>(settingTowerTech - 1, newTech);
 			}
-			else if(selectedTower.GetComponent<SentryTower>())
+			else if(selectedTower.GetComponent<SentryTower>() || selectedTower.GetComponent<Sentry>())
 			{
 				AddTech<SentryTower>(settingTowerTech - 1, newTech);
 			}
@@ -295,6 +297,8 @@ public class TechController : MonoBehaviour
 		{
 			SelectedTechnology = newTech;
 			settingTowerTech = 0;
+			if(techDebugging)
+				SelectedTechnology.ResearchProgress = SelectedTechnology.researchCost;
 		}
 		else if(settingTowerTech > 0 && selectedTower != null)
 			SetTowerSlot(newTech);
