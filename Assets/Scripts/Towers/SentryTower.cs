@@ -44,19 +44,9 @@ public class SentryTower : LaserTower
 		StartCoroutine(BuildSentry());
 	}
 
-	public override void GetXP()
+	public override void SetRankStats()
 	{
-		rankProgress += 1f / (10f + 10f * Rank);
-
-		if(rankProgress >= 1 && Rank < 10)
-		{
-			Rank++;
-			rankProgress = 0;
-
-			cooldown -= cooldownGrowth;
-			GetComponent<SphereCollider>().radius += rangeGrowth;
-			if(Rank % 2 == 0)
-				maxSentries++;
-		}
+		base.SetRankStats();
+		maxSentries = 2 + (Rank / 2);
 	}
 }

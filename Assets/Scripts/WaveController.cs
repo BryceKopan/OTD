@@ -55,9 +55,10 @@ public class WaveController : MonoBehaviour
 			}
 		}
 
-		int enemyQuantity = GetEnemyQuantity();
 		foreach(List<Gate> gates in gates.Values)
 		{
+			int wavesSinceGateOpened = GC.season - gates[0].originSeason;
+			int enemyQuantity = GetEnemyQuantity(wavesSinceGateOpened);
 			foreach(Gate gate in gates)
 			{
 				if(randomizePattern)
@@ -73,14 +74,13 @@ public class WaveController : MonoBehaviour
 		return wavePatterns[randomIndex];
 	}
 
-	int GetEnemyQuantity()
+	int GetEnemyQuantity(int waveNumber)
 	{
-		float enemyCount = 15;
-		float enemyCountWaveScaler = 1 + Mathf.Pow(GC.season - 1, 3)/100;
+		float enemyCount = 10;
+		float enemyCountWaveScaler = 1 + Mathf.Pow(waveNumber - 1, 3)/100;
 		float enemyCountRandomization = Random.Range(.75f, 1.25f);
 		enemyCount *= enemyCountWaveScaler;
 		enemyCount *= enemyCountRandomization;
-		Debug.Log(enemyCount);
 		return Mathf.RoundToInt(enemyCount);
 	}
 

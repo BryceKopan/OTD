@@ -10782,7 +10782,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   techDebugging: 0
-  selectedTower: {fileID: 0}
   allTech:
   - {fileID: 1703064270}
   - {fileID: 1132448897}

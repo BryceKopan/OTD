@@ -123,6 +123,7 @@ public class CelestialBody : MonoBehaviour
 			for(int i = 0; i < populationPairs; i++)
 			{
 				Population++;
+				resourcers++;
 			}
 
 			timeToPopulationGrowth = 4;

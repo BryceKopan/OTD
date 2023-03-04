@@ -5,6 +5,7 @@ using UnityEngine;
 public class TechController : MonoBehaviour
 {
 	public bool techDebugging = false;
+	public List<GameObject> allTech = new List<GameObject>();
 
 	private Technology selectedTechnology;
 	public Technology SelectedTechnology
@@ -27,8 +28,16 @@ public class TechController : MonoBehaviour
 	}
 
 	private int settingTowerTech = 0;
-	public GameObject selectedTower;
-	public List<GameObject> allTech = new List<GameObject>();
+	private GameObject selectedTower;
+	public GameObject SelectedTower
+	{
+		get { return selectedTower; }
+		set
+		{
+			selectedTower = value;
+			UpdateSlotedTechUI();
+		}
+	}
 
 	public GameObject researchTowerImage, selectedTechUI, techSlot1, techSlot2, techSlot3;
 
@@ -77,7 +86,8 @@ public class TechController : MonoBehaviour
 		}
 		else if(tower is SentryTower || tower is Sentry)
 		{
-			sentryCount++;
+			if(tower is SentryTower)
+				sentryCount++;
 			foreach(Technology tech in sentryTech)
 				if(tech != null)
 					tech.AddTechnologyTo(tower);
@@ -111,7 +121,7 @@ public class TechController : MonoBehaviour
 					tech.AddTechnologyTo(tower);
 		}
 
-		UpdateSelectedTechUI();
+		UpdateSlotedTechUI();
 	}
 
 	private void AddTech<T>(int index, Technology tech)
@@ -121,7 +131,7 @@ public class TechController : MonoBehaviour
 		if(typeof(T) == typeof(MiningTower))
 			techArray = miningTech;
 
-		else if(typeof(T) == typeof(SentryTower) || typeof(T) == typeof(Sentry))
+		else if(typeof(T) == typeof(SentryTower))
 			techArray = sentryTech;
 
 		else if(typeof(T) == typeof(Railgun))
@@ -138,7 +148,7 @@ public class TechController : MonoBehaviour
 
 		foreach(Tower tower in towers)
 		{
-			if(tower is T)
+			if(tower is T || (typeof(T) == typeof(SentryTower) && tower is Sentry))
 			{
 				if(techArray[index] != null)
 					tech.RemoveTechnologyFrom(tower);
@@ -183,27 +193,27 @@ public class TechController : MonoBehaviour
 	{
 		int towerCount = 0;
 
-		if(selectedTower.GetComponent<MissleBattery>())
+		if(SelectedTower.GetComponent<MissleBattery>())
 		{
 			towerCount = missleCount;
 		}
-		else if(selectedTower.GetComponent<MineLayer>())
+		else if(SelectedTower.GetComponent<MineLayer>())
 		{
 			towerCount = mineCount;
 		}
-		else if(selectedTower.GetComponent<Railgun>())
+		else if(SelectedTower.GetComponent<Railgun>())
 		{
 			towerCount = railgunCount;
 		}
-		else if(selectedTower.GetComponent<SentryTower>())
+		else if(SelectedTower.GetComponent<SentryTower>())
 		{
 			towerCount = sentryCount;
 		}
-		else if(selectedTower.GetComponent<MiningTower>())
+		else if(SelectedTower.GetComponent<MiningTower>())
 		{
 			towerCount = miningCount;
 		}
-		else if(selectedTower.GetComponent<LaserTower>())
+		else if(SelectedTower.GetComponent<LaserTower>())
 		{
 			towerCount = laserCount;
 		}
@@ -221,27 +231,27 @@ public class TechController : MonoBehaviour
 			techSlot.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = newTech.techName;
 			GC.AddResources(-settingTowerTech * towerCount);
 
-			if(selectedTower.GetComponent<MissleBattery>())
+			if(SelectedTower.GetComponent<MissleBattery>())
 			{
 				AddTech<MissleBattery>(settingTowerTech - 1, newTech);
 			}
-			else if(selectedTower.GetComponent<MineLayer>())
+			else if(SelectedTower.GetComponent<MineLayer>())
 			{
 				AddTech<MineLayer>(settingTowerTech - 1, newTech);
 			}
-			else if(selectedTower.GetComponent<Railgun>())
+			else if(SelectedTower.GetComponent<Railgun>())
 			{
 				AddTech<Railgun>(settingTowerTech - 1, newTech);
 			}
-			else if(selectedTower.GetComponent<SentryTower>() || selectedTower.GetComponent<Sentry>())
+			else if(SelectedTower.GetComponent<SentryTower>() || SelectedTower.GetComponent<Sentry>())
 			{
 				AddTech<SentryTower>(settingTowerTech - 1, newTech);
 			}
-			else if(selectedTower.GetComponent<MiningTower>())
+			else if(SelectedTower.GetComponent<MiningTower>())
 			{
 				AddTech<MiningTower>(settingTowerTech - 1, newTech);
 			}
-			else if(selectedTower.GetComponent<LaserTower>())
+			else if(SelectedTower.GetComponent<LaserTower>())
 			{
 				AddTech<LaserTower>(settingTowerTech - 1, newTech);
 			}
@@ -253,28 +263,28 @@ public class TechController : MonoBehaviour
 	{
 		int towerCount = 0;
 
-		if(selectedTower != null)
-			if(selectedTower.GetComponent<MissleBattery>())
+		if(SelectedTower != null)
+			if(SelectedTower.GetComponent<MissleBattery>())
 			{
 				towerCount = missleCount;
 			}
-			else if(selectedTower.GetComponent<MineLayer>())
+			else if(SelectedTower.GetComponent<MineLayer>())
 			{
 				towerCount = mineCount;
 			}
-			else if(selectedTower.GetComponent<Railgun>())
+			else if(SelectedTower.GetComponent<Railgun>())
 			{
 				towerCount = railgunCount;
 			}
-			else if(selectedTower.GetComponent<SentryTower>())
+			else if(SelectedTower.GetComponent<SentryTower>())
 			{
 				towerCount = sentryCount;
 			}
-			else if(selectedTower.GetComponent<MiningTower>())
+			else if(SelectedTower.GetComponent<MiningTower>())
 			{
 				towerCount = miningCount;
 			}
-			else if(selectedTower.GetComponent<LaserTower>())
+			else if(SelectedTower.GetComponent<LaserTower>())
 			{
 				towerCount = laserCount;
 			}
@@ -282,9 +292,40 @@ public class TechController : MonoBehaviour
 		return towerCount;
 	}
 
-	public void UpdateSelectedTechUI()
+	public void UpdateSlotedTechUI()
 	{
 		int towerCount = GetSelectedTowerTypeCount();
+
+		Technology[] techs = new Technology[0];
+		if(SelectedTower != null)
+			if(SelectedTower.GetComponent<MissleBattery>())
+			{
+				techs = missleTech;
+			}
+			else if(SelectedTower.GetComponent<MineLayer>())
+			{
+				techs = mineTech;
+			}
+			else if(SelectedTower.GetComponent<Railgun>())
+			{
+				techs = railgunTech;
+			}
+			else if(SelectedTower.GetComponent<SentryTower>())
+			{
+				techs = sentryTech;
+			}
+			else if(SelectedTower.GetComponent<MiningTower>())
+			{
+				techs = miningTech;
+			}
+			else if(SelectedTower.GetComponent<LaserTower>())
+			{
+				techs = laserTech;
+			}
+
+		techSlot1.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = techs[0] ? techs[0].name : "Empty";
+		techSlot2.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = techs[1] ? techs[1].name : "Empty";
+		techSlot3.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = techs[2] ? techs[2].name : "Empty";
 
 		techSlot1.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "$" + towerCount * 1;
 		techSlot2.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "$" + towerCount * 2;
@@ -300,7 +341,7 @@ public class TechController : MonoBehaviour
 			if(techDebugging)
 				SelectedTechnology.ResearchProgress = SelectedTechnology.researchCost;
 		}
-		else if(settingTowerTech > 0 && selectedTower != null)
+		else if(settingTowerTech > 0 && SelectedTower != null)
 			SetTowerSlot(newTech);
 	}
 

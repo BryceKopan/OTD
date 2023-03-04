@@ -141,12 +141,12 @@ public class GameController : MonoBehaviour
 			SpriteRenderer sr = unbuiltTower.GetComponentInChildren<SpriteRenderer>();
 			image.sprite = sr.sprite;
 			image.color = sr.color;
-			if(TC.selectedTower != null)
-				Destroy(TC.selectedTower);
-			TC.selectedTower = unbuiltTower;
+			if(TC.SelectedTower != null)
+				Destroy(TC.SelectedTower);
+			TC.SelectedTower = unbuiltTower;
 			unbuiltTower.SetActive(false);
 			unbuiltTower = null;
-			TC.UpdateSelectedTechUI();
+			TC.UpdateSlotedTechUI();
 		}
 
 		if(selectedObject)
@@ -493,6 +493,10 @@ public class GameController : MonoBehaviour
 		tower5Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 5;
 		tower6Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 5;
 		arkButton.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 100;
+
+		//Tech UI
+		if(TC.SelectedTechnology)
+			TC.selectedTechUI.transform.GetChild(1).GetComponent<UnityEngine.UI.Text>().text = TC.SelectedTechnology.ResearchProgress + "/" + TC.SelectedTechnology.researchCost;
 	}
 
 	public void SetBodyTab(GameObject bodyTab, GameObject celestialBody)
