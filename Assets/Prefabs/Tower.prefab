@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4617483409382487399}
   - component: {fileID: 3244000799428476940}
   - component: {fileID: 7341478602294319860}
+  - component: {fileID: 6910903801085000347}
   m_Layer: 8
   m_Name: Tower
   m_TagString: Untagged
@@ -50,18 +51,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Laser Tower
+  maxHealth: 3
   baseCooldown: 0.5
   cooldown: 0.5
   rankProgress: 0
   xpMultiplier: 1
-  rangeGrowth: 0.25
-  cooldownGrowth: 0.01
   targetTag: Enemy
   parallelFire: 0
   burstFire: 0
   projectilesPerVolley: 1
   distanceBetweenProjectiles: 0.5
   bulletPrefab: {fileID: 6211998665189431076, guid: 1a6365efa111c674a8c426400894dbe5, type: 3}
+  attackCooldownGrowthPercent: 2.5
 --- !u!114 &4617483409382487397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +129,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &6910903801085000347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4617483409382487320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0418d31871676a947a8011ec98b04751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5811567770844807096
 GameObject:
   m_ObjectHideFlags: 0

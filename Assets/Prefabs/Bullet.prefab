@@ -51,8 +51,11 @@ MonoBehaviour:
   speed: 20
   isTriggered: 1
   destroyWhenUnseen: 1
+  hasHit: 0
   targetDirectionUnit: {x: 0, y: 0, z: 0}
   lastDeltaPosition: {x: 0, y: 0, z: 0}
+  damage: 1
+  deflectionAmount: 0.25
 --- !u!65 &4910974852223001994
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -80,7 +83,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!1 &8719216351343782611
 GameObject:

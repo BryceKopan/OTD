@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 775847189971516289}
   - component: {fileID: 6690464547841493520}
   - component: {fileID: 4697690002739168022}
+  - component: {fileID: -4131411913163596369}
   m_Layer: 8
   m_Name: Sentry Tower
   m_TagString: Untagged
@@ -87,18 +88,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Sentry Tower
+  resourceCost: 3
+  maxHealth: 3
   baseCooldown: 0.5
   cooldown: 0.5
   rankProgress: 0
   xpMultiplier: 1
-  rangeGrowth: 0.1
-  cooldownGrowth: 0.01
   targetTag: Enemy
   parallelFire: 0
   burstFire: 0
   projectilesPerVolley: 1
   distanceBetweenProjectiles: 0.5
   bulletPrefab: {fileID: 6211998665189431076, guid: 1a6365efa111c674a8c426400894dbe5, type: 3}
+  attackCooldownGrowthPercent: 0
   sentryPrefab: {fileID: 2991533358762030055, guid: 1568f23bdd112c54b8996884c767c3b5, type: 3}
   maxSentries: 2
   buildCooldown: 4
@@ -131,6 +133,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4131411913163596369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775847189971516288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0418d31871676a947a8011ec98b04751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &910111443218442302
 GameObject:
   m_ObjectHideFlags: 0

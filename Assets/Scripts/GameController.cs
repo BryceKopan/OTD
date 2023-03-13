@@ -3,9 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+[System.Serializable]
+public struct TowerStruct
+{
+	public GameObject prefab;
+	public bool isUnlocked;
+}
 
 public class GameController : MonoBehaviour
 {
+	public bool IS_DEBUGGING = false;
+
 	public GameObject selectedObject;
 	public CelestialBody lastSelectedCelestialBody;
 
@@ -19,13 +29,12 @@ public class GameController : MonoBehaviour
 	public bool showAllRanges = false;
 	private float timeScale;
 
-	public GameObject seasonCounter, resourceCounter, pauseSymbol, playSymbol, tower1Button, tower2Button, tower3Button, tower4Button, tower5Button, tower6Button, endGameUI;
+	public GameObject seasonCounter, resourceCounter, pauseSymbol, playSymbol, endGameUI;
 
-	public GameObject tower1Prefab, tower2Prefab, tower3Prefab, tower4Prefab, tower5Prefab, tower6Prefab;
+	public TowerStruct[] towers;
 	GameObject unbuiltTower;
 	bool isPlacementValid = true;
 	Color originalColor;
-	float unbuiltTowerCost;
 	Orbit unbuiltTowerOrbit;
 
 	public GameObject Sun, TargetPlanet;
@@ -34,7 +43,7 @@ public class GameController : MonoBehaviour
 
 	public float orbitIncrement, angleIncrement;
 
-	public GameObject window, towerWindow, towerName, towerRange, towerSpeed, towerPrestige, towerProgress, sentryTower, maxSentries, buildSpeed;
+	public GameObject tooltip;
 	public GameObject ark, arkButton;
 
 	public List<GameObject> tabBodies = new List<GameObject>();
@@ -42,9 +51,12 @@ public class GameController : MonoBehaviour
 	public List<CelestialBody> populatedBodies = new List<CelestialBody>(); 
 
 	public GameObject totalHealth, planetDetail, planetDetailName, planetDetailPopulation, planetDetailResourcers, planetDetailResearchers, planetDetailTTPG, planetDetailTransferMessage;
+	public GameObject planetDetailArkButton, planetDetailPopulated, planetDetailUnpopulated, planetDetailUnlocks;
 	public GameObject researchPanel;
+	public OrbitalMenu orbitalMenu;
+	public Canvas canvas;
 
-	private bool isTransferingPopulation = false;
+	private bool isTransferingPopulation = false, isSelectingTower = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -60,8 +72,8 @@ public class GameController : MonoBehaviour
 		{
 			if(!tabBodies[i].GetComponent<CelestialBody>().isPopulated)
 			{
-				tabBodies[i].GetComponent<CelestialBody>().IsExplored = false;
-				SetBodyTab(tabs[i], null);
+				//tabBodies[i].GetComponent<CelestialBody>().IsExplored = false;
+				//SetBodyTab(tabs[i], null);
 			}
 		}
 
@@ -78,17 +90,18 @@ public class GameController : MonoBehaviour
 		if(skipToNextSeason)
 			Time.timeScale += .1f;
 
-		populatedBodies = GetPopulatedBodies();
 		UpdateUI();
 
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		if(Physics.Raycast(ray, out mouseHit, Mathf.Infinity, -1, QueryTriggerInteraction.Ignore))
 		{
-			RangeToolTip toolTip = mouseHit.transform.GetComponentInChildren<RangeToolTip>();
-			if(toolTip)
-			{
-				toolTip.indicatorIsActive = true;
-			}
+			RangeToolTip rToolTip = mouseHit.transform.GetComponentInChildren<RangeToolTip>();
+			if(rToolTip)
+				rToolTip.indicatorIsActive = true;
+
+			ToolTip toolTip = mouseHit.transform.GetComponentInChildren<ToolTip>();
+			if(toolTip && toolTip.enabled)
+				toolTip.ActivateTooltip();
 		}
 		
 		if(unbuiltTower != null && !researchPanel.activeSelf)
@@ -148,9 +161,6 @@ public class GameController : MonoBehaviour
 			unbuiltTower = null;
 			TC.UpdateSlotedTechUI();
 		}
-
-		if(selectedObject)
-			UpdateSelectedUI();
 	}
 
 	public void Pause()
@@ -193,48 +203,48 @@ public class GameController : MonoBehaviour
 		unbuiltTowerOrbit.followOrbit = false;
 		unbuiltTowerOrbit.principle = GetClosestCelestialBody(unbuiltTower);
 		originalColor = unbuiltTower.GetComponentInChildren<SpriteRenderer>().color;
+
+		ToolTip tt = unbuiltTower.GetComponent<ToolTip>();
+		if(tt)
+			tt.enabled = false;
+
+		orbitalMenu.IsSelectingTower = false;
 	}
 
-	public void BuildTower()
+	public void BuildLaserTower()
 	{
-		unbuiltTowerCost = 1;
-		if(resources >= unbuiltTowerCost)
-			BuildObject(tower1Prefab);
+		if(resources >= towers[0].prefab.GetComponent<Tower>().resourceCost && towers[0].isUnlocked)
+			BuildObject(towers[0].prefab);
 	}
 
-	public void BuildTower2()
+	public void BuildMiningTower()
 	{
-		unbuiltTowerCost = 2;
-		if(resources >= unbuiltTowerCost)
-			BuildObject(tower2Prefab);
+		if(resources >= towers[5].prefab.GetComponent<Tower>().resourceCost && towers[5].isUnlocked)
+			BuildObject(towers[5].prefab);
 	}
 
-	public void BuildTower3()
+	public void BuildSentry()
 	{
-		unbuiltTowerCost = 3;
-		if(resources >= unbuiltTowerCost)
-			BuildObject(tower3Prefab);
+		if(resources >= towers[2].prefab.GetComponent<Tower>().resourceCost && towers[2].isUnlocked)
+			BuildObject(towers[2].prefab);
 	}
 
-	public void BuildTower4()
+	public void BuildRailgun()
 	{
-		unbuiltTowerCost = 5;
-		if(resources >= unbuiltTowerCost)
-			BuildObject(tower4Prefab);
+		if(resources >= towers[1].prefab.GetComponent<Tower>().resourceCost && towers[1].isUnlocked)
+			BuildObject(towers[1].prefab);
 	}
 
-	public void BuildTower5()
+	public void BuildMissleBattery()
 	{
-		unbuiltTowerCost = 5;
-		if(resources >= unbuiltTowerCost)
-			BuildObject(tower5Prefab);
+		if(resources >= towers[3].prefab.GetComponent<Tower>().resourceCost && towers[3].isUnlocked)
+			BuildObject(towers[3].prefab);
 	}
 
-	public void BuildTower6()
+	public void BuildMineLayer()
 	{
-		unbuiltTowerCost = 5;
-		if(resources >= unbuiltTowerCost)
-			BuildObject(tower6Prefab);
+		if(resources >= towers[4].prefab.GetComponent<Tower>().resourceCost && towers[4].isUnlocked)
+			BuildObject(towers[4].prefab);
 	}
 
 	public void BuildArk()
@@ -252,14 +262,16 @@ public class GameController : MonoBehaviour
 		{
 			if(unbuiltTower != null && isPlacementValid)
 			{
-				if(unbuiltTower.GetComponent<Tower>())
+				Tower t = unbuiltTower.GetComponent<Tower>();
+				if(t)
 				{
 					TC.AddTower(unbuiltTower.GetComponent<Tower>());
+					AddResources(-t.resourceCost);
 				}
 
 				unbuiltTowerOrbit.RestartOrbit();
+				unbuiltTower.GetComponent<ToolTip>().enabled = true;
 				unbuiltTower = null;
-				AddResources(-unbuiltTowerCost);
 			}
 			else if(unbuiltTower != null && !isPlacementValid)
 			{
@@ -284,13 +296,23 @@ public class GameController : MonoBehaviour
 	{
 		if(context.started)
 		{
-			Destroy(unbuiltTower);
-			unbuiltTower = null;
-
-			if(isTransferingPopulation)
+			if(unbuiltTower != null)
+			{
+				Destroy(unbuiltTower);
+				unbuiltTower = null;
+			}
+			else if(isTransferingPopulation)
 			{
 				isTransferingPopulation = false;
 				planetDetailTransferMessage.SetActive(false);
+			}
+			else if(orbitalMenu.IsSelectingTower)
+			{
+				orbitalMenu.IsSelectingTower = false;
+			}
+			else
+			{
+				orbitalMenu.OpenTowerMenu();
 			}
 		}
 	}
@@ -331,7 +353,6 @@ public class GameController : MonoBehaviour
 		if(obj == null)
 		{
 			selectedObject = null;
-			window.SetActive(false);
 			return;
 		}
 
@@ -351,7 +372,7 @@ public class GameController : MonoBehaviour
 			Camera.main.transform.position = new Vector3(obj.transform.position.x, Camera.main.transform.position.y, obj.transform.position.z);
 			Camera.main.transform.parent = obj.transform;
 
-			if(lastSelectedCelestialBody == obj.GetComponent<CelestialBody>() && lastSelectedCelestialBody.isPopulated)
+			if(lastSelectedCelestialBody == obj.GetComponent<CelestialBody>())
 			{
 				ShowPlanetDetails();
 			}
@@ -362,47 +383,19 @@ public class GameController : MonoBehaviour
 
 			lastSelectedCelestialBody = obj.GetComponent<CelestialBody>();
 		}
-		if(obj.GetComponent<Tower>())
-		{
-			sentryTower.SetActive(false);
-
-			Tower tower = obj.GetComponent<Tower>();
-			window.SetActive(true);
-			towerWindow.SetActive(true);
-			towerName.GetComponent<UnityEngine.UI.Text>().text = tower.displayName;
-		}
-		if(obj.GetComponent<SentryTower>())
-		{
-			sentryTower.SetActive(true);
-		}
 
 		selectedObject = obj;
 	}
 
-	private void UpdateSelectedUI()
-	{
-		if(selectedObject.GetComponent<Tower>())
-		{
-			Tower tower = selectedObject.GetComponent<Tower>();
-			towerRange.GetComponent<UnityEngine.UI.Text>().text = "Range: " + tower.GetComponent<SphereCollider>().radius;
-			towerSpeed.GetComponent<UnityEngine.UI.Text>().text = "Speed: " + (1 / tower.cooldown).ToString("n2") + "/s";
-			towerPrestige.GetComponent<UnityEngine.UI.Text>().text = "Prestige: " + tower.Rank;
-			towerProgress.GetComponent<UnityEngine.UI.Text>().text = "Progress: " + tower.rankProgress.ToString("n2");
-		}
-		if(selectedObject.GetComponent<SentryTower>())
-		{
-			SentryTower tower = selectedObject.GetComponent<SentryTower>();
-			maxSentries.GetComponent<UnityEngine.UI.Text>().text = "Max Sentries: " + tower.maxSentries;
-			buildSpeed.GetComponent<UnityEngine.UI.Text>().text = "Build Speed: " + (1 / tower.buildCooldown).ToString("n2") + "/s";
-		}
-	}
-
 	public void DeleteSelectedTower()
 	{
-		Tower tower = selectedObject.GetComponent<Tower>();
+		ToolTipWindow toolTipWindow = tooltip.GetComponent<ToolTipWindow>();
+		Tower tower = toolTipWindow.currentToolTip.GetComponent<Tower>();
 		if(tower)
+		{
+			toolTipWindow.gameObject.SetActive(false);
 			Destroy(tower.gameObject);
-		Select(null);
+		}
 	}
 
 	public void StartNextSeason()
@@ -416,9 +409,9 @@ public class GameController : MonoBehaviour
 		season++;
 		seasonCounter.GetComponent<UnityEngine.UI.Text>().text = "Season: " + season;
 
-		foreach(CelestialBody body in populatedBodies)
+		for(int i = 0; i < populatedBodies.Count; i++)
 		{
-			body.IncrementSeason();
+			populatedBodies[i].IncrementSeason();
 		}
 
 		WC.StartWave();
@@ -449,6 +442,30 @@ public class GameController : MonoBehaviour
 		if(!planetDetail.activeSelf)
 		{
 			planetDetail.SetActive(true);
+			Text nameText = planetDetailName.GetComponent<Text>();
+			nameText.text = lastSelectedCelestialBody.displayName;
+			nameText.color = lastSelectedCelestialBody.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+
+			if(lastSelectedCelestialBody.isOrigin)
+			{
+				planetDetailArkButton.SetActive(true);
+			}
+			else
+			{
+				planetDetailArkButton.SetActive(false);
+			}
+
+			if(lastSelectedCelestialBody.isPopulated)
+			{
+				planetDetailPopulated.SetActive(true);
+				planetDetailUnpopulated.SetActive(false);
+			}
+			else
+			{
+				planetDetailPopulated.SetActive(false);
+				planetDetailUnpopulated.SetActive(true);
+				planetDetailUnpopulated.transform.GetChild(0).GetComponent<Text>().text = "Max pop: " + lastSelectedCelestialBody.maxPopulation; 
+			}
 		}
 		else
 		{
@@ -484,14 +501,15 @@ public class GameController : MonoBehaviour
 		planetDetailTTPG.GetComponent<UnityEngine.UI.Text>().text = "Time to population growth: " + lastSelectedCelestialBody.timeToPopulationGrowth;
 		planetDetailResourcers.GetComponent<UnityEngine.UI.Text>().text = "Resource Gatherers: " + lastSelectedCelestialBody.resourcers;
 		planetDetailResearchers.GetComponent<UnityEngine.UI.Text>().text = "Researchers: " + lastSelectedCelestialBody.researchers;
+		if(lastSelectedCelestialBody.unlockedTowerPrefab)
+		{
+			planetDetailUnlocks.SetActive(true);
+			planetDetailUnlocks.transform.GetChild(1).GetComponent<Text>().text = lastSelectedCelestialBody.unlockedTowerPrefab.GetComponent<Tower>().displayName;
+		}
+			
+		else
+			planetDetailUnlocks.SetActive(false);
 
-		//Buttons that grey out from cost
-		tower1Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 1;
-		tower2Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 2;
-		tower3Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 3;
-		tower4Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 5;
-		tower5Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 5;
-		tower6Button.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 5;
 		arkButton.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 100;
 
 		//Tech UI
@@ -541,5 +559,26 @@ public class GameController : MonoBehaviour
 	public void SkipToNextSeason()
 	{
 		skipToNextSeason = true;
+	}
+
+	public void EndGame()
+	{
+		if(!IS_DEBUGGING)
+			endGameUI.SetActive(true);
+	}
+
+	public void LoadMainMenu()
+	{
+		Time.timeScale = 1;
+		SceneManager.LoadScene(0);
+	}
+
+	public void UnlockTower(GameObject towerPrefab)
+	{
+		for(int i = 0; i < towers.Length; i++)
+		{
+			if(towers[i].prefab == towerPrefab)
+				towers[i].isUnlocked = true;
+		}
 	}
 }

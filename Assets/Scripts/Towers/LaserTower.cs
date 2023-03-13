@@ -5,6 +5,7 @@ using UnityEngine;
 public class LaserTower : Tower
 {
 	public GameObject bulletPrefab;
+	public float attackCooldownGrowthPercent;
 
 	public override IEnumerator FireAt(GameObject target)
 	{
@@ -54,5 +55,11 @@ public class LaserTower : Tower
 		}
 
 		StartCoroutine(FireCooldown());
+	}
+
+	public override void SetRankStats()
+	{
+		base.SetRankStats();
+		cooldown = BaseCooldown - (Rank * (BaseCooldown * attackCooldownGrowthPercent / 100));
 	}
 }

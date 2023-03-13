@@ -6,17 +6,24 @@ public class MissleBattery : Tower
 {
 	public GameObject misslePrefab;
 	public float delayBetweenMissles, spread;
-	public int baseMisslesPerVolley;
+	public int baseMissles, missleGrowth;
+	private int missles;
+
+	public new void Start()
+	{
+		base.Start();
+		missles = baseMissles;
+	}
 
 	public override IEnumerator FireAt(GameObject target)
 	{
 		Vector3 direction = (target.transform.position - transform.position).normalized;
 		Vector3 adjustment = GetParallellFireVector(target);
 
-		int misslesPerVolley = baseMisslesPerVolley * projectilesPerVolley;
+		int misslesPerVolley = missles * projectilesPerVolley;
 		int curProjectilesPerFire = projectilesPerVolley;
 		if(burstFire)
-			curProjectilesPerFire = curProjectilesPerFire / 3;
+			misslesPerVolley *= 3;
 
 		for(int i = 0; i < misslesPerVolley; i += curProjectilesPerFire)
 		{
@@ -47,12 +54,21 @@ public class MissleBattery : Tower
 
 			float actualDelay = delayBetweenMissles;
 
-			if(!burstFire || burstFire && (i/curProjectilesPerFire) % 3 != 0)
+			Debug.Log(i);
+			if(!burstFire || (burstFire && (i+1) % 3 != 0))
+			{
 				yield return new WaitForSeconds(delayBetweenMissles);
+			}
 			else
 				yield return new WaitForSeconds(delayBetweenMissles * 3);
 		}
 
 		StartCoroutine(FireCooldown());
+	}
+
+	public override void SetRankStats()
+	{
+		base.SetRankStats();
+		missles = baseMissles + (Rank * missleGrowth);
 	}
 }

@@ -5,8 +5,17 @@ using UnityEngine;
 [System.Serializable]
 public struct WavePattern
 {
-	public float enemyQuantityWeight;
+	public int minSeason, maxSeason;
+	public float enemyStrengthWeight;
 	public float enemySpawnInterval;
+
+	public List<SpawnPattern> spawnPatterns;
+	public List<int> patternCycle;
+}
+
+[System.Serializable]
+public struct SpawnPattern
+{
 	public int enemiesPerSpawn;
 	public float angleBetweenEnemies;
 	public float enemyStartAngle;
@@ -14,18 +23,23 @@ public struct WavePattern
 	public float enemyAcceleration;
 	public float enemyTurnSpeed;
 	public float enemyTurnAcceleration;
+	public int[] shieldPerEnemy;
+	public int[] sizePerEnemy;
+	public bool[] spawnOnDeathPerEnemy;
+	public bool[] spawningEnemyPerEnemy;
 }
 
 public class WaveController : MonoBehaviour
 {
 	public GameObject gatePrefab;
+	public GameObject enemyPrefab;
 	public float gateOrbitDistance;
 	public int gateSeasonIncrement;
-	public bool randomizePattern;
+	public bool lockPattern, randomizePatternProgression;
 
 	public WavePattern currentWavePattern;
 
-	public List<WavePattern> wavePatterns;
+	public List<WavePattern> newWavePatterns;
 
 	Dictionary<CelestialBody, List<Gate>> gates = new Dictionary<CelestialBody, List<Gate>>();
 
@@ -40,6 +54,7 @@ public class WaveController : MonoBehaviour
 	{
 		List<CelestialBody> populatedBodies = GC.populatedBodies;
 
+		// look at all populated bodies and spawn initial gates
 		for(int i = 0; i < populatedBodies.Count; i++)
 		{
 			if(!gates.ContainsKey(populatedBodies[i]))
@@ -55,29 +70,42 @@ public class WaveController : MonoBehaviour
 			}
 		}
 
+		//Decide wave strength and start waves
 		foreach(List<Gate> gates in gates.Values)
 		{
 			int wavesSinceGateOpened = GC.season - gates[0].originSeason;
-			int enemyQuantity = GetEnemyQuantity(wavesSinceGateOpened);
+			int waveTotalStrength = GetWaveStrength(wavesSinceGateOpened);
 			foreach(Gate gate in gates)
 			{
-				if(randomizePattern)
+				if(!lockPattern)
 					currentWavePattern = GetRandomWavePattern();
-				StartCoroutine(gate.SpawnWave(enemyQuantity/gates.Count, currentWavePattern));
+				StartCoroutine(gate.SpawnWave(waveTotalStrength/gates.Count, currentWavePattern));
 			}
 		}
 	}
 
 	WavePattern GetRandomWavePattern()
 	{
-		int randomIndex = Random.Range(0, wavePatterns.Count);
-		return wavePatterns[randomIndex];
+		bool foundPattern = false;
+		WavePattern newPattern;
+
+		do
+		{
+			int randomIndex = Random.Range(0, newWavePatterns.Count);
+			newPattern = newWavePatterns[randomIndex];
+			if((GC.season > newPattern.minSeason && GC.season < newPattern.maxSeason) || randomizePatternProgression)
+				foundPattern = true;
+			else if(GC.season > newPattern.maxSeason)
+				newWavePatterns.RemoveAt(randomIndex);
+		} while(!foundPattern);
+
+		return newPattern;
 	}
 
-	int GetEnemyQuantity(int waveNumber)
+	int GetWaveStrength(int seasonsSinceFirstWave)
 	{
 		float enemyCount = 10;
-		float enemyCountWaveScaler = 1 + Mathf.Pow(waveNumber - 1, 3)/100;
+		float enemyCountWaveScaler = 1 + Mathf.Pow(seasonsSinceFirstWave - 1, 4)/100;
 		float enemyCountRandomization = Random.Range(.75f, 1.25f);
 		enemyCount *= enemyCountWaveScaler;
 		enemyCount *= enemyCountRandomization;

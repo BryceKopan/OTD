@@ -17,7 +17,7 @@ public class Mine : Bullet
 			{
 				if(Vector3.Distance(transform.position, obj.transform.position) < explosionRadius)
 				{
-					Destroy(obj);
+					obj.GetComponent<Enemy>().Health -= damage;
 					tower.GetXP();
 				}
 			}

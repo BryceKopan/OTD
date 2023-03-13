@@ -151,7 +151,7 @@ public class TechController : MonoBehaviour
 			if(tower is T || (typeof(T) == typeof(SentryTower) && tower is Sentry))
 			{
 				if(techArray[index] != null)
-					tech.RemoveTechnologyFrom(tower);
+					techArray[index].RemoveTechnologyFrom(tower);
 
 				tech.AddTechnologyTo(tower);
 			}
@@ -298,6 +298,7 @@ public class TechController : MonoBehaviour
 
 		Technology[] techs = new Technology[0];
 		if(SelectedTower != null)
+		{
 			if(SelectedTower.GetComponent<MissleBattery>())
 			{
 				techs = missleTech;
@@ -323,13 +324,14 @@ public class TechController : MonoBehaviour
 				techs = laserTech;
 			}
 
-		techSlot1.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = techs[0] ? techs[0].name : "Empty";
-		techSlot2.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = techs[1] ? techs[1].name : "Empty";
-		techSlot3.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = techs[2] ? techs[2].name : "Empty";
+			techSlot1.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = techs[0] ? techs[0].name : "Empty";
+			techSlot2.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = techs[1] ? techs[1].name : "Empty";
+			techSlot3.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text = techs[2] ? techs[2].name : "Empty";
 
-		techSlot1.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "$" + towerCount * 1;
-		techSlot2.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "$" + towerCount * 2;
-		techSlot3.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "$" + towerCount * 3;
+			techSlot1.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "$" + towerCount * 1;
+			techSlot2.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "$" + towerCount * 2;
+			techSlot3.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = "$" + towerCount * 3;
+		}
 	}
 
 	public void SelectTech(Technology newTech)

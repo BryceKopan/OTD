@@ -5,6 +5,20 @@ using UnityEngine;
 public abstract class Tower : MonoBehaviour
 {
 	public string displayName = "Tower";
+	public float resourceCost = 1f;
+
+	public int maxHealth = 3;
+	private int health;
+	public int Health
+	{
+		get { return health; }
+		set
+		{
+			health = value;
+			if(health <= 0)
+				Destroy(gameObject);
+		}
+	}
 
 	[SerializeField]
 	private float baseCooldown;
@@ -31,7 +45,7 @@ public abstract class Tower : MonoBehaviour
 		set { targetingCollider.radius = range = value;}
 	}
 
-	public float rankProgress = 0, xpMultiplier = 1, rangeGrowth, cooldownGrowth;
+	public float rankProgress = 0, xpMultiplier = 1;
 	private int rank = 0;
 	public int Rank
 	{
@@ -57,6 +71,7 @@ public abstract class Tower : MonoBehaviour
 		targetingCollider = GetComponent<SphereCollider>();
 		Range = BaseRange = targetingCollider.radius;
 		cooldown = BaseCooldown;
+		Health = maxHealth;
 	}
 
 	private void FixedUpdate()
@@ -130,8 +145,8 @@ public abstract class Tower : MonoBehaviour
 
 	public virtual void SetRankStats()
 	{
-		cooldown = BaseCooldown - (cooldownGrowth * rank);
-		Range = BaseRange + (rangeGrowth * rank);
+		cooldown = BaseCooldown;
+		Range = BaseRange;
 	}
 
 	protected Vector3 GetParallellFireVector(GameObject target)
@@ -141,5 +156,14 @@ public abstract class Tower : MonoBehaviour
 		Vector3 adjustment = Vector3.Normalize(new Vector3(perp.x, 0, perp.y));
 
 		return adjustment;
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if(collision.transform.gameObject.tag == "Enemy")
+		{
+			Health--;
+			collision.gameObject.GetComponent<Enemy>().Die();
+		}
 	}
 }

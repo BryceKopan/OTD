@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8220932386560451847}
   - component: {fileID: 7786773391098412909}
   - component: {fileID: 1537856863366875217}
+  - component: {fileID: 4752630850382870690}
   m_Layer: 8
   m_Name: Missle Battery
   m_TagString: Untagged
@@ -87,12 +88,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Missle Battery
+  resourceCost: 5
+  maxHealth: 3
   baseCooldown: 4
   cooldown: 5
   rankProgress: 0
   xpMultiplier: 1
-  rangeGrowth: 0.1
-  cooldownGrowth: 0.1
   targetTag: Enemy
   parallelFire: 0
   burstFire: 0
@@ -101,7 +102,9 @@ MonoBehaviour:
   misslePrefab: {fileID: 2368880725693855904, guid: 834f8d87813d10e46986fcb6d1b3ac74, type: 3}
   delayBetweenMissles: 0.1
   spread: 45
-  baseMisslesPerVolley: 5
+  baseMissles: 5
+  missleGrowth: 1
+  missles: 0
 --- !u!54 &7786773391098412909
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -131,6 +134,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4752630850382870690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4893545198040699694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0418d31871676a947a8011ec98b04751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5011481707882856592
 GameObject:
   m_ObjectHideFlags: 0

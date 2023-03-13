@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CelestialBody : MonoBehaviour
 {
+	public string displayName;
+
 	public int maxPopulation;
 	[SerializeField]
 	private int population;
@@ -18,23 +20,22 @@ public class CelestialBody : MonoBehaviour
 				population = maxPopulation;
 
 			population1.GetComponent<UnityEngine.UI.Text>().text = "Pop: " + population;
-			if(population > 0)
+			if(population > 0 && !isPopulated)
+			{
 				isPopulated = true;
-			else
+				if(unlockedTowerPrefab)
+					GC.UnlockTower(unlockedTowerPrefab);
+				GC.populatedBodies.Add(this);
+			}
+			else if(population < 0 && isPopulated)
+			{
 				isPopulated = false;
+				GC.populatedBodies.Remove(this);
+			}
 		}
 	}
 
-	[SerializeField]
-	private bool isExplored = true;
-	public bool IsExplored
-	{
-		get { return isExplored; }
-		set
-		{
-			isExplored = value;
-		}
-	}
+	public GameObject unlockedTowerPrefab;
 
 	public float gravityRadius;
 	public bool isPopulated = false, isOrigin = false;
@@ -106,7 +107,8 @@ public class CelestialBody : MonoBehaviour
 
 	private void PlanetDestroyed()
 	{
-		FindObjectOfType<GameController>().endGameUI.SetActive(true);
+		if(isOrigin)
+			GC.EndGame();
 	}
 
 	public void IncrementSeason()
@@ -154,7 +156,7 @@ public class CelestialBody : MonoBehaviour
 		body.Population++;
 	}
 
-	public void ToggleIsExplored()
+	/*public void ToggleIsExplored()
 	{
 		if(IsExplored)
 		{
@@ -164,5 +166,5 @@ public class CelestialBody : MonoBehaviour
 		{
 			//UnHide Stuff
 		}
-	}
+	}*/
 }

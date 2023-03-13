@@ -145,6 +145,11 @@ MonoBehaviour:
   target: {fileID: 0}
   speed: 40
   isTriggered: 1
+  destroyWhenUnseen: 1
+  hasHit: 0
+  targetDirectionUnit: {x: 0, y: 0, z: 0}
+  lastDeltaPosition: {x: 0, y: 0, z: 0}
+  damage: 1
 --- !u!54 &7256152226992836355
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -159,5 +164,5 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0

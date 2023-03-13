@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: -2325381665763909986}
   - component: {fileID: 2307755832257849407}
   - component: {fileID: 6537100349409677282}
+  - component: {fileID: -7668814191983252497}
   m_Layer: 8
   m_Name: Mining Tower
   m_TagString: Untagged
@@ -169,12 +170,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Mining Tower
+  resourceCost: 2
+  maxHealth: 3
   baseCooldown: 4
   cooldown: 4
   rankProgress: 0
   xpMultiplier: 1
-  rangeGrowth: 0.5
-  cooldownGrowth: 0.01
   targetTag: Asteroid
   parallelFire: 0
   burstFire: 0
@@ -211,6 +212,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-7668814191983252497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995254018240817334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0418d31871676a947a8011ec98b04751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2149784465484495624
 GameObject:
   m_ObjectHideFlags: 0

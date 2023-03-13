@@ -85,13 +85,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Sentry
+  resourceCost: 0
+  maxHealth: 3
   baseCooldown: 0.5
   cooldown: 0.5
   rankProgress: 0
-  rangeGrowth: 0.1
-  cooldownGrowth: 0.01
+  xpMultiplier: 1
   targetTag: Enemy
+  parallelFire: 0
+  burstFire: 0
+  projectilesPerVolley: 1
+  distanceBetweenProjectiles: 0.5
   bulletPrefab: {fileID: 6211998665189431076, guid: 1a6365efa111c674a8c426400894dbe5, type: 3}
+  attackCooldownGrowthPercent: 0
   sentryTower: {fileID: 0}
 --- !u!1 &3450055131617091673
 GameObject:

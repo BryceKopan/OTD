@@ -58,4 +58,10 @@ public class MiningTower : Tower
 
 		yield return null;
 	}
+
+	public override void SetRankStats()
+	{
+		base.SetRankStats();
+		Debug.Log("Not Implemented");
+	}
 }

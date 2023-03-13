@@ -9,7 +9,7 @@ public class RailgunBullet : Bullet
 		if(collision.gameObject.tag == "Enemy")
 		{
 			tower.GetXP();
-			Destroy(collision.transform.gameObject);
+			collision.gameObject.GetComponent<Enemy>().Health -= damage;
 		}
 	}
 }

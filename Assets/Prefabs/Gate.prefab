@@ -151,4 +151,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466dd3a8a2454c442880976c9f8e1608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originSeason: 0
   enemyPrefab: {fileID: 4095526914806602992, guid: c9dbdfec719693447994a3f94ec1f1b6, type: 3}

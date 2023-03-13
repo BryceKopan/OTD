@@ -24,31 +24,73 @@ public class Gate : MonoBehaviour
 		transform.rotation = Quaternion.LookRotation(targetCB.transform.position - transform.position, new Vector3(0, 1, 0));
 	}
 
-	public IEnumerator SpawnWave(int enemyQuantity, WavePattern pattern)
+	public IEnumerator SpawnWave(int waveStrength, WavePattern wavePattern)
 	{
-		int enemiesSpawned = 0;
-		enemyQuantity = Mathf.RoundToInt((pattern.enemyQuantityWeight * enemyQuantity));
+		int spawnedStrength = 0;
+		waveStrength = Mathf.RoundToInt((wavePattern.enemyStrengthWeight * waveStrength));
 
-		while(enemiesSpawned < enemyQuantity)
+		if(wavePattern.patternCycle.Count == 0)
+			wavePattern.patternCycle = new List<int>{ 0 };
+
+		while(spawnedStrength < waveStrength)
 		{
-			yield return new WaitForSeconds(pattern.enemySpawnInterval);
-			for(int i = 0; i < pattern.enemiesPerSpawn; i ++)
+			foreach(int index in wavePattern.patternCycle)
 			{
-				Enemy enemy = Instantiate(enemyPrefab, transform.position, transform.rotation, targetCB.transform).GetComponent<Enemy>();
-				enemy.speed = pattern.enemyStartSpeed;
-				enemy.acceleration = pattern.enemyAcceleration;
-				enemy.turnSpeed = pattern.enemyTurnSpeed;
-				enemy.turnAcceleration = pattern.enemyTurnAcceleration;
-				enemy.target = targetCB;
+				if(spawnedStrength < waveStrength)
+				{
+					yield return new WaitForSeconds(wavePattern.enemySpawnInterval);
+					SpawnPattern spawnPattern = wavePattern.spawnPatterns[index];
 
-				Vector3 startingDirection = targetCB.transform.position - transform.position;
-				float startAngle = pattern.enemyStartAngle - (((pattern.enemiesPerSpawn - 1) / 2) * pattern.angleBetweenEnemies) + pattern.angleBetweenEnemies * i;
-				startingDirection = Quaternion.Euler(0, startAngle, 0) * startingDirection;
+					if(spawnPattern.sizePerEnemy.Length != spawnPattern.enemiesPerSpawn)
+					{
+						spawnPattern.sizePerEnemy = new int[spawnPattern.enemiesPerSpawn];
+						for(int i = 0; i < spawnPattern.enemiesPerSpawn; i++)
+							spawnPattern.sizePerEnemy[i] = 1;
+					}
 
-				enemy.directionUnit = startingDirection;
+					if(spawnPattern.shieldPerEnemy.Length != spawnPattern.enemiesPerSpawn)
+					{
+						spawnPattern.shieldPerEnemy = new int[spawnPattern.enemiesPerSpawn];
+						for(int i = 0; i < spawnPattern.enemiesPerSpawn; i++)
+							spawnPattern.shieldPerEnemy[i] = 0;
+					}
+
+					if(spawnPattern.spawnOnDeathPerEnemy.Length != spawnPattern.enemiesPerSpawn)
+					{
+						spawnPattern.spawnOnDeathPerEnemy = new bool[spawnPattern.enemiesPerSpawn];
+						for(int i = 0; i < spawnPattern.enemiesPerSpawn; i++)
+							spawnPattern.spawnOnDeathPerEnemy[i] = false;
+					}
+
+					if(spawnPattern.spawningEnemyPerEnemy.Length != spawnPattern.enemiesPerSpawn)
+					{
+						spawnPattern.spawningEnemyPerEnemy = new bool[spawnPattern.enemiesPerSpawn];
+						for(int i = 0; i < spawnPattern.enemiesPerSpawn; i++)
+							spawnPattern.spawningEnemyPerEnemy[i] = false;
+					}
+
+					for(int i = 0; i < spawnPattern.enemiesPerSpawn; i++)
+					{
+						Enemy enemy = Instantiate(enemyPrefab, transform.position, transform.rotation, targetCB.transform).GetComponent<Enemy>();
+						enemy.speed = spawnPattern.enemyStartSpeed;
+						enemy.acceleration = spawnPattern.enemyAcceleration;
+						enemy.turnSpeed = spawnPattern.enemyTurnSpeed;
+						enemy.turnAcceleration = spawnPattern.enemyTurnAcceleration;
+						enemy.target = targetCB;
+						enemy.size = spawnPattern.sizePerEnemy[i];
+						enemy.shield.ShieldStrength = spawnPattern.shieldPerEnemy[i];
+						enemy.spawnEnemiesOnDeath = spawnPattern.spawnOnDeathPerEnemy[i];
+						enemy.spawningEnemy = spawnPattern.spawningEnemyPerEnemy[i];
+
+						Vector3 startingDirection = targetCB.transform.position - transform.position;
+						float startAngle = spawnPattern.enemyStartAngle - (((spawnPattern.enemiesPerSpawn - 1) / 2) * spawnPattern.angleBetweenEnemies) + spawnPattern.angleBetweenEnemies * i;
+						startingDirection = Quaternion.Euler(0, startAngle, 0) * startingDirection;
+						enemy.directionUnit = startingDirection;
+
+						spawnedStrength += (int)enemy.GetStrengthValue();
+					}
+				}
 			}
-
-			enemiesSpawned += pattern.enemiesPerSpawn;
 		}
 	}
 }

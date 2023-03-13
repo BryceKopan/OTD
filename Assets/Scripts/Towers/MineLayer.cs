@@ -5,7 +5,13 @@ using UnityEngine;
 public class MineLayer : Tower
 {
 	public GameObject minePrefab;
-	public int maxMineDensity;
+	public int baseMaxMineDensity, maxMineDensity;
+
+	public new void Start()
+	{
+		base.Start();
+		maxMineDensity = baseMaxMineDensity;
+	}
 
 	private void Update()
 	{
@@ -59,5 +65,11 @@ public class MineLayer : Tower
 
 	protected override void FireAtFarthestTarget()
 	{
+	}
+
+	public override void SetRankStats()
+	{
+		base.SetRankStats();
+		maxMineDensity = baseMaxMineDensity + (Rank / 3);
 	}
 }

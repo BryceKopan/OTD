@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 5278436172687726190}
   - component: {fileID: 1276605122857137270}
   - component: {fileID: 3311887332598494503}
+  - component: {fileID: -7174203630342648998}
   m_Layer: 8
   m_Name: MineLayer
   m_TagString: Untagged
@@ -154,7 +155,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5278436172687726190
 MonoBehaviour:
@@ -169,19 +170,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Mine Layer
+  resourceCost: 5
+  maxHealth: 3
   baseCooldown: 3
   cooldown: 2
   rankProgress: 0
   xpMultiplier: 1
-  rangeGrowth: 0.1
-  cooldownGrowth: 0.1
-  targetTag: Mine Layer
+  targetTag: Mine
   parallelFire: 0
   burstFire: 0
   projectilesPerVolley: 1
   distanceBetweenProjectiles: 0.5
   minePrefab: {fileID: 3963138666125681249, guid: 4aeca2c7943632e4dbfc06343f7ae9c3, type: 3}
-  maxMineDensity: 3
+  baseMaxMineDensity: 3
+  maxMineDensity: 0
 --- !u!54 &1276605122857137270
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -211,6 +213,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-7174203630342648998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220545702867308774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0418d31871676a947a8011ec98b04751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4393088353889944408
 GameObject:
   m_ObjectHideFlags: 0
