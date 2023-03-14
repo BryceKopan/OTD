@@ -40,12 +40,16 @@ public class Enemy : MonoBehaviour
 	private float strengthValue = 0;
 	public float shieldStrengthValueScalar = 1, spawnOnDeathStrengthValueScalar = 1, spawningStrengthValueScalar = 1;
 
+	private GameController GC;
+
 	private void Start()
 	{
 		if(strengthValue == 0)
 		{
 			SetupEnemy();
 		}
+
+		GC = FindObjectOfType<GameController>();
 	}
 
 	private void Update()
@@ -77,6 +81,9 @@ public class Enemy : MonoBehaviour
 				SpawnEnemy(relativePosition, targetRotation, directionUnit);
 			}
 		}
+
+		GC.SC.EnemiesKilled++;
+		GC.SC.EnemiesKilledScore += strengthValue;
 	}
 
 	public IEnumerator SpawnEnemiesAtInterval()

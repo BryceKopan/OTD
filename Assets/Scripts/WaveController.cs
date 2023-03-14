@@ -64,7 +64,7 @@ public class WaveController : MonoBehaviour
 			}
 
 			Gate firstGate = gates[populatedBodies[i]][0];
-			if(GC.season - firstGate.originSeason >= gateSeasonIncrement * gates[populatedBodies[i]].Count)
+			if(GC.SC.Season - firstGate.originSeason >= gateSeasonIncrement * gates[populatedBodies[i]].Count)
 			{
 				SpawnGate(populatedBodies[i]);
 			}
@@ -73,7 +73,7 @@ public class WaveController : MonoBehaviour
 		//Decide wave strength and start waves
 		foreach(List<Gate> gates in gates.Values)
 		{
-			int wavesSinceGateOpened = GC.season - gates[0].originSeason;
+			int wavesSinceGateOpened = GC.SC.Season - gates[0].originSeason;
 			int waveTotalStrength = GetWaveStrength(wavesSinceGateOpened);
 			foreach(Gate gate in gates)
 			{
@@ -93,9 +93,9 @@ public class WaveController : MonoBehaviour
 		{
 			int randomIndex = Random.Range(0, newWavePatterns.Count);
 			newPattern = newWavePatterns[randomIndex];
-			if((GC.season > newPattern.minSeason && GC.season < newPattern.maxSeason) || randomizePatternProgression)
+			if((GC.SC.Season > newPattern.minSeason && GC.SC.Season < newPattern.maxSeason) || randomizePatternProgression)
 				foundPattern = true;
-			else if(GC.season > newPattern.maxSeason)
+			else if(GC.SC.Season > newPattern.maxSeason)
 				newWavePatterns.RemoveAt(randomIndex);
 		} while(!foundPattern);
 

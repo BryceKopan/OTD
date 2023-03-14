@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
 	public Vector3 mainMenuPosition, preGamePosition;
-	public GameObject mainMenuText, mainMenuButtons, preGameLeft, preGameRight;
+	public GameObject mainMenuText, mainMenuButtons, preGameLeft, preGameRight, talentPanel;
 
 	private bool isInPreGame = false;
 
@@ -22,7 +23,7 @@ public class MainMenuController : MonoBehaviour
 		mainMenuButtons.SetActive(false);
 		preGameLeft.SetActive(true);
 		preGameRight.SetActive(true);
-		Camera.main.transform.localPosition = new Vector3(0, Camera.main.transform.position.y, 0); ;
+		Camera.main.transform.localPosition = new Vector3(0, Camera.main.transform.position.y, 0);
 	}
 
 	public void Quit()
@@ -43,5 +44,13 @@ public class MainMenuController : MonoBehaviour
 	public void StartGame()
 	{
 		SceneManager.LoadScene(1);
+	}
+
+	public void ShowTalents()
+	{
+		if(talentPanel.activeSelf)
+			talentPanel.SetActive(false);
+		else
+			talentPanel.SetActive(true);
 	}
 }

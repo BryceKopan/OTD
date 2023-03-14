@@ -21,7 +21,8 @@ public class GameController : MonoBehaviour
 
 	private WaveController WC;
 	private TechController TC;
-	public int season = 0;
+	[HideInInspector]
+	public StatController SC;
 
 	public float resources = 1f;
 
@@ -56,6 +57,8 @@ public class GameController : MonoBehaviour
 	public OrbitalMenu orbitalMenu;
 	public Canvas canvas;
 
+	public Text postGameScore, postGameSeason, postGameEnemyScore, postGameResources, postGameResearch, postGameEnemiesKilled, postGamePopGain, postGamePopLost, postGameTowersBuilt;
+
 	private bool isTransferingPopulation = false, isSelectingTower = false;
 
 	// Start is called before the first frame update
@@ -64,6 +67,7 @@ public class GameController : MonoBehaviour
 		resourceCounter.GetComponent<UnityEngine.UI.Text>().text = "Resources: " + resources;
 		WC = FindObjectOfType<WaveController>();
 		TC = FindObjectOfType<TechController>();
+		SC = FindObjectOfType<StatController>();
 		populatedBodies = GetPopulatedBodies();
 
 		Camera.main.transform.parent = populatedBodies[0].transform;
@@ -150,7 +154,7 @@ public class GameController : MonoBehaviour
 		}
 		else if(unbuiltTower != null)
 		{
-			UnityEngine.UI.Image image = TC.researchTowerImage.GetComponent<UnityEngine.UI.Image>();
+			Image image = TC.researchTowerImage.GetComponent<Image>();
 			SpriteRenderer sr = unbuiltTower.GetComponentInChildren<SpriteRenderer>();
 			image.sprite = sr.sprite;
 			image.color = sr.color;
@@ -188,6 +192,8 @@ public class GameController : MonoBehaviour
 	{
 		resources += r;
 		resourceCounter.GetComponent<UnityEngine.UI.Text>().text = "Resources: " + resources;
+		if(r > 0)
+			SC.ResourcesGained += r;
 	}
 
 	private void BuildObject(GameObject prefab)
@@ -267,6 +273,7 @@ public class GameController : MonoBehaviour
 				{
 					TC.AddTower(unbuiltTower.GetComponent<Tower>());
 					AddResources(-t.resourceCost);
+					SC.TowersBuilt++;
 				}
 
 				unbuiltTowerOrbit.RestartOrbit();
@@ -406,8 +413,8 @@ public class GameController : MonoBehaviour
 					skipToNextSeason = false;
 		}
 
-		season++;
-		seasonCounter.GetComponent<UnityEngine.UI.Text>().text = "Season: " + season;
+		SC.Season++;
+		seasonCounter.GetComponent<UnityEngine.UI.Text>().text = "Season: " + SC.Season;
 
 		for(int i = 0; i < populatedBodies.Count; i++)
 		{
@@ -496,11 +503,11 @@ public class GameController : MonoBehaviour
 			health += cb.Population;
 		}
 
-		totalHealth.GetComponent<UnityEngine.UI.Text>().text = "Health: " + health;
-		planetDetailPopulation.GetComponent<UnityEngine.UI.Text>().text = "Population: " + lastSelectedCelestialBody.Population + " / " + lastSelectedCelestialBody.maxPopulation;
-		planetDetailTTPG.GetComponent<UnityEngine.UI.Text>().text = "Time to population growth: " + lastSelectedCelestialBody.timeToPopulationGrowth;
-		planetDetailResourcers.GetComponent<UnityEngine.UI.Text>().text = "Resource Gatherers: " + lastSelectedCelestialBody.resourcers;
-		planetDetailResearchers.GetComponent<UnityEngine.UI.Text>().text = "Researchers: " + lastSelectedCelestialBody.researchers;
+		totalHealth.GetComponent<Text>().text = "Health: " + health;
+		planetDetailPopulation.GetComponent<Text>().text = "Population: " + lastSelectedCelestialBody.Population + " / " + lastSelectedCelestialBody.maxPopulation;
+		planetDetailTTPG.GetComponent<Text>().text = "Time to population growth: " + lastSelectedCelestialBody.timeToPopulationGrowth;
+		planetDetailResourcers.GetComponent<Text>().text = "Resource Gatherers: " + lastSelectedCelestialBody.resourcers;
+		planetDetailResearchers.GetComponent<Text>().text = "Researchers: " + lastSelectedCelestialBody.researchers;
 		if(lastSelectedCelestialBody.unlockedTowerPrefab)
 		{
 			planetDetailUnlocks.SetActive(true);
@@ -564,7 +571,19 @@ public class GameController : MonoBehaviour
 	public void EndGame()
 	{
 		if(!IS_DEBUGGING)
+		{
 			endGameUI.SetActive(true);
+
+			postGameScore.text = ((int) SC.Score).ToString();
+			postGameSeason.text = "Seasons Survived: " + SC.Season;
+			postGameEnemyScore.text = "Enemies Killed Score: " + (int) SC.EnemiesKilledScore;
+			postGameResources.text = "Resources Gained: " + SC.ResourcesGained;
+			postGameResearch.text = "Research Gained: " + SC.ResearchGained;
+			postGameEnemiesKilled.text = "Enemies Killed: " + SC.EnemiesKilled;
+			postGamePopGain.text = "Population Gained: " + SC.PopulationGained;
+			postGamePopLost.text = "Population Lost: " + SC.PopulationLost;
+			postGameTowersBuilt.text = "Towers Built: " + SC.TowersBuilt;
+		}
 	}
 
 	public void LoadMainMenu()

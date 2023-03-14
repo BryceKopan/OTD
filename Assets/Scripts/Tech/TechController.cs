@@ -57,6 +57,14 @@ public class TechController : MonoBehaviour
 		GC = FindObjectOfType<GameController>();
 	}
 
+	public void AddResearch(int research)
+	{
+		if(SelectedTechnology != null)
+			SelectedTechnology.ResearchProgress += research;
+		if(research > 0)
+			GC.SC.ResearchGained += research;
+	}
+
 	public void SetTowerTech1()
 	{
 		settingTowerTech = 1;

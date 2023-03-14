@@ -14,10 +14,18 @@ public class CelestialBody : MonoBehaviour
 		get { return population; }
 		set
 		{
-			population = value;
+			if(value > maxPopulation)
+				value = maxPopulation;
+			else if(value < 0)
+				value = 0;
 
-			if(population > maxPopulation)
-				population = maxPopulation;
+			int deltaPopulation = value - population;
+			if(deltaPopulation > 0 && population > 0)
+				GC.SC.PopulationGained += deltaPopulation;
+			else
+				GC.SC.PopulationLost -= deltaPopulation;
+
+			population = value;
 
 			population1.GetComponent<UnityEngine.UI.Text>().text = "Pop: " + population;
 			if(population > 0 && !isPopulated)
@@ -114,9 +122,7 @@ public class CelestialBody : MonoBehaviour
 	public void IncrementSeason()
 	{
 		GC.AddResources(resourcers);
-		if(TC.SelectedTechnology != null)
-			TC.SelectedTechnology.ResearchProgress += researchers;
-
+		TC.AddResearch(researchers);
 
 		timeToPopulationGrowth--;
 		int populationPairs = Population / 2;
@@ -124,8 +130,11 @@ public class CelestialBody : MonoBehaviour
 		{
 			for(int i = 0; i < populationPairs; i++)
 			{
-				Population++;
-				resourcers++;
+				if(Population < maxPopulation)
+				{
+					Population++;
+					resourcers++;
+				}
 			}
 
 			timeToPopulationGrowth = 4;

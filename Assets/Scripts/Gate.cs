@@ -16,7 +16,7 @@ public class Gate : MonoBehaviour
 		GC = FindObjectOfType<GameController>();
 		WC = FindObjectOfType<WaveController>();
 		targetCB = GetComponent<Orbit>().principle.gameObject;
-		originSeason = GC.season;
+		originSeason = GC.SC.Season;
 	}
 
     void Update()
