@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8220932386560451847}
   - component: {fileID: 7786773391098412909}
   - component: {fileID: 1537856863366875217}
-  - component: {fileID: 4752630850382870690}
+  - component: {fileID: 3079865560290141305}
   m_Layer: 8
   m_Name: Missle Battery
   m_TagString: Untagged
@@ -104,7 +104,6 @@ MonoBehaviour:
   spread: 45
   baseMissles: 5
   missleGrowth: 1
-  missles: 0
 --- !u!54 &7786773391098412909
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -134,7 +133,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4752630850382870690
+--- !u!114 &3079865560290141305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,7 +142,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4893545198040699694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0418d31871676a947a8011ec98b04751, type: 3}
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5011481707882856592

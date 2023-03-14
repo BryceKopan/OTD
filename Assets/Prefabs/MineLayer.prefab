@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5278436172687726190}
   - component: {fileID: 1276605122857137270}
   - component: {fileID: 3311887332598494503}
-  - component: {fileID: -7174203630342648998}
+  - component: {fileID: 360688553192181242}
   m_Layer: 8
   m_Name: MineLayer
   m_TagString: Untagged
@@ -213,7 +213,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-7174203630342648998
+--- !u!114 &360688553192181242
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4220545702867308774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0418d31871676a947a8011ec98b04751, type: 3}
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4393088353889944408

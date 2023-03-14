@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: -2325381665763909986}
   - component: {fileID: 2307755832257849407}
   - component: {fileID: 6537100349409677282}
-  - component: {fileID: -7668814191983252497}
+  - component: {fileID: 2326287407234291203}
   m_Layer: 8
   m_Name: Mining Tower
   m_TagString: Untagged
@@ -212,7 +212,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-7668814191983252497
+--- !u!114 &2326287407234291203
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1995254018240817334}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0418d31871676a947a8011ec98b04751, type: 3}
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2149784465484495624

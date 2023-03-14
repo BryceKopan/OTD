@@ -28268,6 +28268,7 @@ MonoBehaviour:
   gateSeasonIncrement: 16
   lockPattern: 0
   randomizePatternProgression: 0
+  waveStrengthExponent: 4
   currentWavePattern:
     minSeason: 0
     maxSeason: 0
@@ -30961,9 +30962,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1872465669}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0c0e7e730e8b514184c6ff6316238d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e2ca05919973a74ab61dcbb3954e6a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentToolTip: {fileID: 0}
+  towerName: {fileID: 1044764145}
+  towerRank: {fileID: 868938411}
+  towerRankProgress: {fileID: 1214678907}
+  towerRange: {fileID: 1923310281}
+  towerAttackSpeed: {fileID: 1382709225}
+  sentryStats: {fileID: 77709994}
+  missleStats: {fileID: 582029136}
+  mineStats: {fileID: 442663990}
+  towerHealth: {fileID: 0}
 --- !u!1 &1881961855
 GameObject:
   m_ObjectHideFlags: 0

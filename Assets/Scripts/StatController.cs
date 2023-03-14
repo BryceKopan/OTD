@@ -13,7 +13,11 @@ public class StatController : MonoBehaviour
     public float Score
 	{
 		get { return score; }
-		set { score = value;}
+		set
+		{
+			GC.UpdatePopulationXP((int) (value - score));
+			score = value;
+		}
 	}
 
 	[SerializeField]
@@ -94,5 +98,12 @@ public class StatController : MonoBehaviour
 	{
 		get { return towersBuilt; }
 		set { towersBuilt = value; }
+	}
+
+	GameController GC;
+
+	private void Start()
+	{
+		GC = FindObjectOfType<GameController>();
 	}
 }

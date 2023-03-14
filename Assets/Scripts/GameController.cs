@@ -606,4 +606,16 @@ public class GameController : MonoBehaviour
 				towers[i].isUnlocked = true;
 		}
 	}
+
+	public void UpdatePopulationXP(int score)
+	{
+		SavedData.currentPopXP += score;
+
+		if(SavedData.currentPopXP >= 500 * Mathf.Pow(2, SavedData.popLevel))
+		{
+			SavedData.popLevel++;
+			SavedData.currentPopXP = 0;
+			Debug.Log("LEvel Up!");
+		}
+	}
 }

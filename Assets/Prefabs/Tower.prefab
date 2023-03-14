@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4617483409382487399}
   - component: {fileID: 3244000799428476940}
   - component: {fileID: 7341478602294319860}
-  - component: {fileID: 6910903801085000347}
+  - component: {fileID: 7769347129562246697}
   m_Layer: 8
   m_Name: Tower
   m_TagString: Untagged
@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: Laser Tower
+  resourceCost: 1
   maxHealth: 3
   baseCooldown: 0.5
   cooldown: 0.5
@@ -129,7 +130,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!114 &6910903801085000347
+--- !u!114 &7769347129562246697
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,7 +139,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4617483409382487320}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0418d31871676a947a8011ec98b04751, type: 3}
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5811567770844807096
