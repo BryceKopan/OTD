@@ -72,20 +72,25 @@ public class GameController : MonoBehaviour
 
 		Camera.main.transform.parent = populatedBodies[0].transform;
 
-		for(int i = 0; i < tabs.Count; i++)
-		{
-			if(!tabBodies[i].GetComponent<CelestialBody>().isPopulated)
-			{
-				//tabBodies[i].GetComponent<CelestialBody>().IsExplored = false;
-				//SetBodyTab(tabs[i], null);
-			}
-		}
-
 		if(pause)
 		{
 			pause = false;
 			Pause();
 		}
+
+		if(SavedData.isQuickStartMode)
+		{
+			SC.Season = 7;
+			populatedBodies[0].Population += 3;
+			AddResources(28);
+			seasonCounter.GetComponent<Text>().text = "Season: " + SC.Season;
+		}
+
+		if(SavedData.isWildPatternsMode)
+			WC.randomizePatternProgression = true;
+
+		if(SavedData.isHardMode)
+			WC.waveStrengthExponent++;
 	}
 
     // Update is called once per frame
@@ -414,12 +419,13 @@ public class GameController : MonoBehaviour
 		}
 
 		SC.Season++;
-		seasonCounter.GetComponent<UnityEngine.UI.Text>().text = "Season: " + SC.Season;
+		seasonCounter.GetComponent<Text>().text = "Season: " + SC.Season;
 
-		for(int i = 0; i < populatedBodies.Count; i++)
-		{
-			populatedBodies[i].IncrementSeason();
-		}
+		if((SC.Season > 1 && !SavedData.isQuickStartMode) || (SC.Season > 8 && SavedData.isQuickStartMode))
+			for(int i = 0; i < populatedBodies.Count; i++)
+			{
+				populatedBodies[i].IncrementSeason();
+			}
 
 		WC.StartWave();
 	}

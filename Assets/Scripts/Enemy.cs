@@ -50,6 +50,7 @@ public class Enemy : MonoBehaviour
 		}
 
 		GC = FindObjectOfType<GameController>();
+		WC = FindObjectOfType<WaveController>();
 	}
 
 	private void Update()
@@ -132,7 +133,11 @@ public class Enemy : MonoBehaviour
 
 	private void SetupEnemy()
 	{
-		WC = FindObjectOfType<WaveController>();
+		if(SavedData.isShieldWallMode && shield.ShieldStrength == 0)
+			shield.ShieldStrength = 1;
+
+		if(SavedData.isBigThreatMode && size == 1)
+			size = 2;
 
 		switch(size)
 		{

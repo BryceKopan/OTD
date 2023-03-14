@@ -2062,6 +2062,61 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &115901705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 115901706}
+  - component: {fileID: 115901707}
+  m_Layer: 0
+  m_Name: StatController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &115901706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115901705}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1638554471}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &115901707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115901705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ab366e28aed514b85c8a7081d9a917, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seasonScoreAmount: 100
+  researchScoreAmount: 5
+  resourceScoreAmount: 5
+  score: 0
+  season: 0
+  enemiesKilled: 0
+  enemiesKilledScore: 0
+  resourcesGained: 0
+  researchGained: 0
+  populationGained: 0
+  populationLost: 0
+  towersBuilt: 0
 --- !u!1 &116991890
 GameObject:
   m_ObjectHideFlags: 0
@@ -7458,7 +7513,7 @@ MonoBehaviour:
   followOrbit: 1
   varySpeed: 1
   useStartingPositionAsOrbit: 0
-  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 3}
   color: {r: 0.8980393, g: 0.8980393, b: 0.8980393, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
@@ -11525,14 +11580,26 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1358542037}
   toggleTransition: 1
   graphic: {fileID: 1739797430}
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1638554472}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: ToggleHardMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &650484739
 GameObject:
@@ -12543,14 +12610,26 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 2108697781}
   toggleTransition: 1
   graphic: {fileID: 1957812112}
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1638554472}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: ToggleQuickstart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &717815684
 GameObject:
@@ -17917,7 +17996,7 @@ MonoBehaviour:
   followOrbit: 1
   varySpeed: 1
   useStartingPositionAsOrbit: 0
-  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 3}
   color: {r: 0.8313726, g: 0.53333336, b: 0.30980393, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
@@ -19713,7 +19792,7 @@ MonoBehaviour:
   followOrbit: 1
   varySpeed: 1
   useStartingPositionAsOrbit: 0
-  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 3}
   color: {r: 0, g: 0.5058824, b: 1, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
@@ -20664,7 +20743,7 @@ MonoBehaviour:
   followOrbit: 1
   varySpeed: 1
   useStartingPositionAsOrbit: 0
-  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 3}
   color: {r: 0.9960785, g: 1, b: 0.43921572, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
@@ -22296,7 +22375,7 @@ MonoBehaviour:
   followOrbit: 1
   varySpeed: 1
   useStartingPositionAsOrbit: 0
-  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 3}
   color: {r: 1, g: 0.71410346, b: 0.43921566, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
@@ -22973,7 +23052,7 @@ MonoBehaviour:
   followOrbit: 1
   varySpeed: 1
   useStartingPositionAsOrbit: 0
-  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 3}
   color: {r: 0, g: 0.5058824, b: 1, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
@@ -24065,14 +24144,26 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1184522520}
   toggleTransition: 1
   graphic: {fileID: 1586919719}
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1638554472}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: ToggleBigThreat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &1502387312
 GameObject:
@@ -26192,7 +26283,7 @@ MonoBehaviour:
   IS_DEBUGGING: 1
   selectedObject: {fileID: 1446619343}
   lastSelectedCelestialBody: {fileID: 1446619345}
-  season: 0
+  SC: {fileID: 0}
   resources: 2
   pause: 0
   skipToNextSeason: 0
@@ -26236,6 +26327,15 @@ MonoBehaviour:
   researchPanel: {fileID: 317813586}
   orbitalMenu: {fileID: 917136330}
   canvas: {fileID: 29865743}
+  postGameScore: {fileID: 0}
+  postGameSeason: {fileID: 0}
+  postGameEnemyScore: {fileID: 0}
+  postGameResources: {fileID: 0}
+  postGameResearch: {fileID: 0}
+  postGameEnemiesKilled: {fileID: 0}
+  postGamePopGain: {fileID: 0}
+  postGamePopLost: {fileID: 0}
+  postGameTowersBuilt: {fileID: 0}
 --- !u!4 &1638554471
 Transform:
   m_ObjectHideFlags: 0
@@ -26249,6 +26349,7 @@ Transform:
   m_Children:
   - {fileID: 1746213434}
   - {fileID: 1957233601}
+  - {fileID: 115901706}
   m_Father: {fileID: 0}
   m_RootOrder: 43
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30863,16 +30964,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c0e7e730e8b514184c6ff6316238d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentToolTip: {fileID: 0}
-  towerName: {fileID: 1044764145}
-  towerRank: {fileID: 868938411}
-  towerRankProgress: {fileID: 1214678907}
-  towerRange: {fileID: 1923310281}
-  towerAttackSpeed: {fileID: 1382709225}
-  sentryStats: {fileID: 77709994}
-  missleStats: {fileID: 582029136}
-  mineStats: {fileID: 442663990}
-  towerHealth: {fileID: 0}
 --- !u!1 &1881961855
 GameObject:
   m_ObjectHideFlags: 0
@@ -33650,14 +33741,26 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1846543965}
   toggleTransition: 1
   graphic: {fileID: 257446255}
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1638554472}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: ToggleWildPatterns
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &2035380772
 GameObject:
@@ -33748,7 +33851,7 @@ MonoBehaviour:
   followOrbit: 1
   varySpeed: 1
   useStartingPositionAsOrbit: 0
-  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 3}
   color: {r: 0.81568635, g: 0.5294118, b: 0.31764707, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
@@ -34493,14 +34596,26 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 664934934}
   toggleTransition: 1
   graphic: {fileID: 2083224462}
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1638554472}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: ToggleShieldWall
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &2083224460
 GameObject:
@@ -35626,7 +35741,7 @@ MonoBehaviour:
   followOrbit: 1
   varySpeed: 1
   useStartingPositionAsOrbit: 0
-  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  orbitPathMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 3}
   color: {r: 0.8313726, g: 0.53333336, b: 0.30980393, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}

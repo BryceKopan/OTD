@@ -36,6 +36,7 @@ public class WaveController : MonoBehaviour
 	public float gateOrbitDistance;
 	public int gateSeasonIncrement;
 	public bool lockPattern, randomizePatternProgression;
+	public int waveStrengthExponent = 4;
 
 	public WavePattern currentWavePattern;
 
@@ -105,7 +106,7 @@ public class WaveController : MonoBehaviour
 	int GetWaveStrength(int seasonsSinceFirstWave)
 	{
 		float enemyCount = 10;
-		float enemyCountWaveScaler = 1 + Mathf.Pow(seasonsSinceFirstWave - 1, 4)/100;
+		float enemyCountWaveScaler = 1 + Mathf.Pow(seasonsSinceFirstWave - 1, waveStrengthExponent)/100;
 		float enemyCountRandomization = Random.Range(.75f, 1.25f);
 		enemyCount *= enemyCountWaveScaler;
 		enemyCount *= enemyCountRandomization;

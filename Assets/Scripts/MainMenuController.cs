@@ -53,4 +53,34 @@ public class MainMenuController : MonoBehaviour
 		else
 			talentPanel.SetActive(true);
 	}
+
+	public void ToggleHardMode()
+	{
+		SavedData.isHardMode = !SavedData.isHardMode;
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(2).GetComponent<Toggle>().isOn = SavedData.isHardMode;
+	}
+
+	public void ToggleQuickstart()
+	{
+		SavedData.isQuickStartMode = !SavedData.isQuickStartMode;
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(3).GetComponent<Toggle>().isOn = SavedData.isQuickStartMode;
+	}
+
+	public void ToggleWildPatterns()
+	{
+		SavedData.isWildPatternsMode = !SavedData.isWildPatternsMode;
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(4).GetComponent<Toggle>().isOn = SavedData.isWildPatternsMode;
+	}
+
+	public void ToggleShieldWall()
+	{
+		SavedData.isShieldWallMode = !SavedData.isShieldWallMode;
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(8).GetComponent<Toggle>().isOn = SavedData.isShieldWallMode;
+	}
+
+	public void ToggleBigThreat()
+	{
+		SavedData.isBigThreatMode = !SavedData.isBigThreatMode;
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(10).GetComponent<Toggle>().isOn = SavedData.isBigThreatMode;
+	}
 }

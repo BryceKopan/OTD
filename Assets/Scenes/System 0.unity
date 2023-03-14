@@ -11002,6 +11002,7 @@ MonoBehaviour:
   gateSeasonIncrement: 8
   lockPattern: 0
   randomizePatternProgression: 0
+  waveStrengthExponent: 4
   currentWavePattern:
     minSeason: 12
     maxSeason: 36
@@ -20051,7 +20052,7 @@ MonoBehaviour:
   selectedObject: {fileID: 528901110}
   lastSelectedCelestialBody: {fileID: 528901111}
   SC: {fileID: 0}
-  resources: 2
+  resources: 5
   pause: 1
   skipToNextSeason: 0
   showAllRanges: 0
