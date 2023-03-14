@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 4095526914806602997}
   - component: {fileID: 4095526914806602999}
   - component: {fileID: 4537188803518584214}
+  - component: {fileID: 8494656202615665593}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -217,13 +218,14 @@ MonoBehaviour:
   acceleration: 0
   turnSpeed: 0
   turnAcceleration: 0
+  maxHealth: 0
   shield: {fileID: 5964550653440919878}
   size: 1
-  spawnEnemiesOnDeath: 0
-  spawningEnemy: 0
+  modifiers: 
   onDeathMultipleir: 1
   spawningTime: 1
-  onDeathColor: {r: 1, g: 0.60057265, b: 0, a: 1}
+  shieldedColor: {r: 0, g: 0.72156864, b: 1, a: 1}
+  burstingColor: {r: 1, g: 0.6, b: 0, a: 1}
   spawningColor: {r: 0.80030656, g: 1, b: 0, a: 1}
   angleBetweenEnemies: 15
   spaceBetween: 0.5
@@ -259,6 +261,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8494656202615665593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095526914806602992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
 --- !u!1 &7623526840042958203
 GameObject:
   m_ObjectHideFlags: 0

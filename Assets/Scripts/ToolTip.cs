@@ -1,11 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ToolTip : MonoBehaviour
+public enum ToolTipType
 {
+	Tower,
+	TowerPreview,
+	Enemy,
+	Research,
+	Talent
+}
+
+public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
+	public ToolTipType type;
 	ToolTipWindow toolTipWindow;
 	GameController GC;
+
+	//Temp Tower Preview Setting
+	public string towerPreviewName;
+	public int cost;
+
+	public bool isMouseOver = false;
 
 	private void Start()
 	{
@@ -21,7 +38,19 @@ public class ToolTip : MonoBehaviour
 
 	public void ActivateTooltip()
 	{
-		if(!toolTipWindow.isActiveAndEnabled)
+		if(!toolTipWindow.gameObject.activeSelf)
 			toolTipWindow.SetupWindowAtMousePosition(this);
+	}
+
+	public void OnPointerEnter(PointerEventData eventData)
+	{
+		isMouseOver = true;
+		ActivateTooltip();
+	}
+
+
+	public void OnPointerExit(PointerEventData eventData)
+	{
+		isMouseOver = false;
 	}
 }

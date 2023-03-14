@@ -23,7 +23,7 @@ public class OrbitalMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 		}
 	}
 
-	bool isMouseOver = false;
+	public bool isMouseOver = false;
 	public Canvas canvas;
 	public GameController GC;
 
@@ -41,7 +41,10 @@ public class OrbitalMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 	public void OnPointerExit(PointerEventData eventData)
 	{
 		isMouseOver = false;
-		IsSelectingTower = false;
+		if(GC.tooltip.GetComponent<ToolTipWindow>().currentToolTip.type != ToolTipType.TowerPreview || !GC.tooltip.activeSelf)
+		{
+			IsSelectingTower = false;
+		}
 	}
 
 	public void OpenTowerMenu()

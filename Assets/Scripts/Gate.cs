@@ -79,8 +79,10 @@ public class Gate : MonoBehaviour
 						enemy.target = targetCB;
 						enemy.size = spawnPattern.sizePerEnemy[i];
 						enemy.shield.ShieldStrength = spawnPattern.shieldPerEnemy[i];
-						enemy.spawnEnemiesOnDeath = spawnPattern.spawnOnDeathPerEnemy[i];
-						enemy.spawningEnemy = spawnPattern.spawningEnemyPerEnemy[i];
+						if(spawnPattern.spawnOnDeathPerEnemy[i])
+							enemy.modifiers.Add(EnemyModifier.Bursting);
+						if(spawnPattern.spawningEnemyPerEnemy[i])
+							enemy.modifiers.Add(EnemyModifier.Spawning);
 
 						Vector3 startingDirection = targetCB.transform.position - transform.position;
 						float startAngle = spawnPattern.enemyStartAngle - (((spawnPattern.enemiesPerSpawn - 1) / 2) * spawnPattern.angleBetweenEnemies) + spawnPattern.angleBetweenEnemies * i;

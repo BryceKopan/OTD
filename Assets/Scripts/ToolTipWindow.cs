@@ -8,8 +8,14 @@ public class ToolTipWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 {
 	public ToolTip currentToolTip;
 
-	public GameObject towerName, towerRank, towerRankProgress, towerRange, towerAttackSpeed;
-	public GameObject sentryStats, missleStats, mineStats, towerHealth;
+	public GameObject towerWindow, towerName, towerRank, towerRankProgress, towerRange, towerAttackSpeed, sentryStats, missleStats, mineStats, towerHealth;
+
+	public GameObject enemyWindow;
+	public Text enemyHealth, enemyModifiers;
+	public Text[] modifierSlots;
+
+	public GameObject towerPreviewWindow;
+	public Text towerPreviewName, towerPreviewCost;
 
 	bool isMouseOver = false;
 	Canvas canvas;
@@ -24,11 +30,18 @@ public class ToolTipWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 		canvas = FindObjectOfType<Canvas>();
 	}
 
-	//Is this needed?
 	private void Update()
 	{
-		if(!isMouseOver)
+		if(!isMouseOver && currentToolTip && !currentToolTip.isMouseOver)
+		{
 			gameObject.SetActive(false);
+
+			OrbitalMenu om = FindObjectOfType<OrbitalMenu>();
+			if(currentToolTip.type == ToolTipType.TowerPreview && !om.isMouseOver)
+			{
+				om.IsSelectingTower = false;
+			}
+		}
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
@@ -39,20 +52,48 @@ public class ToolTipWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 	public void OnPointerExit(PointerEventData eventData)
 	{
 		isMouseOver = false;
-		gameObject.SetActive(false);
 	}
 
 	public void SetupWindowAtMousePosition(ToolTip newToolTip)
 	{
 		gameObject.SetActive(true);
+		towerWindow.SetActive(false);
 		missleStats.SetActive(false);
 		mineStats.SetActive(false);
 		sentryStats.SetActive(false);
+
+		enemyWindow.SetActive(false);
+		enemyModifiers.gameObject.SetActive(false);
+		foreach(Text modifierSlot in modifierSlots)
+		{
+			modifierSlot.gameObject.SetActive(false);
+		}
+
+		towerPreviewWindow.SetActive(false);
+
 		currentToolTip = newToolTip;
 
 		Vector2 pos;
 		RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, Input.mousePosition, canvas.worldCamera, out pos);
 		transform.position = canvas.transform.TransformPoint(pos);
+
+		switch(currentToolTip.type)
+		{
+			case ToolTipType.Tower:
+				SetupTowerToolTip();
+				break;
+			case ToolTipType.Enemy:
+				SetupEnemyToolTip();
+				break;
+			case ToolTipType.TowerPreview:
+				SetupTowerPreviewToolTip();
+				break;
+		}
+	}
+	
+	void SetupTowerToolTip()
+	{
+		towerWindow.SetActive(true);
 
 		Tower tower = currentToolTip.GetComponent<Tower>();
 		if(tower)
@@ -90,12 +131,59 @@ public class ToolTipWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 		}
 		else if(currentToolTip.GetComponent<MiningTower>())
 		{
-			
+
 		}
 		else if(currentToolTip.GetComponent<LaserTower>())
 		{
 			LaserTower lt = currentToolTip.GetComponent<LaserTower>();
 			towerAttackSpeed.GetComponent<Text>().text = "<color=#FFBD00>Speed: " + 1 / lt.cooldown + "/s</color>";
 		}
+	}
+
+	void SetupEnemyToolTip()
+	{
+		enemyWindow.SetActive(true);
+
+		Enemy enemy= currentToolTip.GetComponent<Enemy>();
+		if(enemy)
+		{
+			enemyHealth.text = enemy.Health + "/" + enemy.maxHealth;
+
+			//Has Modifier
+			if(enemy.modifiers.Count > 0)
+			{
+				enemyModifiers.gameObject.SetActive(true);
+				int modifierSlotIndex = 0;
+				if(enemy.modifiers.Contains(EnemyModifier.Shielded))
+				{
+					modifierSlots[modifierSlotIndex].gameObject.SetActive(true);
+					modifierSlots[modifierSlotIndex].color = enemy.shieldedColor;
+					modifierSlots[modifierSlotIndex].text = "Shielded " + enemy.shield.ShieldStrength + " / 3";
+					modifierSlotIndex++;
+				}
+				if(enemy.modifiers.Contains(EnemyModifier.Bursting))
+				{
+					modifierSlots[modifierSlotIndex].gameObject.SetActive(true);
+					modifierSlots[modifierSlotIndex].color = enemy.burstingColor;
+					modifierSlots[modifierSlotIndex].text = "Bursting";
+					modifierSlotIndex++;
+				}
+				if(enemy.modifiers.Contains(EnemyModifier.Spawning))
+				{
+					modifierSlots[modifierSlotIndex].gameObject.SetActive(true);
+					modifierSlots[modifierSlotIndex].color = enemy.spawningColor;
+					modifierSlots[modifierSlotIndex].text = "Spawning";
+					modifierSlotIndex++;
+				}
+			}
+		}
+	}
+
+	public void SetupTowerPreviewToolTip()
+	{
+		towerPreviewWindow.SetActive(true);
+
+		towerPreviewName.text = currentToolTip.towerPreviewName;
+		towerPreviewCost.text = "Cost: " + currentToolTip.cost;
 	}
 }

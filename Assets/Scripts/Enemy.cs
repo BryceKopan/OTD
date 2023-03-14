@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnemyModifier
+{
+	Shielded,
+	Bursting,
+	Spawning
+}
 
 public class Enemy : MonoBehaviour
 {
@@ -12,6 +18,8 @@ public class Enemy : MonoBehaviour
 	public float turnSpeed;
 	public float turnAcceleration;
 
+	[HideInInspector]
+	public int maxHealth;
 	private int health = 1;
 	public int Health
 	{
@@ -28,11 +36,11 @@ public class Enemy : MonoBehaviour
 
 	public int size = 1;
 
-	public bool spawnEnemiesOnDeath = false, spawningEnemy= false;
+	public List<EnemyModifier> modifiers = new List<EnemyModifier>();
 	private int enemyCount = 0;
 
 	public float onDeathMultipleir = 1f, spawningTime = 1f;
-	public Color onDeathColor, spawningColor;
+	public Color shieldedColor, burstingColor, spawningColor;
 	public float angleBetweenEnemies = 15f;
 	public float spaceBetween = .5f;
 	private WaveController WC;
@@ -68,7 +76,7 @@ public class Enemy : MonoBehaviour
 	{
 		Destroy(gameObject);
 
-		if(spawnEnemiesOnDeath)
+		if(modifiers.Contains(EnemyModifier.Bursting))
 		{
 			for(int i = 0; i < enemyCount; i ++)
 			{
@@ -144,8 +152,10 @@ public class Enemy : MonoBehaviour
 			case 1:
 				gameObject.transform.localScale = new Vector3(.5f, 1f, .5f);
 				Health = 1;
-				spawnEnemiesOnDeath = false;
-				spawningEnemy = false;
+				if(modifiers.Contains(EnemyModifier.Bursting))
+					modifiers.Remove(EnemyModifier.Bursting);
+				if(modifiers.Contains(EnemyModifier.Spawning))
+					modifiers.Remove(EnemyModifier.Spawning);
 				break;
 			case 2:
 				gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
@@ -159,19 +169,24 @@ public class Enemy : MonoBehaviour
 				break;
 		}
 
-		if(spawnEnemiesOnDeath)
-			transform.GetChild(0).GetComponent<SpriteRenderer>().color = onDeathColor;
+		if(modifiers.Contains(EnemyModifier.Bursting))
+			transform.GetChild(0).GetComponent<SpriteRenderer>().color = burstingColor;
 
-		if(spawningEnemy)
+		if(modifiers.Contains(EnemyModifier.Spawning))
 		{
 			transform.GetChild(0).GetComponent<SpriteRenderer>().color = spawningColor;
 			StartCoroutine(SpawnEnemiesAtInterval());
 		}
 
 		strengthValue = Health + (shield.ShieldStrength * shieldStrengthValueScalar);
-		if(spawnEnemiesOnDeath)
+		if(modifiers.Contains(EnemyModifier.Bursting))
 			strengthValue *= spawnOnDeathStrengthValueScalar;
-		if(spawningEnemy)
+		if(modifiers.Contains(EnemyModifier.Spawning))
 			strengthValue += spawningStrengthValueScalar;
+
+		maxHealth = Health;
+
+		if(shield.ShieldStrength > 0)
+			modifiers.Add(EnemyModifier.Shielded);
 	}
 }

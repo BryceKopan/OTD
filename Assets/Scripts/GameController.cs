@@ -220,6 +220,7 @@ public class GameController : MonoBehaviour
 			tt.enabled = false;
 
 		orbitalMenu.IsSelectingTower = false;
+		tooltip.SetActive(false);
 	}
 
 	public void BuildLaserTower()
