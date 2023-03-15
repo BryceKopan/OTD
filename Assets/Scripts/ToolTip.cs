@@ -18,9 +18,11 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	ToolTipWindow toolTipWindow;
 	GameController GC;
 
+	public string generalToolTipText;
+
 	//Temp Tower Preview Setting
 	public string towerPreviewName;
-	public int cost;
+	public int towerPreviewCost;
 
 	public bool isMouseOver = false;
 

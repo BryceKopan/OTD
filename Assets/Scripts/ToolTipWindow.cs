@@ -184,6 +184,6 @@ public class ToolTipWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 		towerPreviewWindow.SetActive(true);
 
 		towerPreviewName.text = currentToolTip.towerPreviewName;
-		towerPreviewCost.text = "Cost: " + currentToolTip.cost;
+		towerPreviewCost.text = "Cost: " + currentToolTip.towerPreviewCost;
 	}
 }
