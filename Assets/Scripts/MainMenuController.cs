@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour
 {
 	public Vector3 mainMenuPosition, preGamePosition;
-	public GameObject mainMenuText, mainMenuButtons, preGameLeft, preGameRight, talentPanel;
+	public GameObject mainMenuText, mainMenuButtons, preGameLeft, preGameRight, talentPanel, talentText;
 
 	private bool isInPreGame = false;
 
@@ -23,7 +23,14 @@ public class MainMenuController : MonoBehaviour
 		mainMenuButtons.SetActive(false);
 		preGameLeft.SetActive(true);
 		preGameRight.SetActive(true);
+		preGameRight.transform.GetChild(4).GetComponent<Text>().text = "Human " + SavedData.saveData.popLevel;
 		Camera.main.transform.localPosition = new Vector3(0, Camera.main.transform.position.y, 0);
+
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(2).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isHardMode);
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(3).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isQuickStartMode);
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(4).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isWildPatternsMode);
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(8).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isShieldWallMode);
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(10).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isBigThreatMode);
 	}
 
 	public void Quit()
@@ -37,50 +44,63 @@ public class MainMenuController : MonoBehaviour
 		mainMenuText.SetActive(true);
 		mainMenuButtons.SetActive(true);
 		preGameLeft.SetActive(false);
-		preGameRight.SetActive(false);
 		Camera.main.transform.localPosition = mainMenuPosition;
 	}
 
 	public void StartGame()
 	{
+		SavedData.SaveFile();
 		SceneManager.LoadScene(1);
 	}
 
-	public void ShowTalents()
+	public void ToggleTalents()
 	{
 		if(talentPanel.activeSelf)
 			talentPanel.SetActive(false);
 		else
-			talentPanel.SetActive(true);
+			ShowTalents();
 	}
 
 	public void ToggleHardMode()
 	{
-		SavedData.isHardMode = !SavedData.isHardMode;
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(2).GetComponent<Toggle>().isOn = SavedData.isHardMode;
+		SavedData.saveData.isHardMode = !SavedData.saveData.isHardMode;
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(2).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isHardMode);
 	}
 
 	public void ToggleQuickstart()
 	{
-		SavedData.isQuickStartMode = !SavedData.isQuickStartMode;
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(3).GetComponent<Toggle>().isOn = SavedData.isQuickStartMode;
+		SavedData.saveData.isQuickStartMode = !SavedData.saveData.isQuickStartMode;
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(3).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isQuickStartMode);
 	}
 
 	public void ToggleWildPatterns()
 	{
-		SavedData.isWildPatternsMode = !SavedData.isWildPatternsMode;
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(4).GetComponent<Toggle>().isOn = SavedData.isWildPatternsMode;
+		SavedData.saveData.isWildPatternsMode = !SavedData.saveData.isWildPatternsMode;
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(4).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isWildPatternsMode);
 	}
 
 	public void ToggleShieldWall()
 	{
-		SavedData.isShieldWallMode = !SavedData.isShieldWallMode;
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(8).GetComponent<Toggle>().isOn = SavedData.isShieldWallMode;
+		SavedData.saveData.isShieldWallMode = !SavedData.saveData.isShieldWallMode;
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(8).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isShieldWallMode);
 	}
 
 	public void ToggleBigThreat()
 	{
-		SavedData.isBigThreatMode = !SavedData.isBigThreatMode;
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(10).GetComponent<Toggle>().isOn = SavedData.isBigThreatMode;
+		SavedData.saveData.isBigThreatMode = !SavedData.saveData.isBigThreatMode;
+		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(10).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isBigThreatMode);
+	}
+
+	public void ResetSaveData()
+	{
+		SavedData.saveData = new DataHolder(false);
+		SavedData.SaveFile();
+	}
+
+	public void ShowTalents()
+	{
+		talentPanel.SetActive(true);
+
+		talentText.transform.GetChild(1).GetComponent<Text>().text = "Pop Lvl: " + SavedData.saveData.popLevel + "\n Unspent Points: " + SavedData.saveData.unspentTalentPoints;
 	}
 }

@@ -54,7 +54,6 @@ public class MissleBattery : Tower
 
 			float actualDelay = delayBetweenMissles;
 
-			Debug.Log(i);
 			if(!burstFire || (burstFire && (i+1) % 3 != 0))
 			{
 				yield return new WaitForSeconds(delayBetweenMissles);

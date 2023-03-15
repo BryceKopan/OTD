@@ -141,10 +141,10 @@ public class Enemy : MonoBehaviour
 
 	private void SetupEnemy()
 	{
-		if(SavedData.isShieldWallMode && shield.ShieldStrength == 0)
+		if(SavedData.saveData.isShieldWallMode && shield.ShieldStrength == 0)
 			shield.ShieldStrength = 1;
 
-		if(SavedData.isBigThreatMode && size == 1)
+		if(SavedData.saveData.isBigThreatMode && size == 1)
 			size = 2;
 
 		switch(size)

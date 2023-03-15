@@ -48,7 +48,7 @@ public class CelestialBody : MonoBehaviour
 	public float gravityRadius;
 	public bool isPopulated = false, isOrigin = false;
 	public int resourcers, researchers;
-	public int timeToPopulationGrowth;
+	public int timeToPopulationGrowth, populationGrowthTime = 4;
 	public GameObject population1;
 
 	private GameController GC;
@@ -66,6 +66,7 @@ public class CelestialBody : MonoBehaviour
 		GC = FindObjectOfType<GameController>();
 		TC = FindObjectOfType<TechController>();
 		planetOrbit = GetComponent<Orbit>();
+		timeToPopulationGrowth = populationGrowthTime;
 	}
 
 	private void OnCollisionEnter(Collision collision)
@@ -137,7 +138,7 @@ public class CelestialBody : MonoBehaviour
 				}
 			}
 
-			timeToPopulationGrowth = 4;
+			timeToPopulationGrowth = populationGrowthTime;
 		}
 
 		population1.GetComponent<UnityEngine.UI.Text>().text = "Pop: " + Population;

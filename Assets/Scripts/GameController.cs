@@ -61,10 +61,15 @@ public class GameController : MonoBehaviour
 
 	private bool isTransferingPopulation = false, isSelectingTower = false;
 
+	public float travelTimeScalar = 1f;
+
 	// Start is called before the first frame update
 	void Start()
     {
-		resourceCounter.GetComponent<UnityEngine.UI.Text>().text = "Resources: " + resources;
+		SavedData.IS_DEBUGGING = IS_DEBUGGING;
+		SavedData.LoadFile();
+
+		resourceCounter.GetComponent<Text>().text = "Resources: " + resources;
 		WC = FindObjectOfType<WaveController>();
 		TC = FindObjectOfType<TechController>();
 		SC = FindObjectOfType<StatController>();
@@ -78,19 +83,8 @@ public class GameController : MonoBehaviour
 			Pause();
 		}
 
-		if(SavedData.isQuickStartMode)
-		{
-			SC.Season = 7;
-			populatedBodies[0].Population += 3;
-			AddResources(28);
-			seasonCounter.GetComponent<Text>().text = "Season: " + SC.Season;
-		}
-
-		if(SavedData.isWildPatternsMode)
-			WC.randomizePatternProgression = true;
-
-		if(SavedData.isHardMode)
-			WC.waveStrengthExponent++;
+		ApplyGameModes();
+		ApplyTalents();
 	}
 
     // Update is called once per frame
@@ -422,7 +416,7 @@ public class GameController : MonoBehaviour
 		SC.Season++;
 		seasonCounter.GetComponent<Text>().text = "Season: " + SC.Season;
 
-		if((SC.Season > 1 && !SavedData.isQuickStartMode) || (SC.Season > 8 && SavedData.isQuickStartMode))
+		if((SC.Season > 1 && !SavedData.saveData.isQuickStartMode) || (SC.Season > 8 && SavedData.saveData.isQuickStartMode))
 			for(int i = 0; i < populatedBodies.Count; i++)
 			{
 				populatedBodies[i].IncrementSeason();
@@ -577,7 +571,7 @@ public class GameController : MonoBehaviour
 
 	public void EndGame()
 	{
-		if(!IS_DEBUGGING)
+		if(!SavedData.IS_DEBUGGING)
 		{
 			endGameUI.SetActive(true);
 
@@ -610,13 +604,63 @@ public class GameController : MonoBehaviour
 
 	public void UpdatePopulationXP(int score)
 	{
-		SavedData.currentPopXP += score;
+		SavedData.saveData.currentPopXP += score;
 
-		if(SavedData.currentPopXP >= 500 * Mathf.Pow(2, SavedData.popLevel))
+		if(SavedData.saveData.currentPopXP >= 500 * Mathf.Pow(2, SavedData.saveData.popLevel))
 		{
-			SavedData.popLevel++;
-			SavedData.currentPopXP = 0;
+			SavedData.saveData.popLevel++;
+			SavedData.saveData.unspentTalentPoints++;
+			SavedData.saveData.currentPopXP = 0;
+			SavedData.SaveFile();
 			Debug.Log("LEvel Up!");
+		}
+	}
+
+	private void ApplyGameModes()
+	{
+		if(SavedData.saveData.isQuickStartMode)
+		{
+			SC.Season = 7;
+			populatedBodies[0].Population += 3;
+			AddResources(28);
+			seasonCounter.GetComponent<Text>().text = "Season: " + SC.Season;
+		}
+
+		if(SavedData.saveData.isWildPatternsMode)
+			WC.randomizePatternProgression = true;
+
+		if(SavedData.saveData.isHardMode)
+			WC.waveStrengthExponent++;
+	}
+
+	private void ApplyTalents()
+	{
+		if(SavedData.saveData.hasPlannedWorldTalent)
+		{
+
+			populatedBodies[0].maxPopulation = (populatedBodies[0].maxPopulation * 5 / 4);
+
+		}
+
+		if(SavedData.saveData.hasGrowthVatsTalent)
+		{
+			populatedBodies[0].populationGrowthTime--;
+			populatedBodies[0].timeToPopulationGrowth = populatedBodies[0].populationGrowthTime;
+		}
+
+		if(SavedData.saveData.hasEfficientArchitecureTalent)
+		{
+			CelestialBody[] planets = FindObjectsOfType<CelestialBody>();
+
+			foreach(CelestialBody body in planets)
+			{
+				body.maxPopulation = (body.maxPopulation * 5 / 4);
+			}
+		}
+
+		if(SavedData.saveData.hasLaserDefense1Talent)
+		{
+
 		}
 	}
 }
