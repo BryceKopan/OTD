@@ -11,7 +11,7 @@ public class Orbit : MonoBehaviour
 	public Material orbitPathMaterial;
 	public Color color = Color.white;
 	public float trailLength = .33f;
-	public Ellipse orbitPath;
+	public LineRenderer orbitPath;
 
 	public CelestialBody principle;
 	public Vector2 axisVector;
@@ -20,8 +20,6 @@ public class Orbit : MonoBehaviour
 
 	private float targetAngle;
 
-	public int resolution = 1000;
-
 
 	private void Start()
 	{
@@ -29,7 +27,6 @@ public class Orbit : MonoBehaviour
 
 		if(!orbitPath)
 			SetupLine();
-		RenderOrbitPath();
 
 		if(useStartingPositionAsOrbit)
 			SetCurrentPositionAsOrbit();
@@ -37,55 +34,59 @@ public class Orbit : MonoBehaviour
 
 	private void Update()
 	{
-		CalculatePath();
+		if(Time.deltaTime == 0)
+		{
+			targetAngle = GetCurrentAngle();
+			RenderOrbitPath();
+		}
+	}
 
+	private void FixedUpdate()
+	{
 		if(varySpeed)
 			CalculateSpeed();
 		targetAngle -= Time.deltaTime * currentSpeed;
 		if(targetAngle < 0)
 			targetAngle = 360 + targetAngle;
 
-		//orbitPath.RecalculateEllipse();
 		if(followOrbit)
-			transform.position = orbitPath.GetPositionOnEllipse(targetAngle);
+			transform.position = GetPositionAt(targetAngle);
 
-		orbitPath.DrawEllipse();
+		RenderOrbitPath();
 	}
 
-	private void RenderOrbitPath()
+	public Vector3 GetPositionAt(float angle)
 	{
-		CalculatePath();
-		
-		orbitPath.DrawEllipse();
-	}
-
-	private void CalculatePath()
-	{
-		Vector3 principleDiff = transform.position - principle.transform.position;
-		orbitPath.axisVector = axisVector;
-		orbitPath.center = new Vector2(principle.transform.position.x, principle.transform.position.z);
-		orbitPath.resolution = resolution;
-
-		float ang = GetCurrentAngle();
-	
-		orbitPath.startAngle = -ang;
-		orbitPath.RecalculateEllipse();
+		angle = angle * Mathf.Deg2Rad;
+		Vector3 newPosition = new Vector3(axisVector.x * Mathf.Cos(angle) + principle.transform.position.x, 0.0f, axisVector.y * Mathf.Sin(angle) + principle.transform.position.z);
+		return newPosition;
 	}
 
 	public void SetupLine()
 	{
-		LineRenderer line = gameObject.AddComponent<LineRenderer>();
-		orbitPath = gameObject.AddComponent<Ellipse>();
-		line.material = orbitPathMaterial;
-		line.sortingOrder = -2;
+		orbitPath = gameObject.AddComponent<LineRenderer>();
+		orbitPath.material = orbitPathMaterial;
+		orbitPath.sortingOrder = -10;
 
-		line.startColor = color;
-		line.endColor = color;
+		orbitPath.startColor = color;
+		orbitPath.endColor = color;
 
 		AnimationCurve curve = new AnimationCurve();
 		curve.AddKey(0f, .1f);
-		curve.AddKey(trailLength, 0f);
-		line.widthCurve = curve;
+		curve.AddKey(1f, 0f);
+		orbitPath.widthCurve = curve;
+		RenderOrbitPath();
+	}
+
+	private void RenderOrbitPath()
+	{
+		//Calculate line points
+		int pointCount = (int)(360 * trailLength);
+		orbitPath.positionCount = pointCount;
+		for(int i = 0; i < pointCount; i++)
+		{
+			orbitPath.SetPosition(i, GetPositionAt(targetAngle + i));
+		}
 	}
 
 	public float GetCurrentAngle()
@@ -110,11 +111,6 @@ public class Orbit : MonoBehaviour
 	{
 		float distanceRatio = 1 - (Vector3.Distance(transform.position, principle.transform.position) / principle.gravityRadius);
 		currentSpeed = baseSpeed * (distanceRatio * 2);
-	}
-
-	public Vector3 GetCurrentEllipsePosition()
-	{
-		return orbitPath.GetPositionOnEllipse(GetCurrentAngle());
 	}
 
 	public void SetCurrentPositionAsOrbit()

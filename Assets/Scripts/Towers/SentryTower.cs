@@ -36,7 +36,7 @@ public class SentryTower : LaserTower
 			{
 				Orbit orbit = sentries[i].GetComponent<Orbit>();
 				orbit.followOrbit = false;
-				sentries[i].transform.position = towerOrbit.orbitPath.GetPositionOnEllipse((sentryPlacementAngle * (i + 1)) + towerOrbit.GetCurrentAngle());
+				sentries[i].transform.position = towerOrbit.GetPositionAt((sentryPlacementAngle * (i + 1)) + towerOrbit.GetCurrentAngle());
 				orbit.RestartOrbit();
 			}
 		}

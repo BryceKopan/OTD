@@ -52,7 +52,7 @@ public class GameController : MonoBehaviour
 	public List<CelestialBody> populatedBodies = new List<CelestialBody>(); 
 
 	public GameObject totalHealth, planetDetail, planetDetailName, planetDetailPopulation, planetDetailResourcers, planetDetailResearchers, planetDetailTTPG, planetDetailTransferMessage;
-	public GameObject planetDetailArkButton, planetDetailPopulated, planetDetailUnpopulated, planetDetailUnlocks;
+	public GameObject planetDetailTransferButton, planetDetailArkButton, planetDetailPopulated, planetDetailUnpopulated, planetDetailUnlocks;
 	public GameObject researchPanel;
 	public OrbitalMenu orbitalMenu;
 	public Canvas canvas;
@@ -122,18 +122,15 @@ public class GameController : MonoBehaviour
 
 			unbuiltTowerOrbit.axisVector = new Vector2(orbitSize, orbitSize);
 			unbuiltTowerOrbit.principle = GetClosestCelestialBody(unbuiltTower);
-			if(unbuiltTowerOrbit.orbitPath)
-			{
-				float angle = unbuiltTowerOrbit.GetCurrentAngle();
-				float angleOffset = angle % angleIncrement;
+			float angle = unbuiltTowerOrbit.GetCurrentAngle();
+			float angleOffset = angle % angleIncrement;
 
-				if(angleOffset >= angleIncrement / 2)
-					angle += angleIncrement - angleOffset;
-				else
-					angle -= angleOffset;
+			if(angleOffset >= angleIncrement / 2)
+				angle += angleIncrement - angleOffset;
+			else
+				angle -= angleOffset;
 
-				unbuiltTower.transform.position = unbuiltTowerOrbit.orbitPath.GetPositionOnEllipse(angle);
-			}
+			unbuiltTower.transform.position = unbuiltTowerOrbit.GetPositionAt(angle);
 
 			isPlacementValid = true;
 			Vector3 halfExtents = unbuiltTower.GetComponent<BoxCollider>().size/2;
@@ -467,11 +464,13 @@ public class GameController : MonoBehaviour
 			{
 				planetDetailPopulated.SetActive(true);
 				planetDetailUnpopulated.SetActive(false);
+				planetDetailTransferButton.SetActive(true);
 			}
 			else
 			{
 				planetDetailPopulated.SetActive(false);
 				planetDetailUnpopulated.SetActive(true);
+				planetDetailTransferButton.SetActive(false);
 				planetDetailUnpopulated.transform.GetChild(0).GetComponent<Text>().text = "Max pop: " + lastSelectedCelestialBody.maxPopulation; 
 			}
 		}
@@ -571,7 +570,7 @@ public class GameController : MonoBehaviour
 
 	public void EndGame()
 	{
-		if(!SavedData.IS_DEBUGGING)
+		if(!GetComponent<MainMenuController>() && !SavedData.IS_DEBUGGING)
 		{
 			endGameUI.SetActive(true);
 
@@ -658,9 +657,34 @@ public class GameController : MonoBehaviour
 			}
 		}
 
-		if(SavedData.saveData.hasLaserDefense1Talent)
+		if(SavedData.saveData.hasLaserDefense1Talent && towers.Length > 0)
 		{
+			int numberOfTurrets = 0;
+			if(SavedData.saveData.hasLaserDefense1Talent)
+				numberOfTurrets++;
+			if(SavedData.saveData.hasLaserDefense2Talent)
+				numberOfTurrets++;
+			if(SavedData.saveData.hasLaserDefense3Talent)
+				numberOfTurrets++;
 
+			float towerPlacementAngle = 360 / numberOfTurrets;
+
+			for(int i = 0; i < numberOfTurrets; i++)
+			{
+				GameObject newTower = Instantiate(towers[0].prefab, transform.position, transform.rotation);
+				Orbit towerOrbit = newTower.GetComponent<Orbit>();
+				towerOrbit.principle = populatedBodies[0];
+				float orbitDistance = populatedBodies[0].GetComponent<SphereCollider>().radius + 1f;
+				towerOrbit.axisVector = new Vector2(orbitDistance, orbitDistance);
+				towerOrbit.followOrbit = false;
+				newTower.transform.position = towerOrbit.GetPositionAt(towerPlacementAngle * i);
+				towerOrbit.RestartOrbit();
+			}
+		}
+
+		if(SavedData.saveData.hasIonEngineTalent)
+		{
+			Debug.Log("Travel Time Not implmented");
 		}
 	}
 }

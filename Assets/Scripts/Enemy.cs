@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
 		WC = FindObjectOfType<WaveController>();
 	}
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		Vector3 deltaPosition = directionUnit * Time.deltaTime * speed;
 		transform.position = transform.position + deltaPosition;

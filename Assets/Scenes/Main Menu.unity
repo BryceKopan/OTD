@@ -2400,6 +2400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 137598430}
   - component: {fileID: 137598431}
+  - component: {fileID: 137598432}
   m_Layer: 5
   m_Name: Tech Draft
   m_TagString: Untagged
@@ -2476,6 +2477,23 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &137598432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137598429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  generalToolTipText: Choose from 3 random technolgies to research at a time
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &145159632
 GameObject:
   m_ObjectHideFlags: 0
@@ -4496,6 +4514,7 @@ GameObject:
   m_Component:
   - component: {fileID: 267312451}
   - component: {fileID: 267312452}
+  - component: {fileID: 267312453}
   m_Layer: 5
   m_Name: Wild Tech
   m_TagString: Untagged
@@ -4572,6 +4591,23 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &267312453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267312450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  generalToolTipText: Technology locations are randomized
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &268654351
 GameObject:
   m_ObjectHideFlags: 0
@@ -4929,6 +4965,7 @@ GameObject:
   m_Component:
   - component: {fileID: 286450536}
   - component: {fileID: 286450537}
+  - component: {fileID: 286450538}
   m_Layer: 5
   m_Name: Wild Towers
   m_TagString: Untagged
@@ -5005,6 +5042,23 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &286450538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286450535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  generalToolTipText: Tower locations are randomized
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &292167500
 GameObject:
   m_ObjectHideFlags: 0
@@ -5752,7 +5806,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 356144894}
   m_OnClick:
     m_PersistentCalls:
@@ -5965,7 +6019,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 362672405}
   m_OnClick:
     m_PersistentCalls:
@@ -10074,6 +10128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 597598386}
   - component: {fileID: 597598387}
+  - component: {fileID: 597598388}
   m_Layer: 5
   m_Name: HUman
   m_TagString: Untagged
@@ -10150,6 +10205,23 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &597598388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597598385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  generalToolTipText: Default Population Type
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &601486960
 GameObject:
   m_ObjectHideFlags: 0
@@ -11245,6 +11317,7 @@ GameObject:
   m_Component:
   - component: {fileID: 643092608}
   - component: {fileID: 643092609}
+  - component: {fileID: 643092610}
   m_Layer: 5
   m_Name: Hard Mode
   m_TagString: Untagged
@@ -11333,6 +11406,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &643092610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643092607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  generalToolTipText: Wave strength increases faster
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &650484739
 GameObject:
   m_ObjectHideFlags: 0
@@ -12350,6 +12440,7 @@ GameObject:
   m_Component:
   - component: {fileID: 715152507}
   - component: {fileID: 715152508}
+  - component: {fileID: 715152509}
   m_Layer: 5
   m_Name: Quick Start Mode
   m_TagString: Untagged
@@ -12438,6 +12529,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &715152509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715152506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  generalToolTipText: Start on season 8
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &717815684
 GameObject:
   m_ObjectHideFlags: 0
@@ -17527,6 +17635,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tooltip
       objectReference: {fileID: 0}
+    - target: {fileID: 3505199233344329953, guid: 078420ed30f7f8b4b9529572cd53d253, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 078420ed30f7f8b4b9529572cd53d253, type: 3}
 --- !u!1001 &1097408974
@@ -18144,7 +18256,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1109971295}
   m_OnClick:
     m_PersistentCalls:
@@ -20652,7 +20764,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1299251804}
   m_OnClick:
     m_PersistentCalls:
@@ -22349,6 +22461,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1419181278}
   - component: {fileID: 1419181279}
+  - component: {fileID: 1419181280}
   m_Layer: 5
   m_Name: Android
   m_TagString: Untagged
@@ -22425,6 +22538,23 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &1419181280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419181277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  generalToolTipText: Population cost resources
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &1419273911
 GameObject:
   m_ObjectHideFlags: 0
@@ -23623,7 +23753,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1478529423}
   m_OnClick:
     m_PersistentCalls:
@@ -24025,6 +24155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1494523576}
   - component: {fileID: 1494523577}
+  - component: {fileID: 1494523578}
   m_Layer: 5
   m_Name: Big Threat
   m_TagString: Untagged
@@ -24113,6 +24244,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &1494523578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494523575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  generalToolTipText: Enemies will never be small
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &1502387312
 GameObject:
   m_ObjectHideFlags: 0
@@ -25730,6 +25878,7 @@ GameObject:
   - component: {fileID: 1622955883}
   - component: {fileID: 1622955882}
   - component: {fileID: 1622955881}
+  - component: {fileID: 1622955880}
   m_Layer: 5
   m_Name: Travel Time
   m_TagString: Untagged
@@ -25758,6 +25907,21 @@ RectTransform:
   m_AnchoredPosition: {x: 55, y: -115}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1622955880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622955878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7422172ca32b1bf47bf1f7d5dc2a5e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUnlocked: 0
+  preReqTalent: {fileID: 0}
+  talentButton: {fileID: 1622955881}
 --- !u!114 &1622955881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25802,9 +25966,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TechController, Assembly-CSharp
-        m_MethodName: SelectRapidFire
+      - m_Target: {fileID: 1622955880}
+        m_TargetAssemblyTypeName: IonEngine, Assembly-CSharp
+        m_MethodName: UnlockTalent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -26131,7 +26295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32c397bfd7ddc74aa9992b51eacec05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IS_DEBUGGING: 1
+  IS_DEBUGGING: 0
   selectedObject: {fileID: 1446619343}
   lastSelectedCelestialBody: {fileID: 1446619345}
   SC: {fileID: 0}
@@ -26304,7 +26468,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1642598708}
   m_OnClick:
     m_PersistentCalls:
@@ -29728,6 +29892,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1845086920}
   - component: {fileID: 1845086921}
+  - component: {fileID: 1845086922}
   m_Layer: 5
   m_Name: Transient tech
   m_TagString: Untagged
@@ -29804,6 +29969,23 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &1845086922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845086919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  generalToolTipText: Each technology can only be used once
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &1846176508
 GameObject:
   m_ObjectHideFlags: 0
@@ -31046,7 +31228,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1920343482}
   m_OnClick:
     m_PersistentCalls:
@@ -33190,6 +33372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2034259399}
   - component: {fileID: 2034259400}
+  - component: {fileID: 2034259401}
   m_Layer: 5
   m_Name: Wild Patterns
   m_TagString: Untagged
@@ -33278,6 +33461,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &2034259401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034259398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  generalToolTipText: Wave patterns are random
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &2035380772
 GameObject:
   m_ObjectHideFlags: 0
@@ -34047,6 +34247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2082323681}
   - component: {fileID: 2082323682}
+  - component: {fileID: 2082323683}
   m_Layer: 5
   m_Name: Shielded Threat
   m_TagString: Untagged
@@ -34135,6 +34336,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &2082323683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082323680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  generalToolTipText: Enemies will always be shielded
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &2083224460
 GameObject:
   m_ObjectHideFlags: 0
@@ -34653,6 +34871,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2101093703}
   - component: {fileID: 2101093704}
+  - component: {fileID: 2101093705}
   m_Layer: 5
   m_Name: Hive Mind
   m_TagString: Untagged
@@ -34729,6 +34948,23 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &2101093705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101093702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  generalToolTipText: Towers cost population
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &2103964761
 GameObject:
   m_ObjectHideFlags: 0

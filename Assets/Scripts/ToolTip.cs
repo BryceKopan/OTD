@@ -8,6 +8,7 @@ public enum ToolTipType
 	Tower,
 	TowerPreview,
 	Enemy,
+	General,
 	Research,
 	Talent
 }

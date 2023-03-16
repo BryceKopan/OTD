@@ -40,8 +40,9 @@ public class Mine : Bullet
 		}
 	}
 
-	private void FixedUpdate()
+	protected override void FixedUpdate()
 	{
+		base.FixedUpdate();
 		for(int i = 0; i < targetsInRange.Count; i++)
 		{
 			if(targetsInRange[i] == null)
@@ -62,7 +63,7 @@ public class Mine : Bullet
 		{
 			orbit.followOrbit = false;
 			transform.parent = orbit.principle.transform;
-			orbit.orbitPath.enabled = false;
+			//orbit.orbitPath.enabled = false;
 			isTriggered = true;
 			GameObject nearestTarget = targetsInRange[0];
 
@@ -79,7 +80,7 @@ public class Mine : Bullet
 		else if(isTriggered)
 		{
 			orbit.SetCurrentPositionAsOrbit();
-			orbit.orbitPath.enabled = true;
+			//orbit.orbitPath.enabled = true;
 			isTriggered = false;
 			transform.parent = null;
 			orbit.RestartOrbit();

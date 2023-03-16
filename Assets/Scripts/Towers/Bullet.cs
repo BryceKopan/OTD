@@ -17,8 +17,7 @@ public class Bullet : MonoBehaviour
 
 	public float deflectionAmount = .1f;
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void FixedUpdate()
     {
 		if(!target && isTriggered)
 		{

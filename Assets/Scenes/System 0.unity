@@ -1094,6 +1094,7 @@ MonoBehaviour:
   resourcers: 0
   researchers: 0
   timeToPopulationGrowth: 0
+  populationGrowthTime: 4
   population1: {fileID: 53615554}
   planetName: Venus
   objectsToHideWithPlanet: []
@@ -1149,7 +1150,6 @@ MonoBehaviour:
   axisVector: {x: 200, y: 200}
   baseSpeed: 2
   currentSpeed: 2
-  resolution: 1000
 --- !u!1 &130002336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1920,6 +1920,7 @@ MonoBehaviour:
   resourcers: 0
   researchers: 0
   timeToPopulationGrowth: 0
+  populationGrowthTime: 4
   population1: {fileID: 0}
   planetName: 
   objectsToHideWithPlanet: []
@@ -1975,7 +1976,6 @@ MonoBehaviour:
   axisVector: {x: 25, y: 25}
   baseSpeed: 10
   currentSpeed: 10
-  resolution: 1000
 --- !u!1 &199838182
 GameObject:
   m_ObjectHideFlags: 0
@@ -2426,7 +2426,7 @@ MonoBehaviour:
   type: 1
   generalToolTipText: 
   towerPreviewName: Mining Tower
-  towerPreviewCost: 0
+  towerPreviewCost: 2
   isMouseOver: 0
 --- !u!1 &287479489
 GameObject:
@@ -2564,6 +2564,7 @@ MonoBehaviour:
   resourcers: 0
   researchers: 0
   timeToPopulationGrowth: 0
+  populationGrowthTime: 4
   population1: {fileID: 1586314481}
   planetName: Mercury
   objectsToHideWithPlanet: []
@@ -2619,7 +2620,6 @@ MonoBehaviour:
   axisVector: {x: 100, y: 100}
   baseSpeed: 2
   currentSpeed: 2
-  resolution: 1000
 --- !u!1 &301671021
 GameObject:
   m_ObjectHideFlags: 0
@@ -3961,7 +3961,6 @@ MonoBehaviour:
   axisVector: {x: 15, y: 15}
   baseSpeed: 10
   currentSpeed: 10
-  resolution: 1000
 --- !u!4 &438563470
 Transform:
   m_ObjectHideFlags: 0
@@ -4691,7 +4690,7 @@ MonoBehaviour:
   type: 1
   generalToolTipText: 
   towerPreviewName: Railgun
-  towerPreviewCost: 0
+  towerPreviewCost: 5
   isMouseOver: 0
 --- !u!1001 &511925979
 PrefabInstance:
@@ -4950,6 +4949,7 @@ MonoBehaviour:
   resourcers: 3
   researchers: 0
   timeToPopulationGrowth: 5
+  populationGrowthTime: 4
   population1: {fileID: 602727471}
   planetName: Earth
   objectsToHideWithPlanet: []
@@ -5020,7 +5020,6 @@ MonoBehaviour:
   axisVector: {x: 300, y: 300}
   baseSpeed: 2
   currentSpeed: 2
-  resolution: 1000
 --- !u!1 &533149134
 GameObject:
   m_ObjectHideFlags: 0
@@ -5898,7 +5897,7 @@ MonoBehaviour:
   type: 1
   generalToolTipText: 
   towerPreviewName: Sentry Tower
-  towerPreviewCost: 0
+  towerPreviewCost: 3
   isMouseOver: 0
 --- !u!1 &600898230
 GameObject:
@@ -7566,6 +7565,7 @@ MonoBehaviour:
   resourcers: 0
   researchers: 0
   timeToPopulationGrowth: 0
+  populationGrowthTime: 4
   population1: {fileID: 0}
   planetName: 
   objectsToHideWithPlanet: []
@@ -7621,7 +7621,6 @@ MonoBehaviour:
   axisVector: {x: 15, y: 15}
   baseSpeed: 10
   currentSpeed: 10
-  resolution: 1000
 --- !u!1 &757026613
 GameObject:
   m_ObjectHideFlags: 0
@@ -7829,6 +7828,7 @@ MonoBehaviour:
   resourcers: 0
   researchers: 0
   timeToPopulationGrowth: 0
+  populationGrowthTime: 4
   population1: {fileID: 0}
   planetName: 
   objectsToHideWithPlanet: []
@@ -7884,7 +7884,6 @@ MonoBehaviour:
   axisVector: {x: 7.5, y: 7.5}
   baseSpeed: 10
   currentSpeed: 10
-  resolution: 1000
 --- !u!1 &765974677
 GameObject:
   m_ObjectHideFlags: 0
@@ -9655,6 +9654,7 @@ MonoBehaviour:
   resourcers: 0
   researchers: 0
   timeToPopulationGrowth: 0
+  populationGrowthTime: 4
   population1: {fileID: 0}
   planetName: 
   objectsToHideWithPlanet: []
@@ -9710,7 +9710,6 @@ MonoBehaviour:
   axisVector: {x: 15, y: 15}
   baseSpeed: 10
   currentSpeed: 10
-  resolution: 1000
 --- !u!1 &957526228
 GameObject:
   m_ObjectHideFlags: 0
@@ -16217,6 +16216,7 @@ MonoBehaviour:
   resourcers: 0
   researchers: 0
   timeToPopulationGrowth: 0
+  populationGrowthTime: 4
   population1: {fileID: 320171252}
   planetName: Mars
   objectsToHideWithPlanet: []
@@ -16272,7 +16272,6 @@ MonoBehaviour:
   axisVector: {x: 400, y: 400}
   baseSpeed: 2
   currentSpeed: 2
-  resolution: 1000
 --- !u!4 &1473928881
 Transform:
   m_ObjectHideFlags: 0
@@ -16499,7 +16498,7 @@ MonoBehaviour:
   type: 1
   generalToolTipText: 
   towerPreviewName: Mine Layer
-  towerPreviewCost: 0
+  towerPreviewCost: 5
   isMouseOver: 0
 --- !u!1 &1532541526
 GameObject:
@@ -17239,6 +17238,7 @@ MonoBehaviour:
   resourcers: 0
   researchers: 0
   timeToPopulationGrowth: 0
+  populationGrowthTime: 4
   population1: {fileID: 0}
   planetName: 
   objectsToHideWithPlanet: []
@@ -18359,7 +18359,7 @@ MonoBehaviour:
   type: 1
   generalToolTipText: 
   towerPreviewName: Laser Tower
-  towerPreviewCost: 0
+  towerPreviewCost: 1
   isMouseOver: 0
 --- !u!1 &1676100678
 GameObject:
@@ -18958,6 +18958,7 @@ MonoBehaviour:
   planetDetailResearchers: {fileID: 1156978418}
   planetDetailTTPG: {fileID: 1858855814}
   planetDetailTransferMessage: {fileID: 1931867461}
+  planetDetailTransferButton: {fileID: 143853205}
   planetDetailArkButton: {fileID: 713178830}
   planetDetailPopulated: {fileID: 665073375}
   planetDetailUnpopulated: {fileID: 1996639301}
@@ -18974,6 +18975,7 @@ MonoBehaviour:
   postGamePopGain: {fileID: 634597467}
   postGamePopLost: {fileID: 1468850212}
   postGameTowersBuilt: {fileID: 765974679}
+  travelTimeScalar: 1
 --- !u!4 &1680388946
 Transform:
   m_ObjectHideFlags: 0
@@ -22006,7 +22008,7 @@ MonoBehaviour:
   type: 1
   generalToolTipText: 
   towerPreviewName: Missle Battery
-  towerPreviewCost: 0
+  towerPreviewCost: 5
   isMouseOver: 0
 --- !u!1 &2016463660
 GameObject:
@@ -23059,22 +23061,6 @@ PrefabInstance:
     - target: {fileID: 3505199233344329953, guid: 078420ed30f7f8b4b9529572cd53d253, type: 3}
       propertyPath: m_Name
       value: Tooltip
-      objectReference: {fileID: 0}
-    - target: {fileID: 3505199233344329953, guid: 078420ed30f7f8b4b9529572cd53d253, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3505199233567280563, guid: 078420ed30f7f8b4b9529572cd53d253, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 3505199233567280563, guid: 078420ed30f7f8b4b9529572cd53d253, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3505199233666477397, guid: 078420ed30f7f8b4b9529572cd53d253, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3505199233951806685, guid: 078420ed30f7f8b4b9529572cd53d253, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

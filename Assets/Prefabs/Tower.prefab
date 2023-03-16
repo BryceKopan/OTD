@@ -142,6 +142,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c037bc3c1b2d01b4e80868cf902f5e5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
+  generalToolTipText: 
+  towerPreviewName: 
+  towerPreviewCost: 0
+  isMouseOver: 0
 --- !u!1 &5811567770844807096
 GameObject:
   m_ObjectHideFlags: 0

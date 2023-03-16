@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserDefense1 : Talent
+public class IonEngine : Talent
 {
 	protected override void GetSavedData()
 	{
-		isUnlocked = SavedData.saveData.hasLaserDefense1Talent;
+		isUnlocked = SavedData.saveData.hasIonEngineTalent;
 	}
 
 	public override void UnlockTalent()
 	{
 		if(SavedData.saveData.unspentTalentPoints > 0 || SavedData.IS_DEBUGGING)
 		{
-			SavedData.saveData.unspentTalentPoints--;
-			SavedData.saveData.hasLaserDefense1Talent = true;
 			base.UnlockTalent();
+			SavedData.saveData.unspentTalentPoints--;
+			SavedData.saveData.hasIonEngineTalent = true;
 		}
 	}
 }
-

@@ -17,6 +17,9 @@ public class ToolTipWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 	public GameObject towerPreviewWindow;
 	public Text towerPreviewName, towerPreviewCost;
 
+	public GameObject generalWindow;
+	public Text generalText;
+
 	bool isMouseOver = false;
 	Canvas canvas;
 
@@ -70,6 +73,7 @@ public class ToolTipWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 		}
 
 		towerPreviewWindow.SetActive(false);
+		generalWindow.SetActive(false);
 
 		currentToolTip = newToolTip;
 
@@ -87,6 +91,9 @@ public class ToolTipWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 				break;
 			case ToolTipType.TowerPreview:
 				SetupTowerPreviewToolTip();
+				break;
+			case ToolTipType.General:
+				SetupGeneralToolTip();
 				break;
 		}
 	}
@@ -131,7 +138,7 @@ public class ToolTipWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 		}
 		else if(currentToolTip.GetComponent<MiningTower>())
 		{
-
+			Debug.Log("Not IMplemented, will mining stay in the game?");
 		}
 		else if(currentToolTip.GetComponent<LaserTower>())
 		{
@@ -185,5 +192,11 @@ public class ToolTipWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 		towerPreviewName.text = currentToolTip.towerPreviewName;
 		towerPreviewCost.text = "Cost: " + currentToolTip.towerPreviewCost;
+	}
+
+	public void SetupGeneralToolTip()
+	{
+		generalWindow.SetActive(true);
+		generalText.text = currentToolTip.generalToolTipText;
 	}
 }

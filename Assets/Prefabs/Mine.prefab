@@ -220,7 +220,6 @@ MonoBehaviour:
   axisVector: {x: 2, y: 2}
   baseSpeed: 5
   currentSpeed: 5
-  resolution: 1000
 --- !u!135 &3963138666125681182
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -255,6 +254,7 @@ MonoBehaviour:
   targetDirectionUnit: {x: 0, y: 0, z: 0}
   lastDeltaPosition: {x: 0, y: 0, z: 0}
   damage: 1
+  deflectionAmount: 0.1
   targetTag: Enemy
   explosionRadius: 1
 --- !u!54 &589783402407498519
@@ -269,7 +269,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0

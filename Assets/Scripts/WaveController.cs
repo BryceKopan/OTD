@@ -121,7 +121,7 @@ public class WaveController : MonoBehaviour
 		Orbit newGateOrbit = newGate.GetComponent<Orbit>();
 		newGateOrbit.principle = body.GetComponent<CelestialBody>();
 		newGateOrbit.axisVector = new Vector2(gateOrbitDistance, gateOrbitDistance);
-		newGateOrbit.SetupLine();
+		//newGateOrbit.SetupLine();
 
 		Orbit firstGateOrbit = gates[body][0].GetComponent<Orbit>();
 
@@ -131,7 +131,7 @@ public class WaveController : MonoBehaviour
 		{
 			Orbit orbit = gates[body][i].GetComponent<Orbit>();
 			orbit.followOrbit = false;
-			gates[body][i].transform.position = firstGateOrbit.orbitPath.GetPositionOnEllipse((gatePlacementAngle * i) + firstGateOrbit.GetCurrentAngle());
+			gates[body][i].transform.position = firstGateOrbit.GetPositionAt((gatePlacementAngle * i) + firstGateOrbit.GetCurrentAngle());
 			orbit.RestartOrbit();
 		}
 	}

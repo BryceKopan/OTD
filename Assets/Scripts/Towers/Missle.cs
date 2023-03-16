@@ -31,8 +31,9 @@ public class Missle : Bullet
 		directionUnit = Vector3.RotateTowards(directionUnit, directionUnit + new Vector3(Random.Range(-1, 1) - Random.Range(-1, 1), 0, Random.Range(-1, 1) - Random.Range(-1, 1)), turnSpeed * Time.deltaTime, 0).normalized;
 	}
 
-	private void FixedUpdate()
+	protected override void FixedUpdate()
 	{
+		base.FixedUpdate();
 		Enemy[] enemies = FindObjectsOfType<Enemy>();
 		if(enemies.Length > 0)
 		{

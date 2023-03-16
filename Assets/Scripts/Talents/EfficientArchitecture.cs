@@ -13,9 +13,9 @@ public class EfficientArchitecture : Talent
 	{
 		if(SavedData.saveData.unspentTalentPoints > 0 || SavedData.IS_DEBUGGING)
 		{
-			base.UnlockTalent();
 			SavedData.saveData.unspentTalentPoints--;
 			SavedData.saveData.hasEfficientArchitecureTalent = true;
+			base.UnlockTalent();
 		}
 	}
 }

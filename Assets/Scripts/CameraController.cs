@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
 		SetZoomSpeed();
 	}
 
-	private void Update()
+	private void LateUpdate()
 	{
 		transform.position += deltaPosition * panSpeed;
 	}
