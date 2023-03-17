@@ -102,7 +102,7 @@ public class GameController : MonoBehaviour
 			if(rToolTip)
 				rToolTip.indicatorIsActive = true;
 
-			ToolTip toolTip = mouseHit.transform.GetComponentInChildren<ToolTip>();
+			ToolTip toolTip = mouseHit.transform.GetComponent<ToolTip>();
 			if(toolTip && toolTip.enabled)
 				toolTip.ActivateTooltip();
 		}

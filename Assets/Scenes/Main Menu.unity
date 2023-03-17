@@ -7379,7 +7379,6 @@ MonoBehaviour:
   axisVector: {x: 100, y: 100}
   baseSpeed: 2
   currentSpeed: 2
-  resolution: 1000
 --- !u!1 &430044831
 GameObject:
   m_ObjectHideFlags: 0
@@ -13850,7 +13849,6 @@ MonoBehaviour:
   axisVector: {x: 15, y: 15}
   baseSpeed: 10
   currentSpeed: 10
-  resolution: 1000
 --- !u!4 &811583331
 Transform:
   m_ObjectHideFlags: 0
@@ -17946,7 +17944,6 @@ MonoBehaviour:
   axisVector: {x: 15, y: 15}
   baseSpeed: 10
   currentSpeed: 10
-  resolution: 1000
 --- !u!1 &1106793655
 GameObject:
   m_ObjectHideFlags: 0
@@ -19801,7 +19798,6 @@ MonoBehaviour:
   axisVector: {x: 15, y: 15}
   baseSpeed: 10
   currentSpeed: 10
-  resolution: 1000
 --- !u!1 &1224586097
 GameObject:
   m_ObjectHideFlags: 0
@@ -20684,7 +20680,6 @@ MonoBehaviour:
   axisVector: {x: 7.5, y: 7.5}
   baseSpeed: 10
   currentSpeed: 10
-  resolution: 1000
 --- !u!1 &1299251800
 GameObject:
   m_ObjectHideFlags: 0
@@ -22450,7 +22445,6 @@ MonoBehaviour:
   axisVector: {x: 200, y: 200}
   baseSpeed: 2
   currentSpeed: 2
-  resolution: 1000
 --- !u!1 &1419181277
 GameObject:
   m_ObjectHideFlags: 0
@@ -23229,7 +23223,6 @@ MonoBehaviour:
   axisVector: {x: 300, y: 300}
   baseSpeed: 2
   currentSpeed: 2
-  resolution: 1000
 --- !u!1 &1452087433
 GameObject:
   m_ObjectHideFlags: 0
@@ -26335,6 +26328,7 @@ MonoBehaviour:
   planetDetailResearchers: {fileID: 1433654335}
   planetDetailTTPG: {fileID: 206032444}
   planetDetailTransferMessage: {fileID: 25955259}
+  planetDetailTransferButton: {fileID: 0}
   planetDetailArkButton: {fileID: 516418773}
   planetDetailPopulated: {fileID: 1760670532}
   planetDetailUnpopulated: {fileID: 1600829774}
@@ -33576,7 +33570,6 @@ MonoBehaviour:
   axisVector: {x: 400, y: 400}
   baseSpeed: 2
   currentSpeed: 2
-  resolution: 1000
 --- !u!4 &2035380777
 Transform:
   m_ObjectHideFlags: 0
@@ -35504,7 +35497,6 @@ MonoBehaviour:
   axisVector: {x: 25, y: 25}
   baseSpeed: 10
   currentSpeed: 10
-  resolution: 1000
 --- !u!1 &2146984200
 GameObject:
   m_ObjectHideFlags: 0

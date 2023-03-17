@@ -9,7 +9,7 @@ public struct DataHolder
 {
 	public int popLevel, unspentTalentPoints, currentPopXP;
 	public bool isQuickStartMode, isWildPatternsMode, isShieldWallMode, isBigThreatMode, isHardMode;
-	public bool hasGrowthVatsTalent, hasEfficientArchitecureTalent, hasPlannedWorldTalent, hasLaserDefense1Talent, hasLaserDefense2Talent, hasLaserDefense3Talent, hasIonEngineTalent;
+	public bool hasGrowthVatsTalent, hasEfficientArchitecureTalent, hasPlannedWorldTalent, hasLaserDefense1Talent, hasLaserDefense2Talent, hasLaserDefense3Talent, hasIonEngineTalent, hasTerraformingTalent;
 
 	public DataHolder(bool stuff)
 	{
@@ -28,6 +28,7 @@ public struct DataHolder
 		hasLaserDefense2Talent = false;
 		hasLaserDefense3Talent = false;
 		hasIonEngineTalent = false;
+		hasTerraformingTalent = false;
 	}
 }
 

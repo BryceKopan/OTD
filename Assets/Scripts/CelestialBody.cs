@@ -73,7 +73,6 @@ public class CelestialBody : MonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		Debug.Log(collision.transform.gameObject.tag);
 		if(collision.transform.gameObject.tag == "Enemy" || collision.transform.gameObject.tag == "Bullet" || collision.transform.gameObject.tag == "Mine")
 		{
 			Destroy(collision.transform.gameObject);

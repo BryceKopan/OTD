@@ -27,6 +27,12 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	public bool isMouseOver = false;
 
+	private void Update()
+	{
+		if(isMouseOver)
+			ActivateTooltip();
+	}
+
 	private void Start()
 	{
 		GC = FindObjectOfType<GameController>();
@@ -41,18 +47,21 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	public void ActivateTooltip()
 	{
-		if(!toolTipWindow.gameObject.activeSelf)
-			toolTipWindow.SetupWindowAtMousePosition(this);
+		toolTipWindow.SetupWindowAtMousePosition(this);
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
 		isMouseOver = true;
-		ActivateTooltip();
+
 	}
 
-
 	public void OnPointerExit(PointerEventData eventData)
+	{
+		isMouseOver = false;
+	}
+
+	private void OnDisable()
 	{
 		isMouseOver = false;
 	}

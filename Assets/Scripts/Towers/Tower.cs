@@ -74,7 +74,7 @@ public abstract class Tower : MonoBehaviour
 		Health = maxHealth;
 	}
 
-	private void FixedUpdate()
+	private void LateUpdate()
 	{
 		for(int i = 0; i < targetsInRange.Count; i++)
 		{

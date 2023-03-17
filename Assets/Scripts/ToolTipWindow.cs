@@ -45,6 +45,9 @@ public class ToolTipWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 				om.IsSelectingTower = false;
 			}
 		}
+
+		if(currentToolTip == null)
+			gameObject.SetActive(false);
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
