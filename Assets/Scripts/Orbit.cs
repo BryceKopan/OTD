@@ -13,7 +13,7 @@ public class Orbit : MonoBehaviour
 	public float trailLength = .33f;
 	public LineRenderer orbitPath;
 
-	public CelestialBody principle;
+	public GameObject principle;
 	public Vector2 axisVector;
 	public float baseSpeed = 25f;
 	public float currentSpeed = 25f;
@@ -109,7 +109,7 @@ public class Orbit : MonoBehaviour
 
 	private void CalculateSpeed()
 	{
-		float distanceRatio = 1 - (Vector3.Distance(transform.position, principle.transform.position) / principle.gravityRadius);
+		float distanceRatio = 1 - (Vector3.Distance(transform.position, principle.transform.position) / principle.GetComponent<CelestialBody>().info.gravityRadius);
 		currentSpeed = baseSpeed * (distanceRatio * 2);
 	}
 

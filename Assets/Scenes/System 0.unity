@@ -291,7 +291,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 26
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -340,7 +340,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &19097345
@@ -485,7 +485,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 28
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -534,7 +534,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1001 &34427093
@@ -1084,20 +1084,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2f6a43745ac2342b80249965707666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: Venus
-  maxPopulation: 4
-  population: 0
-  unlockedTowerPrefab: {fileID: 775847189971516288, guid: dee96985824dbd440aab66341a566c68, type: 3}
-  gravityRadius: 10
-  isPopulated: 0
-  isOrigin: 0
-  resourcers: 0
-  researchers: 0
-  timeToPopulationGrowth: 0
-  populationGrowthTime: 4
-  population1: {fileID: 53615554}
-  planetName: Venus
-  objectsToHideWithPlanet: []
+  info:
+    displayName: Venus
+    type: 1
+    gravityRadius: 10
+    unlockedTowerPrefab: {fileID: 775847189971516288, guid: dee96985824dbd440aab66341a566c68, type: 3}
+    isOrigin: 0
+    isTerrestrial: 1
+    isGaseous: 0
+    hasWater: 0
+    hasAtmosphere: 1
+    hasMagnetosphere: 0
+    isAsteroid: 0
+    isComet: 0
 --- !u!54 &127676874
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1146,7 +1145,7 @@ MonoBehaviour:
   color: {r: 1, g: 0.71410346, b: 0.43921566, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
-  principle: {fileID: 1580974476}
+  principle: {fileID: 1580974474}
   axisVector: {x: 200, y: 200}
   baseSpeed: 2
   currentSpeed: 2
@@ -1910,20 +1909,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2f6a43745ac2342b80249965707666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: Deimos
-  maxPopulation: 0
-  population: 0
-  unlockedTowerPrefab: {fileID: 0}
-  gravityRadius: 5
-  isPopulated: 0
-  isOrigin: 0
-  resourcers: 0
-  researchers: 0
-  timeToPopulationGrowth: 0
-  populationGrowthTime: 4
-  population1: {fileID: 0}
-  planetName: 
-  objectsToHideWithPlanet: []
+  info:
+    displayName: Deimos
+    type: 4
+    gravityRadius: 2.5
+    unlockedTowerPrefab: {fileID: 0}
+    isOrigin: 0
+    isTerrestrial: 1
+    isGaseous: 0
+    hasWater: 0
+    hasAtmosphere: 0
+    hasMagnetosphere: 0
+    isAsteroid: 0
+    isComet: 0
 --- !u!54 &198161394
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1972,7 +1970,7 @@ MonoBehaviour:
   color: {r: 0.8313726, g: 0.53333336, b: 0.30980393, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
-  principle: {fileID: 1473928876}
+  principle: {fileID: 1473928875}
   axisVector: {x: 25, y: 25}
   baseSpeed: 10
   currentSpeed: 10
@@ -2554,20 +2552,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2f6a43745ac2342b80249965707666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: Mercury
-  maxPopulation: 2
-  population: 0
-  unlockedTowerPrefab: {fileID: 4220545702867308774, guid: 5e9f64cde65c16a48b3a0c78f28df951, type: 3}
-  gravityRadius: 5
-  isPopulated: 0
-  isOrigin: 0
-  resourcers: 0
-  researchers: 0
-  timeToPopulationGrowth: 0
-  populationGrowthTime: 4
-  population1: {fileID: 1586314481}
-  planetName: Mercury
-  objectsToHideWithPlanet: []
+  info:
+    displayName: Mercury
+    type: 1
+    gravityRadius: 5
+    unlockedTowerPrefab: {fileID: 4220545702867308774, guid: 5e9f64cde65c16a48b3a0c78f28df951, type: 3}
+    isOrigin: 0
+    isTerrestrial: 1
+    isGaseous: 0
+    hasWater: 1
+    hasAtmosphere: 0
+    hasMagnetosphere: 1
+    isAsteroid: 0
+    isComet: 0
 --- !u!54 &299992636
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2616,7 +2613,7 @@ MonoBehaviour:
   color: {r: 0.8980393, g: 0.8980393, b: 0.8980393, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
-  principle: {fileID: 1580974476}
+  principle: {fileID: 1580974474}
   axisVector: {x: 100, y: 100}
   baseSpeed: 2
   currentSpeed: 2
@@ -2795,7 +2792,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -3156,7 +3153,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 37
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3205,7 +3202,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1001 &338527076
@@ -3222,7 +3219,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -3237,7 +3234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3492,7 +3489,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 38
+      value: 39
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3541,7 +3538,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &384229094
@@ -3957,7 +3954,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   trailLength: 0.1
   orbitPath: {fileID: 0}
-  principle: {fileID: 528901111}
+  principle: {fileID: 0}
   axisVector: {x: 15, y: 15}
   baseSpeed: 10
   currentSpeed: 10
@@ -4080,7 +4077,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -4095,7 +4092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4153,7 +4150,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -4168,7 +4165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4706,7 +4703,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -4721,7 +4718,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4939,20 +4936,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2f6a43745ac2342b80249965707666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: Earth
-  maxPopulation: 6
-  population: 3
-  unlockedTowerPrefab: {fileID: 4617483409382487320, guid: 32234dc31a911b143ba939a5f312ee3d, type: 3}
-  gravityRadius: 20
-  isPopulated: 1
-  isOrigin: 1
-  resourcers: 3
-  researchers: 0
-  timeToPopulationGrowth: 5
-  populationGrowthTime: 4
-  population1: {fileID: 602727471}
-  planetName: Earth
-  objectsToHideWithPlanet: []
+  info:
+    displayName: Earth
+    type: 1
+    gravityRadius: 20
+    unlockedTowerPrefab: {fileID: 4617483409382487320, guid: 32234dc31a911b143ba939a5f312ee3d, type: 3}
+    isOrigin: 0
+    isTerrestrial: 1
+    isGaseous: 0
+    hasWater: 1
+    hasAtmosphere: 1
+    hasMagnetosphere: 1
+    isAsteroid: 0
+    isComet: 0
 --- !u!4 &528901112
 Transform:
   m_ObjectHideFlags: 0
@@ -5016,7 +5012,7 @@ MonoBehaviour:
   color: {r: 0, g: 0.5058824, b: 1, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
-  principle: {fileID: 1580974476}
+  principle: {fileID: 1580974474}
   axisVector: {x: 300, y: 300}
   baseSpeed: 2
   currentSpeed: 2
@@ -5428,7 +5424,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -5443,7 +5439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5501,7 +5497,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -5516,7 +5512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 24
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5569,7 +5565,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 31
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5618,7 +5614,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1001 &577215839
@@ -5635,7 +5631,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -5650,7 +5646,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6048,7 +6044,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Pop: 3'
+  m_Text: 'Pop: 0'
 --- !u!222 &602727474
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6367,7 +6363,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -6382,7 +6378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 23
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7449,7 +7445,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -7464,7 +7460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7555,20 +7551,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2f6a43745ac2342b80249965707666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: The Moon
-  maxPopulation: 0
-  population: 0
-  unlockedTowerPrefab: {fileID: 0}
-  gravityRadius: 5
-  isPopulated: 0
-  isOrigin: 0
-  resourcers: 0
-  researchers: 0
-  timeToPopulationGrowth: 0
-  populationGrowthTime: 4
-  population1: {fileID: 0}
-  planetName: 
-  objectsToHideWithPlanet: []
+  info:
+    displayName: The Moon
+    type: 4
+    gravityRadius: 5
+    unlockedTowerPrefab: {fileID: 0}
+    isOrigin: 0
+    isTerrestrial: 1
+    isGaseous: 0
+    hasWater: 0
+    hasAtmosphere: 0
+    hasMagnetosphere: 0
+    isAsteroid: 0
+    isComet: 0
 --- !u!54 &745044177
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7617,7 +7612,7 @@ MonoBehaviour:
   color: {r: 0, g: 0.5058824, b: 1, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
-  principle: {fileID: 528901111}
+  principle: {fileID: 528901110}
   axisVector: {x: 15, y: 15}
   baseSpeed: 10
   currentSpeed: 10
@@ -7818,20 +7813,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2f6a43745ac2342b80249965707666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: Aeneas
-  maxPopulation: 0
-  population: 0
-  unlockedTowerPrefab: {fileID: 0}
-  gravityRadius: 2.5
-  isPopulated: 0
-  isOrigin: 0
-  resourcers: 0
-  researchers: 0
-  timeToPopulationGrowth: 0
-  populationGrowthTime: 4
-  population1: {fileID: 0}
-  planetName: 
-  objectsToHideWithPlanet: []
+  info:
+    displayName: Neith
+    type: 4
+    gravityRadius: 2.5
+    unlockedTowerPrefab: {fileID: 0}
+    isOrigin: 0
+    isTerrestrial: 1
+    isGaseous: 0
+    hasWater: 0
+    hasAtmosphere: 0
+    hasMagnetosphere: 0
+    isAsteroid: 0
+    isComet: 0
 --- !u!54 &764480842
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7880,7 +7874,7 @@ MonoBehaviour:
   color: {r: 0.9960785, g: 1, b: 0.43921572, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
-  principle: {fileID: 127676873}
+  principle: {fileID: 127676871}
   axisVector: {x: 7.5, y: 7.5}
   baseSpeed: 10
   currentSpeed: 10
@@ -7977,7 +7971,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -7992,7 +7986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 22
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8124,7 +8118,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 30
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8173,7 +8167,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &789284235
@@ -8470,7 +8464,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 29
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8519,7 +8513,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &828846623
@@ -9387,7 +9381,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 35
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9436,7 +9430,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &914968133
@@ -9644,20 +9638,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2f6a43745ac2342b80249965707666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: Phobos
-  maxPopulation: 0
-  population: 0
-  unlockedTowerPrefab: {fileID: 0}
-  gravityRadius: 2.5
-  isPopulated: 0
-  isOrigin: 0
-  resourcers: 0
-  researchers: 0
-  timeToPopulationGrowth: 0
-  populationGrowthTime: 4
-  population1: {fileID: 0}
-  planetName: 
-  objectsToHideWithPlanet: []
+  info:
+    displayName: Phobos
+    type: 4
+    gravityRadius: 2.5
+    unlockedTowerPrefab: {fileID: 0}
+    isOrigin: 0
+    isTerrestrial: 1
+    isGaseous: 0
+    hasWater: 0
+    hasAtmosphere: 0
+    hasMagnetosphere: 0
+    isAsteroid: 0
+    isComet: 0
 --- !u!54 &934662660
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9706,7 +9699,7 @@ MonoBehaviour:
   color: {r: 0.8313726, g: 0.53333336, b: 0.30980393, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
-  principle: {fileID: 1473928876}
+  principle: {fileID: 1473928875}
   axisVector: {x: 15, y: 15}
   baseSpeed: 10
   currentSpeed: 10
@@ -11487,7 +11480,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 39
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11536,7 +11529,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &1018985462
@@ -11604,11 +11597,6 @@ MonoBehaviour:
   isMouseOver: 0
   canvas: {fileID: 1669396426}
   GC: {fileID: 1680388945}
---- !u!4 &1021048627 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
-  m_PrefabInstance: {fileID: 338527076}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1047767864
 GameObject:
   m_ObjectHideFlags: 0
@@ -12327,7 +12315,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -12342,7 +12330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12395,7 +12383,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 27
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12444,7 +12432,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &1132448897
@@ -13062,7 +13050,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 40
+      value: 41
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13111,7 +13099,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &1198803076
@@ -14042,7 +14030,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 41
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14091,7 +14079,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &1257684740
@@ -14550,7 +14538,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 25
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14599,7 +14587,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &1294686647
@@ -14967,7 +14955,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -14982,7 +14970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 21
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15313,7 +15301,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 32
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15362,7 +15350,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &1382773801
@@ -15449,7 +15437,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 36
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15498,7 +15486,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &1390401303
@@ -16115,7 +16103,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -16206,20 +16194,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2f6a43745ac2342b80249965707666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: Mars
-  maxPopulation: 6
-  population: 0
-  unlockedTowerPrefab: {fileID: 5002169109029168752, guid: 4e418d54798777240b52513b94accc40, type: 3}
-  gravityRadius: 30
-  isPopulated: 0
-  isOrigin: 0
-  resourcers: 0
-  researchers: 0
-  timeToPopulationGrowth: 0
-  populationGrowthTime: 4
-  population1: {fileID: 320171252}
-  planetName: Mars
-  objectsToHideWithPlanet: []
+  info:
+    displayName: Mars
+    type: 1
+    gravityRadius: 30
+    unlockedTowerPrefab: {fileID: 5002169109029168752, guid: 4e418d54798777240b52513b94accc40, type: 3}
+    isOrigin: 0
+    isTerrestrial: 1
+    isGaseous: 0
+    hasWater: 1
+    hasAtmosphere: 1
+    hasMagnetosphere: 0
+    isAsteroid: 0
+    isComet: 0
 --- !u!54 &1473928877
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16268,7 +16255,7 @@ MonoBehaviour:
   color: {r: 0.81568635, g: 0.5294118, b: 0.31764707, a: 1}
   trailLength: 0.33
   orbitPath: {fileID: 0}
-  principle: {fileID: 1580974476}
+  principle: {fileID: 1580974474}
   axisVector: {x: 400, y: 400}
   baseSpeed: 2
   currentSpeed: 2
@@ -16750,7 +16737,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -16823,7 +16810,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -16962,7 +16949,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1021048627}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 848635077564441197, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_Name
@@ -16971,7 +16958,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -16986,11 +16973,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 33.55002
+      value: 415.05005
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16998,7 +16985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.94
+      value: 3.4
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -17228,20 +17215,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2f6a43745ac2342b80249965707666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: Sun
-  maxPopulation: 0
-  population: 0
-  unlockedTowerPrefab: {fileID: 0}
-  gravityRadius: 700
-  isPopulated: 0
-  isOrigin: 0
-  resourcers: 0
-  researchers: 0
-  timeToPopulationGrowth: 0
-  populationGrowthTime: 4
-  population1: {fileID: 0}
-  planetName: 
-  objectsToHideWithPlanet: []
+  info:
+    displayName: Star
+    type: 0
+    gravityRadius: 700
+    unlockedTowerPrefab: {fileID: 0}
+    isOrigin: 0
+    isTerrestrial: 0
+    isGaseous: 0
+    hasWater: 0
+    hasAtmosphere: 0
+    hasMagnetosphere: 0
+    isAsteroid: 0
+    isComet: 0
 --- !u!114 &1580974477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17586,7 +17572,7 @@ Transform:
   m_LocalScale: {x: 75, y: 75, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 42
+  m_RootOrder: 43
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1621339356
 GameObject:
@@ -18907,9 +18893,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IS_DEBUGGING: 0
-  selectedObject: {fileID: 528901110}
-  lastSelectedCelestialBody: {fileID: 528901111}
-  SC: {fileID: 0}
+  selectedObject: {fileID: 0}
+  lastSelectedCelestialBody: {fileID: 0}
+  WC: {fileID: 1009515799}
+  TC: {fileID: 1220056050}
+  SC: {fileID: 757273480}
   resources: 5
   pause: 1
   skipToNextSeason: 0
@@ -19073,7 +19061,7 @@ Transform:
   m_LocalScale: {x: 150, y: 150, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 44
+  m_RootOrder: 45
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &1696340304
 PrefabInstance:
@@ -19084,7 +19072,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 33
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19133,7 +19121,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &1698048738
@@ -20469,7 +20457,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12
@@ -20484,7 +20472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6682001648037647804, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20692,7 +20680,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_RootOrder
-      value: 34
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 1071181454786050071, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20741,7 +20729,7 @@ PrefabInstance:
     - target: {fileID: 8462018724246724508, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 624f96196ffdb3744975b29e142ef237, type: 3}
 --- !u!1 &1940846435
@@ -21274,7 +21262,7 @@ Transform:
   m_LocalScale: {x: 75, y: 75, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 43
+  m_RootOrder: 44
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1972177436
 GameObject:
@@ -22827,7 +22815,7 @@ PrefabInstance:
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: principle
       value: 
-      objectReference: {fileID: 1473928876}
+      objectReference: {fileID: 1473928875}
     - target: {fileID: 2812926712943735351, guid: 9949863c4513d694287d67b6db67aefd, type: 3}
       propertyPath: axisVector.x
       value: 12

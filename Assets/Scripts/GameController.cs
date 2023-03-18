@@ -19,9 +19,8 @@ public class GameController : MonoBehaviour
 	public GameObject selectedObject;
 	public CelestialBody lastSelectedCelestialBody;
 
-	private WaveController WC;
-	private TechController TC;
-	[HideInInspector]
+	public WaveController WC;
+	public TechController TC;
 	public StatController SC;
 
 	public float resources = 1f;
@@ -49,7 +48,7 @@ public class GameController : MonoBehaviour
 
 	public List<GameObject> tabBodies = new List<GameObject>();
 	public List<GameObject> tabs = new List<GameObject>();
-	public List<CelestialBody> populatedBodies = new List<CelestialBody>(); 
+	public List<PopulatedBody> populatedBodies = new List<PopulatedBody>(); 
 
 	public GameObject totalHealth, planetDetail, planetDetailName, planetDetailPopulation, planetDetailResourcers, planetDetailResearchers, planetDetailTTPG, planetDetailTransferMessage;
 	public GameObject planetDetailTransferButton, planetDetailArkButton, planetDetailPopulated, planetDetailUnpopulated, planetDetailUnlocks;
@@ -69,10 +68,9 @@ public class GameController : MonoBehaviour
 		SavedData.IS_DEBUGGING = IS_DEBUGGING;
 		SavedData.LoadFile();
 
+		SetOriginPlanet();
+
 		resourceCounter.GetComponent<Text>().text = "Resources: " + resources;
-		WC = FindObjectOfType<WaveController>();
-		TC = FindObjectOfType<TechController>();
-		SC = FindObjectOfType<StatController>();
 		populatedBodies = GetPopulatedBodies();
 
 		Camera.main.transform.parent = populatedBodies[0].transform;
@@ -93,7 +91,8 @@ public class GameController : MonoBehaviour
 		if(skipToNextSeason)
 			Time.timeScale += .1f;
 
-		UpdateUI();
+		if(lastSelectedCelestialBody != null)
+			UpdateUI();
 
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		if(Physics.Raycast(ray, out mouseHit, Mathf.Infinity, -1, QueryTriggerInteraction.Ignore))
@@ -321,7 +320,7 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	private CelestialBody GetClosestCelestialBody(GameObject origin)
+	private GameObject GetClosestCelestialBody(GameObject origin)
 	{
 		CelestialBody[] bodies = FindObjectsOfType<CelestialBody>();
 		CelestialBody closest = FindObjectOfType<Sun>().GetComponent<CelestialBody>();
@@ -331,11 +330,11 @@ public class GameController : MonoBehaviour
 			float currentDistance = Vector3.Distance(origin.transform.position, closest.transform.position);
 			float newDistance = Vector3.Distance(origin.transform.position, body.transform.position);
 
-			if(newDistance <  currentDistance && newDistance < body.gravityRadius)
+			if(newDistance <  currentDistance && newDistance < body.info.gravityRadius)
 				closest = body;
 		}
 
-		return closest;
+		return closest.gameObject;
 	}
 
 	public void RestartGame()
@@ -370,7 +369,7 @@ public class GameController : MonoBehaviour
 				isTransferingPopulation = false;
 				planetDetailTransferMessage.SetActive(false);
 
-				lastSelectedCelestialBody.TransferPopulationTo(obj.GetComponent<CelestialBody>());
+				((PopulatedBody)lastSelectedCelestialBody).TransferPopulationTo(obj.GetComponent<CelestialBody>());
 			}
 
 			Camera.main.transform.position = new Vector3(obj.transform.position.x, Camera.main.transform.position.y, obj.transform.position.z);
@@ -407,7 +406,7 @@ public class GameController : MonoBehaviour
 		if(skipToNextSeason)
 		{
 			Time.timeScale = 1;
-					skipToNextSeason = false;
+			skipToNextSeason = false;
 		}
 
 		SC.Season++;
@@ -448,10 +447,10 @@ public class GameController : MonoBehaviour
 		{
 			planetDetail.SetActive(true);
 			Text nameText = planetDetailName.GetComponent<Text>();
-			nameText.text = lastSelectedCelestialBody.displayName;
+			nameText.text = lastSelectedCelestialBody.info.displayName;
 			nameText.color = lastSelectedCelestialBody.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
 
-			if(lastSelectedCelestialBody.isOrigin)
+			if(lastSelectedCelestialBody.info.isOrigin)
 			{
 				planetDetailArkButton.SetActive(true);
 			}
@@ -460,7 +459,7 @@ public class GameController : MonoBehaviour
 				planetDetailArkButton.SetActive(false);
 			}
 
-			if(lastSelectedCelestialBody.isPopulated)
+			if(lastSelectedCelestialBody is PopulatedBody)
 			{
 				planetDetailPopulated.SetActive(true);
 				planetDetailUnpopulated.SetActive(false);
@@ -471,7 +470,7 @@ public class GameController : MonoBehaviour
 				planetDetailPopulated.SetActive(false);
 				planetDetailUnpopulated.SetActive(true);
 				planetDetailTransferButton.SetActive(false);
-				planetDetailUnpopulated.transform.GetChild(0).GetComponent<Text>().text = "Max pop: " + lastSelectedCelestialBody.maxPopulation; 
+				planetDetailUnpopulated.transform.GetChild(0).GetComponent<Text>().text = "Max pop: " + lastSelectedCelestialBody.Habitability; 
 			}
 		}
 		else
@@ -480,48 +479,50 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	public List<CelestialBody> GetPopulatedBodies()
+	public List<PopulatedBody> GetPopulatedBodies()
 	{
-		CelestialBody[] cBodies = FindObjectsOfType<CelestialBody>();
-		List<CelestialBody> populatedCBs = new List<CelestialBody>();
-
-		foreach(CelestialBody body in cBodies)
-		{
-			if(body.isPopulated)
-				populatedCBs.Add(body);
-		}
-
-		return populatedCBs;
+		return new List<PopulatedBody>(FindObjectsOfType<PopulatedBody>());
 	}
 
 	public void UpdateUI()
 	{
 		int health = 0;
 
-		foreach(CelestialBody cb in populatedBodies)
+		foreach(PopulatedBody pb in populatedBodies)
 		{
-			health += cb.Population;
+			health += pb.Population;
 		}
 
 		totalHealth.GetComponent<Text>().text = "Health: " + health;
-		planetDetailPopulation.GetComponent<Text>().text = "Population: " + lastSelectedCelestialBody.Population + " / " + lastSelectedCelestialBody.maxPopulation;
-		planetDetailTTPG.GetComponent<Text>().text = "Time to population growth: " + lastSelectedCelestialBody.timeToPopulationGrowth;
-		planetDetailResourcers.GetComponent<Text>().text = "Resource Gatherers: " + lastSelectedCelestialBody.resourcers;
-		planetDetailResearchers.GetComponent<Text>().text = "Researchers: " + lastSelectedCelestialBody.researchers;
-		if(lastSelectedCelestialBody.unlockedTowerPrefab)
+
+		PopulatedBody lastSelectedPopulatedBody = lastSelectedCelestialBody.GetComponent<PopulatedBody>();
+		if(lastSelectedPopulatedBody)
+		{
+			planetDetailPopulation.GetComponent<Text>().text = "Population: " + lastSelectedPopulatedBody.Population + " / " + lastSelectedPopulatedBody.maxPopulation;
+			planetDetailTTPG.GetComponent<Text>().text = "Time to population growth: " + lastSelectedPopulatedBody.timeToPopulationGrowth;
+			planetDetailResourcers.GetComponent<Text>().text = "Resource Gatherers: " + lastSelectedPopulatedBody.resourcers;
+			planetDetailResearchers.GetComponent<Text>().text = "Researchers: " + lastSelectedPopulatedBody.researchers;
+		}
+		if(lastSelectedCelestialBody.info.unlockedTowerPrefab)
 		{
 			planetDetailUnlocks.SetActive(true);
-			planetDetailUnlocks.transform.GetChild(1).GetComponent<Text>().text = lastSelectedCelestialBody.unlockedTowerPrefab.GetComponent<Tower>().displayName;
+			planetDetailUnlocks.transform.GetChild(1).GetComponent<Text>().text = lastSelectedCelestialBody.info.unlockedTowerPrefab.GetComponent<Tower>().displayName;
 		}
 			
 		else
 			planetDetailUnlocks.SetActive(false);
 
-		arkButton.GetComponent<UnityEngine.UI.Button>().interactable = resources >= 100;
+		arkButton.GetComponent<Button>().interactable = resources >= 100;
 
 		//Tech UI
 		if(TC.SelectedTechnology)
 			TC.selectedTechUI.transform.GetChild(1).GetComponent<UnityEngine.UI.Text>().text = TC.SelectedTechnology.ResearchProgress + "/" + TC.SelectedTechnology.researchCost;
+
+		for(int i = 0; i < tabs.Count; i++)
+		{
+			if(tabBodies[i].GetComponent<PopulatedBody>())
+				tabs[i].transform.GetChild(2).GetComponent<Text>().text = "Pop: " + tabBodies[i].GetComponent<PopulatedBody>().Population;
+		}
 	}
 
 	public void SetBodyTab(GameObject bodyTab, GameObject celestialBody)
@@ -535,18 +536,17 @@ public class GameController : MonoBehaviour
 		{
 			bodyTab.transform.GetChild(1).GetComponent<UnityEngine.UI.Image>().color = celestialBody.GetComponent<UnityEngine.UI.Image>().color;
 			bodyTab.transform.GetChild(2).gameObject.SetActive(true);
-			celestialBody.GetComponent<CelestialBody>().population1 = bodyTab.transform.GetChild(3).gameObject;
 		}
 	}
 
 	public void IncreaseSelectedCBResourcers()
 	{
-		lastSelectedCelestialBody.IncreaseResourcers();
+		((PopulatedBody)lastSelectedCelestialBody).IncreaseResourcers();
 	}
 
 	public void IncreaseSelectedCBResearchers()
 	{
-		lastSelectedCelestialBody.IncreaseResearchers();
+		((PopulatedBody)lastSelectedCelestialBody).IncreaseResearchers();
 	}
 
 	public void TransferPopulation()
@@ -565,7 +565,14 @@ public class GameController : MonoBehaviour
 
 	public void SkipToNextSeason()
 	{
-		skipToNextSeason = true;
+		skipToNextSeason = !skipToNextSeason;
+		if(!skipToNextSeason)
+		{
+			Time.timeScale = 1;
+			Pause();
+		}
+		else if(pause)
+			Pause();
 	}
 
 	public void EndGame()
@@ -647,16 +654,6 @@ public class GameController : MonoBehaviour
 			populatedBodies[0].timeToPopulationGrowth = populatedBodies[0].populationGrowthTime;
 		}
 
-		if(SavedData.saveData.hasEfficientArchitecureTalent)
-		{
-			CelestialBody[] planets = FindObjectsOfType<CelestialBody>();
-
-			foreach(CelestialBody body in planets)
-			{
-				body.maxPopulation = (body.maxPopulation * 5 / 4);
-			}
-		}
-
 		if(SavedData.saveData.hasLaserDefense1Talent && towers.Length > 0)
 		{
 			int numberOfTurrets = 0;
@@ -673,7 +670,7 @@ public class GameController : MonoBehaviour
 			{
 				GameObject newTower = Instantiate(towers[0].prefab, transform.position, transform.rotation);
 				Orbit towerOrbit = newTower.GetComponent<Orbit>();
-				towerOrbit.principle = populatedBodies[0];
+				towerOrbit.principle = populatedBodies[0].gameObject;
 				float orbitDistance = populatedBodies[0].GetComponent<SphereCollider>().radius + 1f;
 				towerOrbit.axisVector = new Vector2(orbitDistance, orbitDistance);
 				towerOrbit.followOrbit = false;
@@ -685,6 +682,49 @@ public class GameController : MonoBehaviour
 		if(SavedData.saveData.hasIonEngineTalent)
 		{
 			Debug.Log("Travel Time Not implmented");
+		}
+
+		if(SavedData.saveData.hasPopulatedPlanetTalent)
+		{
+			populatedBodies[0].Population++;
+		}
+
+		if(SavedData.saveData.hasMoonBaseTalent)
+		{
+			CelestialBody[] cbs = FindObjectsOfType<CelestialBody>();
+			CelestialBody closestMoon = null;
+			foreach(CelestialBody cb in cbs)
+			{
+				if(cb.info.type == BodyType.Moon && cb.GetComponent<Orbit>().principle == populatedBodies[0].gameObject)
+				{
+					if(closestMoon == null || Vector3.Distance(cb.transform.position, populatedBodies[0].transform.position) < Vector3.Distance(closestMoon.transform.position, populatedBodies[0].transform.position))
+					{
+						closestMoon = cb;
+					}
+				}
+			}
+
+			closestMoon.AddPopulation(1);
+		}
+	}
+
+	private void SetOriginPlanet()
+	{
+		List<PopulatedBody> popPlanets = GetPopulatedBodies();
+
+		if(SavedData.saveData.originIsEarth && popPlanets.Count == 0)
+		{
+			tabBodies[2].GetComponent<CelestialBody>().info.isOrigin = true;
+			PopulatedBody pb = tabBodies[2].GetComponent<CelestialBody>().AddPopulation(3);
+			pb.timeToPopulationGrowth = 4;
+			Select(pb.gameObject);
+		}
+		else if(SavedData.saveData.hasTerraformingTalent && SavedData.saveData.originIsMars && popPlanets.Count == 0)
+		{
+			tabBodies[3].GetComponent<CelestialBody>().info.isOrigin = true;
+			PopulatedBody pb = tabBodies[3].GetComponent<CelestialBody>().AddPopulation(3);
+			pb.timeToPopulationGrowth = 4;
+			Select(pb.gameObject);
 		}
 	}
 }

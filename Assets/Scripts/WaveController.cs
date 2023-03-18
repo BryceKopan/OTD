@@ -53,21 +53,24 @@ public class WaveController : MonoBehaviour
 
 	public void StartWave()
 	{
-		List<CelestialBody> populatedBodies = GC.populatedBodies;
+		List<PopulatedBody> populatedBodies = GC.populatedBodies;
 
 		// look at all populated bodies and spawn initial gates
 		for(int i = 0; i < populatedBodies.Count; i++)
 		{
-			if(!gates.ContainsKey(populatedBodies[i]))
+			if(populatedBodies[i].info.type != BodyType.Moon)
 			{
-				gates[populatedBodies[i]] = new List<Gate>();
-				SpawnGate(populatedBodies[i]);
-			}
+				if(!gates.ContainsKey(populatedBodies[i]))
+				{
+					gates[populatedBodies[i]] = new List<Gate>();
+					SpawnGate(populatedBodies[i]);
+				}
 
-			Gate firstGate = gates[populatedBodies[i]][0];
-			if(GC.SC.Season - firstGate.originSeason >= gateSeasonIncrement * gates[populatedBodies[i]].Count)
-			{
-				SpawnGate(populatedBodies[i]);
+				Gate firstGate = gates[populatedBodies[i]][0];
+				if(GC.SC.Season - firstGate.originSeason >= gateSeasonIncrement * gates[populatedBodies[i]].Count)
+				{
+					SpawnGate(populatedBodies[i]);
+				}
 			}
 		}
 
@@ -119,7 +122,7 @@ public class WaveController : MonoBehaviour
 		gates[body].Add(newGate);
 
 		Orbit newGateOrbit = newGate.GetComponent<Orbit>();
-		newGateOrbit.principle = body.GetComponent<CelestialBody>();
+		newGateOrbit.principle = body.GetComponent<CelestialBody>().gameObject;
 		newGateOrbit.axisVector = new Vector2(gateOrbitDistance, gateOrbitDistance);
 		//newGateOrbit.SetupLine();
 

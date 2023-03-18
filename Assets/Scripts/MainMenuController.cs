@@ -8,6 +8,7 @@ public class MainMenuController : MonoBehaviour
 {
 	public Vector3 mainMenuPosition, preGamePosition;
 	public GameObject mainMenuText, mainMenuButtons, preGameLeft, preGameRight, talentPanel, talentText;
+	public Toggle originEarthToggle, originMarsToggle;
 
 	private bool isInPreGame = false;
 
@@ -31,6 +32,11 @@ public class MainMenuController : MonoBehaviour
 		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(4).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isWildPatternsMode);
 		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(8).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isShieldWallMode);
 		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(10).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isBigThreatMode);
+
+		originEarthToggle.SetIsOnWithoutNotify(SavedData.saveData.originIsEarth);
+		originMarsToggle.SetIsOnWithoutNotify(SavedData.saveData.originIsMars);
+
+		UpdateTalentEffectedUI();
 	}
 
 	public void Quit()
@@ -53,12 +59,45 @@ public class MainMenuController : MonoBehaviour
 		SceneManager.LoadScene(1);
 	}
 
+	private void ResetOrigin()
+	{
+		SavedData.saveData.originIsEarth = false;
+		originEarthToggle.SetIsOnWithoutNotify(false);
+		SavedData.saveData.originIsMars = false;
+		originMarsToggle.SetIsOnWithoutNotify(false);
+	}
+
+	public void SetOriginToEarth()
+	{
+		ResetOrigin();
+		SavedData.saveData.originIsEarth = true;
+		originEarthToggle.SetIsOnWithoutNotify(true);
+	}
+
+	public void SetOriginToMArs()
+	{
+		ResetOrigin();
+		SavedData.saveData.originIsMars = true;
+		originMarsToggle.SetIsOnWithoutNotify(true);
+	}
+
 	public void ToggleTalents()
 	{
 		if(talentPanel.activeSelf)
+		{
+			UpdateTalentEffectedUI();
 			talentPanel.SetActive(false);
+		}
 		else
 			ShowTalents();
+	}
+
+	public void UpdateTalentEffectedUI()
+	{
+		if(SavedData.saveData.hasTerraformingTalent)
+			originMarsToggle.interactable = true;
+		else
+			originMarsToggle.interactable = false;
 	}
 
 	public void ToggleHardMode()
