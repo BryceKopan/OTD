@@ -4,6 +4,12 @@ using UnityEngine;
 
 public abstract class Tower : MonoBehaviour
 {
+	public GameObject travelShipPrefab;
+	private GameObject travelShip;
+	private bool isTraveling = false;
+	private GameObject origin;
+	public float travelSpeed = 2.5f;
+
 	public string displayName = "Tower";
 	public float resourceCost = 1f;
 
@@ -64,17 +70,20 @@ public abstract class Tower : MonoBehaviour
 	public int projectilesPerVolley = 1;
 	[SerializeField]
 	protected float distanceBetweenProjectiles = .5f;
+	protected GameController GC;
 
 	protected void Start()
 	{
+		GC = FindObjectOfType<GameController>();
 		orbit = GetComponent<Orbit>();
 		targetingCollider = GetComponent<SphereCollider>();
 		Range = BaseRange = targetingCollider.radius;
 		cooldown = BaseCooldown;
 		Health = maxHealth;
+		travelSpeed *= GC.travelTimeScalar;
 	}
 
-	private void LateUpdate()
+	private void FixedUpdate()
 	{
 		for(int i = 0; i < targetsInRange.Count; i++)
 		{
@@ -85,7 +94,10 @@ public abstract class Tower : MonoBehaviour
 			}
 		}
 
-		FireAtFarthestTarget();
+		if(!isTraveling)
+			FireAtFarthestTarget();
+		else
+			Travel();
 	}
 
 	protected virtual void FireAtFarthestTarget()
@@ -160,10 +172,38 @@ public abstract class Tower : MonoBehaviour
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		if(collision.transform.gameObject.tag == "Enemy")
+		if(collision.transform.gameObject.tag == "Enemy" && !isTraveling)
 		{
 			Health--;
 			collision.gameObject.GetComponent<Enemy>().Die();
+		}
+	}
+
+	public void StartTravel(GameObject origin)
+	{
+		this.origin = origin;
+		transform.GetChild(0).gameObject.SetActive(false);
+		transform.GetChild(2).gameObject.SetActive(true);
+		travelShip = Instantiate(travelShipPrefab, origin.transform.position, Quaternion.identity, transform);
+		isTraveling = true;
+	}
+	
+	public void FinishTravel()
+	{
+		transform.GetChild(0).gameObject.SetActive(true);
+		transform.GetChild(2).gameObject.SetActive(false);
+		Destroy(travelShip);
+		isTraveling = false;
+	}
+
+	private void Travel()
+	{
+		travelShip.transform.position = Vector3.MoveTowards(travelShip.transform.position, transform.position, Time.deltaTime * travelSpeed);
+		travelShip.transform.rotation = Quaternion.LookRotation(transform.position - travelShip.transform.position, new Vector3(0, 1, 0));
+
+		if(travelShip.transform.position == transform.position)
+		{
+			FinishTravel();
 		}
 	}
 }

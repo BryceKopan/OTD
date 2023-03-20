@@ -4,11 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public struct GameMode
+{
+	public Toggle toggle;
+	public string tooltipMessage;
+	public int unlockLevel;
+}
+
 public class MainMenuController : MonoBehaviour
 {
 	public Vector3 mainMenuPosition, preGamePosition;
 	public GameObject mainMenuText, mainMenuButtons, preGameLeft, preGameRight, talentPanel, talentText;
 	public Toggle originEarthToggle, originMarsToggle;
+
+	public List<GameMode> gameModes;
 
 	private bool isInPreGame = false;
 
@@ -37,6 +47,7 @@ public class MainMenuController : MonoBehaviour
 		originMarsToggle.SetIsOnWithoutNotify(SavedData.saveData.originIsMars);
 
 		UpdateTalentEffectedUI();
+		UpdateGameModes();
 	}
 
 	public void Quit()
@@ -141,5 +152,22 @@ public class MainMenuController : MonoBehaviour
 		talentPanel.SetActive(true);
 
 		talentText.transform.GetChild(1).GetComponent<Text>().text = "Pop Lvl: " + SavedData.saveData.popLevel + "\n Unspent Points: " + SavedData.saveData.unspentTalentPoints;
+	}
+
+	public void UpdateGameModes()
+	{
+		foreach(GameMode gm in gameModes)
+		{
+			if(SavedData.saveData.popLevel >= gm.unlockLevel)
+			{
+				gm.toggle.interactable = true;
+				gm.toggle.GetComponent<ToolTip>().generalToolTipText = gm.tooltipMessage;
+			}
+			else
+			{
+				gm.toggle.interactable = false;
+				gm.toggle.GetComponent<ToolTip>().generalToolTipText = "Unlock by reaching pop lvl " + gm.unlockLevel;
+			}
+		}
 	}
 }

@@ -9,6 +9,7 @@ TagManager:
   - Mine
   - Bullet
   - Shield
+  - PopulationShip
   layers:
   - Default
   - TransparentFX

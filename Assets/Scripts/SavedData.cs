@@ -10,7 +10,7 @@ public struct DataHolder
 	public int popLevel, unspentTalentPoints, currentPopXP;
 	public bool isQuickStartMode, isWildPatternsMode, isShieldWallMode, isBigThreatMode, isHardMode;
 	public bool hasGrowthVatsTalent, hasEfficientArchitecureTalent, hasPlannedWorldTalent, hasLaserDefense1Talent, hasLaserDefense2Talent, hasLaserDefense3Talent, hasIonEngineTalent, hasTerraformingTalent;
-	public bool hasPopulatedPlanetTalent, hasMoonBaseTalent, hasMiningPlanetsTalent, hasResearchPlanetsTalent, hasMiningMoonsTalent, hasResearchMoonsTalent;
+	public bool hasPopulatedPlanetTalent, hasMoonBaseTalent, hasMiningPlanetsTalent, hasResearchPlanetsTalent, hasMiningMoonsTalent, hasResearchMoonsTalent, hasOrionDriveTalent;
 	public bool originIsEarth, originIsMars;
 
 	public DataHolder(bool stuff)
@@ -39,6 +39,7 @@ public struct DataHolder
 		hasResearchPlanetsTalent = false;
 		hasMiningMoonsTalent = false;
 		hasResearchMoonsTalent = false;
+		hasOrionDriveTalent = false;
 	}
 }
 

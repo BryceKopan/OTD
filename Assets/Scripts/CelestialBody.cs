@@ -20,13 +20,17 @@ public struct BodyInfo
 	public BodyType type;
 	public float gravityRadius;
 	public GameObject unlockedTowerPrefab;
+	public List<GameObject> unlockedTechs;
 
-	public bool isOrigin, isTerrestrial, isGaseous, hasWater, hasAtmosphere, hasMagnetosphere, isAsteroid, isComet;
+	public bool isOrigin, isTerrestrial, isGaseous, hasWater, hasAtmosphere, hasMagnetosphere, isAsteroid, isComet, isExplored;
 }
 
 public class CelestialBody : MonoBehaviour
 {
 	public BodyInfo info = new BodyInfo();
+
+	protected Dictionary<CelestialBody, GameObject> travelTargets = new Dictionary<CelestialBody, GameObject>();
+	public float travelSpeed = 2.5f;
 
 	private GameController gc;
 	protected GameController GC
@@ -89,6 +93,11 @@ public class CelestialBody : MonoBehaviour
 		GC = FindObjectOfType<GameController>();
 	}
 
+	protected virtual void FixedUpdate()
+	{
+		Travel();
+	}
+
 	private void OnCollisionEnter(Collision collision)
 	{
 		if(collision.transform.gameObject.tag == "Enemy" || collision.transform.gameObject.tag == "Bullet" || collision.transform.gameObject.tag == "Mine")
@@ -121,5 +130,59 @@ public class CelestialBody : MonoBehaviour
 		DestroyImmediate(this);
 
 		return pb;
+	}
+
+	void Travel()
+	{
+		List<CelestialBody> completedTransfers = new List<CelestialBody>();
+
+		foreach(CelestialBody cb in travelTargets.Keys)
+		{
+			travelTargets[cb].transform.position = Vector3.MoveTowards(travelTargets[cb].transform.position, cb.transform.position, Time.deltaTime * travelSpeed);
+			travelTargets[cb].transform.rotation = Quaternion.LookRotation(cb.transform.position - travelTargets[cb].transform.position, new Vector3(0, 1, 0));
+
+			if(travelTargets[cb].transform.position == cb.transform.position)
+				completedTransfers.Add(cb);
+			else if(Vector3.Distance(travelTargets[cb].transform.position, transform.position) > Vector3.Distance(travelTargets[cb].transform.position, cb.transform.position))
+				travelTargets[cb].transform.parent = cb.transform;
+		}
+
+		foreach(CelestialBody cb in completedTransfers)
+			FinishTransfer(cb);
+	}
+
+	public void StartSatelliteTravel(CelestialBody body)
+	{
+		GameObject travelShip = Instantiate(GC.satelliteTravelShipPrefab, transform.position, Quaternion.identity, transform);
+		travelTargets[body] = travelShip;
+	}
+
+	public virtual void FinishTransfer(CelestialBody body)
+	{
+		Destroy(travelTargets[body]);
+		travelTargets.Remove(body);
+
+		BuildSatellite(body);
+	}
+
+	protected void BuildSatellite(CelestialBody body)
+	{
+		body.info.isExplored = true;
+
+		GameObject newTower = Instantiate(GC.towers[6].prefab, transform.position, transform.rotation);
+		Orbit towerOrbit = newTower.GetComponent<Orbit>();
+		towerOrbit.principle = body.gameObject;
+		float orbitDistance = body.GetComponent<SphereCollider>().radius + 1f;
+		towerOrbit.axisVector = new Vector2(orbitDistance, orbitDistance);
+		towerOrbit.followOrbit = false;
+		towerOrbit.RestartOrbit();
+	}
+
+	protected void UnlockTechnology()
+	{
+		foreach(GameObject tech in info.unlockedTechs)
+		{
+			tech.GetComponent<Technology>().IsDiscovered = true;
+		}
 	}
 }

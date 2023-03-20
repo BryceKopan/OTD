@@ -30,6 +30,8 @@ public class PopulatedBody : CelestialBody
 				isPopulated = true;
 				if(info.unlockedTowerPrefab)
 					GC.UnlockTower(info.unlockedTowerPrefab);
+				if(info.unlockedTechs.Count > 0)
+					UnlockTechnology();
 				GC.populatedBodies.Add(this);
 			}
 			else if(population < 0 && isPopulated)
@@ -74,10 +76,14 @@ public class PopulatedBody : CelestialBody
 		{
 			researchRatio += .25f;
 		}
+
+		info.isExplored = true;
 	}
 
-	private void FixedUpdate()
+	protected override void FixedUpdate()
 	{
+		base.FixedUpdate();
+
 		if(info.isOrigin)
 		{
 			if(planetOrbit.GetCurrentAngle() <= nextSeasonAngle || nextSeasonAngle == 0 && planetOrbit.GetCurrentAngle() > 90)
@@ -154,15 +160,31 @@ public class PopulatedBody : CelestialBody
 			resourcers--;
 	}
 
-	public void TransferPopulationTo(PopulatedBody body)
+	public void StartPopulationTransfer(CelestialBody body)
 	{
 		Population--;
-		body.Population++;
+		GameObject travelShip = Instantiate(GC.populationTransferShipPrefab, transform.position, Quaternion.identity, transform);
+		travelTargets[body] = travelShip;
 	}
 
-	public void TransferPopulationTo(CelestialBody body)
+	public override void FinishTransfer(CelestialBody body)
 	{
-		Population--;
-		body.AddPopulation(1);	
+		if(travelTargets[body].tag == "PopulationShip")
+		{
+			Destroy(travelTargets[body]);
+			travelTargets.Remove(body);
+
+			if(body is PopulatedBody)
+				((PopulatedBody)body).Population++;
+			else
+				body.AddPopulation(1);
+		}
+		else
+		{
+			Destroy(travelTargets[body]);
+			travelTargets.Remove(body);
+
+			BuildSatellite(body);
+		}
 	}
 }

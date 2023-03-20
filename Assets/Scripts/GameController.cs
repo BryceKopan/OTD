@@ -29,7 +29,8 @@ public class GameController : MonoBehaviour
 	public bool showAllRanges = false;
 	private float timeScale;
 
-	public GameObject seasonCounter, resourceCounter, pauseSymbol, playSymbol, endGameUI;
+	public GameObject seasonCounter, resourceCounter, pauseSymbol, playSymbol, speedToggle, endGameUI, menu;
+	int speedToggleValue = 1;
 
 	public TowerStruct[] towers;
 	GameObject unbuiltTower;
@@ -51,7 +52,7 @@ public class GameController : MonoBehaviour
 	public List<PopulatedBody> populatedBodies = new List<PopulatedBody>(); 
 
 	public GameObject totalHealth, planetDetail, planetDetailName, planetDetailPopulation, planetDetailResourcers, planetDetailResearchers, planetDetailTTPG, planetDetailTransferMessage;
-	public GameObject planetDetailTransferButton, planetDetailArkButton, planetDetailPopulated, planetDetailUnpopulated, planetDetailUnlocks;
+	public GameObject planetDetailTransferButton, planetDetailSatelliteButton, planetDetailArkButton, planetDetailPopulated, planetDetailUnpopulated, planetDetailUnlocks, planetDetailSatelliteSent;
 	public GameObject researchPanel;
 	public OrbitalMenu orbitalMenu;
 	public Canvas canvas;
@@ -61,6 +62,7 @@ public class GameController : MonoBehaviour
 	private bool isTransferingPopulation = false, isSelectingTower = false;
 
 	public float travelTimeScalar = 1f;
+	public GameObject populationTransferShipPrefab, satelliteTravelShipPrefab;
 
 	// Start is called before the first frame update
 	void Start()
@@ -120,7 +122,7 @@ public class GameController : MonoBehaviour
 				orbitSize -= orbitOffset;
 
 			unbuiltTowerOrbit.axisVector = new Vector2(orbitSize, orbitSize);
-			unbuiltTowerOrbit.principle = GetClosestCelestialBody(unbuiltTower);
+			unbuiltTowerOrbit.principle = GetClosestCelestialBody(unbuiltTower).gameObject;
 			float angle = unbuiltTowerOrbit.GetCurrentAngle();
 			float angleOffset = angle % angleIncrement;
 
@@ -141,6 +143,10 @@ public class GameController : MonoBehaviour
 					isPlacementValid = false;
 				}
 			}
+
+			CelestialBody closestBody = GetClosestCelestialBody(unbuiltTower);
+			if(!closestBody.info.isExplored)
+				isPlacementValid = false;
 
 			if(isPlacementValid)
 				unbuiltTower.GetComponentInChildren<SpriteRenderer>().color = originalColor;
@@ -202,7 +208,7 @@ public class GameController : MonoBehaviour
 		unbuiltTower = Instantiate(prefab, transform.position, transform.rotation);
 		unbuiltTowerOrbit = unbuiltTower.GetComponent<Orbit>();
 		unbuiltTowerOrbit.followOrbit = false;
-		unbuiltTowerOrbit.principle = GetClosestCelestialBody(unbuiltTower);
+		unbuiltTowerOrbit.principle = GetClosestCelestialBody(unbuiltTower).gameObject;
 		originalColor = unbuiltTower.GetComponentInChildren<SpriteRenderer>().color;
 
 		ToolTip tt = unbuiltTower.GetComponent<ToolTip>();
@@ -274,6 +280,8 @@ public class GameController : MonoBehaviour
 
 				unbuiltTowerOrbit.RestartOrbit();
 				unbuiltTower.GetComponent<ToolTip>().enabled = true;
+				CelestialBody cb = GetClosestPopulatedBody(unbuiltTower);
+				t.StartTravel(cb.gameObject);
 				unbuiltTower = null;
 			}
 			else if(unbuiltTower != null && !isPlacementValid)
@@ -320,7 +328,7 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	private GameObject GetClosestCelestialBody(GameObject origin)
+	private CelestialBody GetClosestCelestialBody(GameObject origin)
 	{
 		CelestialBody[] bodies = FindObjectsOfType<CelestialBody>();
 		CelestialBody closest = FindObjectOfType<Sun>().GetComponent<CelestialBody>();
@@ -334,7 +342,24 @@ public class GameController : MonoBehaviour
 				closest = body;
 		}
 
-		return closest.gameObject;
+		return closest;
+	}
+
+	private PopulatedBody GetClosestPopulatedBody(GameObject origin)
+	{
+		PopulatedBody[] bodies = FindObjectsOfType<PopulatedBody>();
+		PopulatedBody closest = populatedBodies[0];
+
+		foreach(PopulatedBody body in bodies)
+		{
+			float currentDistance = Vector3.Distance(origin.transform.position, closest.transform.position);
+			float newDistance = Vector3.Distance(origin.transform.position, body.transform.position);
+
+			if(newDistance < currentDistance && newDistance < body.info.gravityRadius)
+				closest = body;
+		}
+
+		return closest;
 	}
 
 	public void RestartGame()
@@ -369,7 +394,7 @@ public class GameController : MonoBehaviour
 				isTransferingPopulation = false;
 				planetDetailTransferMessage.SetActive(false);
 
-				((PopulatedBody)lastSelectedCelestialBody).TransferPopulationTo(obj.GetComponent<CelestialBody>());
+				((PopulatedBody)lastSelectedCelestialBody).StartPopulationTransfer(obj.GetComponent<CelestialBody>());
 			}
 
 			Camera.main.transform.position = new Vector3(obj.transform.position.x, Camera.main.transform.position.y, obj.transform.position.z);
@@ -405,8 +430,8 @@ public class GameController : MonoBehaviour
 	{
 		if(skipToNextSeason)
 		{
-			Time.timeScale = 1;
 			skipToNextSeason = false;
+			SetSpeed(speedToggleValue);
 		}
 
 		SC.Season++;
@@ -470,8 +495,29 @@ public class GameController : MonoBehaviour
 				planetDetailPopulated.SetActive(false);
 				planetDetailUnpopulated.SetActive(true);
 				planetDetailTransferButton.SetActive(false);
-				planetDetailUnpopulated.transform.GetChild(0).GetComponent<Text>().text = "Max pop: " + lastSelectedCelestialBody.Habitability; 
+				planetDetailUnpopulated.transform.GetChild(0).GetComponent<Text>().text = "Max pop: " + lastSelectedCelestialBody.Habitability;
 			}
+
+			if(lastSelectedCelestialBody.info.isExplored)
+				planetDetailSatelliteButton.SetActive(false);
+			else
+				planetDetailSatelliteButton.SetActive(true);
+
+			if(lastSelectedCelestialBody.info.unlockedTowerPrefab || lastSelectedCelestialBody.info.unlockedTechs.Count > 0)
+			{
+				planetDetailUnlocks.SetActive(true);
+				if(lastSelectedCelestialBody.info.unlockedTowerPrefab)
+					planetDetailUnlocks.transform.GetChild(1).GetComponent<Text>().text = lastSelectedCelestialBody.info.unlockedTowerPrefab.GetComponent<Tower>().displayName;
+				for(int i = 0; i < lastSelectedCelestialBody.info.unlockedTechs.Count; i++)
+				{
+					if(i == 0)
+						planetDetailUnlocks.transform.GetChild(2).GetComponent<Text>().text = lastSelectedCelestialBody.info.unlockedTechs[i].GetComponent<Technology>().techName;
+					else
+						planetDetailUnlocks.transform.GetChild(2).GetComponent<Text>().text += "\n" + lastSelectedCelestialBody.info.unlockedTechs[i].GetComponent<Technology>().techName;
+				}
+			}
+			else
+				planetDetailUnlocks.SetActive(false);
 		}
 		else
 		{
@@ -503,14 +549,6 @@ public class GameController : MonoBehaviour
 			planetDetailResourcers.GetComponent<Text>().text = "Resource Gatherers: " + lastSelectedPopulatedBody.resourcers;
 			planetDetailResearchers.GetComponent<Text>().text = "Researchers: " + lastSelectedPopulatedBody.researchers;
 		}
-		if(lastSelectedCelestialBody.info.unlockedTowerPrefab)
-		{
-			planetDetailUnlocks.SetActive(true);
-			planetDetailUnlocks.transform.GetChild(1).GetComponent<Text>().text = lastSelectedCelestialBody.info.unlockedTowerPrefab.GetComponent<Tower>().displayName;
-		}
-			
-		else
-			planetDetailUnlocks.SetActive(false);
 
 		arkButton.GetComponent<Button>().interactable = resources >= 100;
 
@@ -555,6 +593,13 @@ public class GameController : MonoBehaviour
 		isTransferingPopulation = true;
 	}
 
+	public void BuildSatellite()
+	{
+		AddResources(-2);
+		PopulatedBody pb = GetClosestPopulatedBody(lastSelectedCelestialBody.gameObject);
+		pb.StartSatelliteTravel(lastSelectedCelestialBody);
+	}
+
 	public void ShowResearchPanel()
 	{
 		if(researchPanel.activeSelf)
@@ -573,6 +618,37 @@ public class GameController : MonoBehaviour
 		}
 		else if(pause)
 			Pause();
+	}
+
+	public void ToggleSpeed()
+	{
+		speedToggleValue++;
+		if(speedToggleValue > 3)
+			speedToggleValue = 1;
+
+		SetSpeed(speedToggleValue);
+	}
+
+	public void SetSpeed(int speed)
+	{
+		switch(speed)
+		{
+			case 1:
+				Time.timeScale = 1;
+				speedToggle.transform.GetChild(1).GetComponent<Image>().color = Color.black;
+				speedToggle.transform.GetChild(2).GetComponent<Image>().color = Color.black;
+				break;
+			case 2:
+				Time.timeScale = 2;
+				speedToggle.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+				speedToggle.transform.GetChild(2).GetComponent<Image>().color = Color.black;
+				break;
+			case 3:
+				Time.timeScale = 3;
+				speedToggle.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+				speedToggle.transform.GetChild(2).GetComponent<Image>().color = Color.white;
+				break;
+		}
 	}
 
 	public void EndGame()
@@ -681,7 +757,12 @@ public class GameController : MonoBehaviour
 
 		if(SavedData.saveData.hasIonEngineTalent)
 		{
-			Debug.Log("Travel Time Not implmented");
+			travelTimeScalar *= 5f / 4f;
+		}
+
+		if(SavedData.saveData.hasOrionDriveTalent)
+		{
+			travelTimeScalar *= 2f;
 		}
 
 		if(SavedData.saveData.hasPopulatedPlanetTalent)
@@ -726,5 +807,16 @@ public class GameController : MonoBehaviour
 			pb.timeToPopulationGrowth = 4;
 			Select(pb.gameObject);
 		}
+	}
+
+	public void ToggleMenu()
+	{
+		GameObject m = menu.transform.GetChild(0).gameObject;
+		m.SetActive(!m.activeSelf);
+	}
+
+	public void QuitGame()
+	{
+		Application.Quit();
 	}
 }

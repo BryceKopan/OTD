@@ -26,6 +26,24 @@ public class Technology : MonoBehaviour
 
 	public GameObject uiProgress;
 
+	private bool isDiscovered = false;
+	public bool IsDiscovered
+	{
+		get { return isDiscovered; }
+		set
+		{
+			isDiscovered = value;
+			GetComponent<UnityEngine.UI.Image>().color = value ? Color.white : Color.black;
+			GetComponent<UnityEngine.UI.Button>().interactable = value;
+		}
+	}
+
+	private void Start()
+	{
+		GetComponent<UnityEngine.UI.Image>().color = IsDiscovered ? Color.white : Color.black;
+		GetComponent<UnityEngine.UI.Button>().interactable = IsDiscovered;
+	}
+
 	public virtual void AddTechnologyTo(Tower tower) { }
 	public virtual void RemoveTechnologyFrom(Tower tower) { }
 }
