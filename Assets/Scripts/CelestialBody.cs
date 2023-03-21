@@ -29,7 +29,7 @@ public class CelestialBody : MonoBehaviour
 {
 	public BodyInfo info = new BodyInfo();
 
-	protected Dictionary<CelestialBody, GameObject> travelTargets = new Dictionary<CelestialBody, GameObject>();
+	protected Dictionary<GameObject, List<GameObject>> travelTargets = new Dictionary<GameObject, List<GameObject>>();
 	public float travelSpeed = 2.5f;
 
 	private GameController gc;
@@ -123,6 +123,7 @@ public class CelestialBody : MonoBehaviour
 	public PopulatedBody AddPopulation(int population)
 	{
 		PopulatedBody pb = gameObject.AddComponent<PopulatedBody>();
+
 		pb.info = info;
 		pb.Habitability = Habitability;
 		pb.maxPopulation = pb.Habitability;
@@ -134,40 +135,52 @@ public class CelestialBody : MonoBehaviour
 
 	void Travel()
 	{
-		List<CelestialBody> completedTransfers = new List<CelestialBody>();
+		List<(GameObject, GameObject)> completedTransfers = new List<(GameObject, GameObject)>();
 
-		foreach(CelestialBody cb in travelTargets.Keys)
+		foreach(GameObject cb in travelTargets.Keys)
 		{
-			travelTargets[cb].transform.position = Vector3.MoveTowards(travelTargets[cb].transform.position, cb.transform.position, Time.deltaTime * travelSpeed);
-			travelTargets[cb].transform.rotation = Quaternion.LookRotation(cb.transform.position - travelTargets[cb].transform.position, new Vector3(0, 1, 0));
+			foreach(GameObject ship in travelTargets[cb])
+			{
+				float maxDistance = Time.deltaTime * travelSpeed;
+				if(ship.tag == "PopulationShip")
+					maxDistance *= 2;
 
-			if(travelTargets[cb].transform.position == cb.transform.position)
-				completedTransfers.Add(cb);
-			else if(Vector3.Distance(travelTargets[cb].transform.position, transform.position) > Vector3.Distance(travelTargets[cb].transform.position, cb.transform.position))
-				travelTargets[cb].transform.parent = cb.transform;
+
+				ship.transform.position = Vector3.MoveTowards(ship.transform.position, cb.transform.position, maxDistance);
+				ship.transform.rotation = Quaternion.LookRotation(cb.transform.position - ship.transform.position, new Vector3(0, 1, 0));
+
+				if(ship.transform.position == cb.transform.position)
+					completedTransfers.Add((cb, ship));
+			}
 		}
 
-		foreach(CelestialBody cb in completedTransfers)
-			FinishTransfer(cb);
+		foreach((GameObject, GameObject) tuple in completedTransfers)
+			FinishTransfer(tuple.Item1, tuple.Item2);
 	}
 
-	public void StartSatelliteTravel(CelestialBody body)
+	public void StartSatelliteTravel(GameObject body)
 	{
-		GameObject travelShip = Instantiate(GC.satelliteTravelShipPrefab, transform.position, Quaternion.identity, transform);
-		travelTargets[body] = travelShip;
+		GameObject travelShip = Instantiate(GC.satelliteTravelShipPrefab, transform.position, Quaternion.identity, body.transform);
+
+		if(!travelTargets.ContainsKey(body))
+			travelTargets[body] = new List<GameObject>();
+
+		travelTargets[body].Add(travelShip);
 	}
 
-	public virtual void FinishTransfer(CelestialBody body)
+	public virtual void FinishTransfer(GameObject body, GameObject ship)
 	{
-		Destroy(travelTargets[body]);
-		travelTargets.Remove(body);
+		Destroy(ship);
+		travelTargets[body].Remove(ship);
 
-		BuildSatellite(body);
+		BuildSatellite(body.GetComponent<CelestialBody>());
 	}
 
 	protected void BuildSatellite(CelestialBody body)
 	{
 		body.info.isExplored = true;
+		if(body.info.unlockedTowerPrefab)
+			GC.UnlockTower(body.info.unlockedTowerPrefab);
 
 		GameObject newTower = Instantiate(GC.towers[6].prefab, transform.position, transform.rotation);
 		Orbit towerOrbit = newTower.GetComponent<Orbit>();

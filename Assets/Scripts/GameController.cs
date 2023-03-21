@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
 	public WaveController WC;
 	public TechController TC;
 	public StatController SC;
+	public GameObject tutorial;
 
 	public float resources = 1f;
 
@@ -394,7 +395,7 @@ public class GameController : MonoBehaviour
 				isTransferingPopulation = false;
 				planetDetailTransferMessage.SetActive(false);
 
-				((PopulatedBody)lastSelectedCelestialBody).StartPopulationTransfer(obj.GetComponent<CelestialBody>());
+				((PopulatedBody)lastSelectedCelestialBody).StartPopulationTransfer(obj);
 			}
 
 			Camera.main.transform.position = new Vector3(obj.transform.position.x, Camera.main.transform.position.y, obj.transform.position.z);
@@ -597,7 +598,7 @@ public class GameController : MonoBehaviour
 	{
 		AddResources(-2);
 		PopulatedBody pb = GetClosestPopulatedBody(lastSelectedCelestialBody.gameObject);
-		pb.StartSatelliteTravel(lastSelectedCelestialBody);
+		pb.StartSatelliteTravel(lastSelectedCelestialBody.gameObject);
 	}
 
 	public void ShowResearchPanel()
@@ -700,6 +701,9 @@ public class GameController : MonoBehaviour
 
 	private void ApplyGameModes()
 	{
+		if(SavedData.saveData.isTutorialMode)
+			tutorial.SetActive(true);
+
 		if(SavedData.saveData.isQuickStartMode)
 		{
 			SC.Season = 7;
@@ -752,6 +756,7 @@ public class GameController : MonoBehaviour
 				towerOrbit.followOrbit = false;
 				newTower.transform.position = towerOrbit.GetPositionAt(towerPlacementAngle * i);
 				towerOrbit.RestartOrbit();
+				TC.AddTower(newTower.GetComponent<Tower>());
 			}
 		}
 
@@ -796,14 +801,14 @@ public class GameController : MonoBehaviour
 		if(SavedData.saveData.originIsEarth && popPlanets.Count == 0)
 		{
 			tabBodies[2].GetComponent<CelestialBody>().info.isOrigin = true;
-			PopulatedBody pb = tabBodies[2].GetComponent<CelestialBody>().AddPopulation(3);
+			PopulatedBody pb = tabBodies[2].GetComponent<CelestialBody>().AddPopulation(4);
 			pb.timeToPopulationGrowth = 4;
 			Select(pb.gameObject);
 		}
 		else if(SavedData.saveData.hasTerraformingTalent && SavedData.saveData.originIsMars && popPlanets.Count == 0)
 		{
 			tabBodies[3].GetComponent<CelestialBody>().info.isOrigin = true;
-			PopulatedBody pb = tabBodies[3].GetComponent<CelestialBody>().AddPopulation(3);
+			PopulatedBody pb = tabBodies[3].GetComponent<CelestialBody>().AddPopulation(4);
 			pb.timeToPopulationGrowth = 4;
 			Select(pb.gameObject);
 		}

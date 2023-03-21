@@ -17,6 +17,8 @@ public class Technology : MonoBehaviour
 			{
 				isResearched = true;
 				FindObjectOfType<TechController>().SelectedTechnology = null;
+				if(SavedData.saveData.isTutorialMode)
+					FindObjectOfType<TutorialController>().isTechResearched = true;
 			}
 		}
 	}

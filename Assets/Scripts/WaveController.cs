@@ -36,7 +36,7 @@ public class WaveController : MonoBehaviour
 	public float gateOrbitDistance;
 	public int gateSeasonIncrement;
 	public bool lockPattern, randomizePatternProgression;
-	public int waveStrengthExponent = 4;
+	public int waveStrengthExponent = 2;
 
 	public WavePattern currentWavePattern;
 
@@ -113,6 +113,16 @@ public class WaveController : MonoBehaviour
 		float enemyCountRandomization = Random.Range(.75f, 1.25f);
 		enemyCount *= enemyCountWaveScaler;
 		enemyCount *= enemyCountRandomization;
+
+		Debug.Log(enemyCount);
+		int health = 0;
+
+		foreach(PopulatedBody pb in GC.populatedBodies)
+		{
+			health += pb.Population;
+		}
+		Debug.Log(health + ":" + (GC.SC.ResearchGained + GC.SC.ResourcesGained) + ":");
+
 		return Mathf.RoundToInt(enemyCount);
 	}
 

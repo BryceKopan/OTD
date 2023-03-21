@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public struct DataHolder
 {
 	public int popLevel, unspentTalentPoints, currentPopXP;
-	public bool isQuickStartMode, isWildPatternsMode, isShieldWallMode, isBigThreatMode, isHardMode;
+	public bool isQuickStartMode, isWildPatternsMode, isShieldWallMode, isBigThreatMode, isHardMode, isTutorialMode;
 	public bool hasGrowthVatsTalent, hasEfficientArchitecureTalent, hasPlannedWorldTalent, hasLaserDefense1Talent, hasLaserDefense2Talent, hasLaserDefense3Talent, hasIonEngineTalent, hasTerraformingTalent;
 	public bool hasPopulatedPlanetTalent, hasMoonBaseTalent, hasMiningPlanetsTalent, hasResearchPlanetsTalent, hasMiningMoonsTalent, hasResearchMoonsTalent, hasOrionDriveTalent;
 	public bool originIsEarth, originIsMars;
@@ -18,6 +18,7 @@ public struct DataHolder
 		popLevel = 0;
 		unspentTalentPoints = 0;
 		currentPopXP = 0;
+		isTutorialMode = true;
 		isQuickStartMode = false;
 		isWildPatternsMode = false;
 		isShieldWallMode = false;

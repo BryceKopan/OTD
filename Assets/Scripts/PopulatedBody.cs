@@ -18,8 +18,12 @@ public class PopulatedBody : CelestialBody
 				value = 0;
 
 			int deltaPopulation = value - population;
-			if(deltaPopulation > 0 && population > 0)
-				GC.SC.PopulationGained += deltaPopulation;
+			if(deltaPopulation > 0)
+			{
+				resourcers += deltaPopulation;
+				if(population > 0)
+					GC.SC.PopulationGained += deltaPopulation;
+			}
 			else if(deltaPopulation < 0)
 				GC.SC.PopulationLost -= deltaPopulation;
 
@@ -28,8 +32,6 @@ public class PopulatedBody : CelestialBody
 			if(population > 0 && !isPopulated)
 			{
 				isPopulated = true;
-				if(info.unlockedTowerPrefab)
-					GC.UnlockTower(info.unlockedTowerPrefab);
 				if(info.unlockedTechs.Count > 0)
 					UnlockTechnology();
 				GC.populatedBodies.Add(this);
@@ -78,6 +80,8 @@ public class PopulatedBody : CelestialBody
 		}
 
 		info.isExplored = true;
+		if(info.unlockedTowerPrefab)
+			GC.UnlockTower(info.unlockedTowerPrefab);
 	}
 
 	protected override void FixedUpdate()
@@ -136,7 +140,6 @@ public class PopulatedBody : CelestialBody
 				if(Population < maxPopulation)
 				{
 					Population++;
-					resourcers++;
 				}
 			}
 
@@ -160,31 +163,39 @@ public class PopulatedBody : CelestialBody
 			resourcers--;
 	}
 
-	public void StartPopulationTransfer(CelestialBody body)
+	public void StartPopulationTransfer(GameObject body)
 	{
+		if(!travelTargets.ContainsKey(body))
+			travelTargets[body] = new List<GameObject>();
+
 		Population--;
-		GameObject travelShip = Instantiate(GC.populationTransferShipPrefab, transform.position, Quaternion.identity, transform);
-		travelTargets[body] = travelShip;
+		if(resourcers > researchers)
+			resourcers--;
+		else
+			researchers--;
+		GameObject travelShip = Instantiate(GC.populationTransferShipPrefab, transform.position, Quaternion.identity, body.transform);
+		travelTargets[body].Add(travelShip);
 	}
 
-	public override void FinishTransfer(CelestialBody body)
+	public override void FinishTransfer(GameObject body, GameObject ship)
 	{
-		if(travelTargets[body].tag == "PopulationShip")
+		if(ship.tag == "PopulationShip")
 		{
-			Destroy(travelTargets[body]);
-			travelTargets.Remove(body);
+			Destroy(ship);
+			travelTargets[body].Remove(ship);
 
-			if(body is PopulatedBody)
-				((PopulatedBody)body).Population++;
+			PopulatedBody pb = body.GetComponent<PopulatedBody>();
+			if(pb)
+				pb.Population++;
 			else
-				body.AddPopulation(1);
+				body.GetComponent<CelestialBody>().AddPopulation(1);
 		}
 		else
 		{
-			Destroy(travelTargets[body]);
-			travelTargets.Remove(body);
+			Destroy(ship);
+			travelTargets[body].Remove(ship);
 
-			BuildSatellite(body);
+			BuildSatellite(body.GetComponent<CelestialBody>());
 		}
 	}
 }

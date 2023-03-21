@@ -37,11 +37,12 @@ public class MainMenuController : MonoBehaviour
 		preGameRight.transform.GetChild(4).GetComponent<Text>().text = "Human " + SavedData.saveData.popLevel;
 		Camera.main.transform.localPosition = new Vector3(0, Camera.main.transform.position.y, 0);
 
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(2).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isHardMode);
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(3).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isQuickStartMode);
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(4).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isWildPatternsMode);
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(8).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isShieldWallMode);
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(10).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isBigThreatMode);
+		gameModes[0].toggle.SetIsOnWithoutNotify(SavedData.saveData.isTutorialMode);
+		gameModes[2].toggle.SetIsOnWithoutNotify(SavedData.saveData.isHardMode);
+		gameModes[4].toggle.SetIsOnWithoutNotify(SavedData.saveData.isQuickStartMode);
+		gameModes[1].toggle.SetIsOnWithoutNotify(SavedData.saveData.isWildPatternsMode);
+		gameModes[6].toggle.SetIsOnWithoutNotify(SavedData.saveData.isShieldWallMode);
+		gameModes[8].toggle.SetIsOnWithoutNotify(SavedData.saveData.isBigThreatMode);
 
 		originEarthToggle.SetIsOnWithoutNotify(SavedData.saveData.originIsEarth);
 		originMarsToggle.SetIsOnWithoutNotify(SavedData.saveData.originIsMars);
@@ -61,6 +62,7 @@ public class MainMenuController : MonoBehaviour
 		mainMenuText.SetActive(true);
 		mainMenuButtons.SetActive(true);
 		preGameLeft.SetActive(false);
+		preGameRight.SetActive(false);
 		Camera.main.transform.localPosition = mainMenuPosition;
 	}
 
@@ -114,31 +116,37 @@ public class MainMenuController : MonoBehaviour
 	public void ToggleHardMode()
 	{
 		SavedData.saveData.isHardMode = !SavedData.saveData.isHardMode;
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(2).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isHardMode);
+		gameModes[2].toggle.SetIsOnWithoutNotify(SavedData.saveData.isHardMode);
 	}
 
 	public void ToggleQuickstart()
 	{
 		SavedData.saveData.isQuickStartMode = !SavedData.saveData.isQuickStartMode;
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(3).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isQuickStartMode);
+		gameModes[4].toggle.SetIsOnWithoutNotify(SavedData.saveData.isQuickStartMode);
 	}
 
 	public void ToggleWildPatterns()
 	{
 		SavedData.saveData.isWildPatternsMode = !SavedData.saveData.isWildPatternsMode;
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(4).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isWildPatternsMode);
+		gameModes[1].toggle.SetIsOnWithoutNotify(SavedData.saveData.isWildPatternsMode);
 	}
 
 	public void ToggleShieldWall()
 	{
 		SavedData.saveData.isShieldWallMode = !SavedData.saveData.isShieldWallMode;
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(8).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isShieldWallMode);
+		gameModes[6].toggle.SetIsOnWithoutNotify(SavedData.saveData.isShieldWallMode);
 	}
 
 	public void ToggleBigThreat()
 	{
 		SavedData.saveData.isBigThreatMode = !SavedData.saveData.isBigThreatMode;
-		preGameLeft.transform.GetChild(1).GetChild(1).GetChild(10).GetComponent<Toggle>().SetIsOnWithoutNotify(SavedData.saveData.isBigThreatMode);
+		gameModes[8].toggle.SetIsOnWithoutNotify(SavedData.saveData.isBigThreatMode);
+	}
+
+	public void ToggleTutorial()
+	{
+		SavedData.saveData.isBigThreatMode = !SavedData.saveData.isTutorialMode;
+		gameModes[0].toggle.SetIsOnWithoutNotify(SavedData.saveData.isTutorialMode);
 	}
 
 	public void ResetSaveData()
