@@ -145,7 +145,7 @@ public class MainMenuController : MonoBehaviour
 
 	public void ToggleTutorial()
 	{
-		SavedData.saveData.isBigThreatMode = !SavedData.saveData.isTutorialMode;
+		SavedData.saveData.isTutorialMode = !SavedData.saveData.isTutorialMode;
 		gameModes[0].toggle.SetIsOnWithoutNotify(SavedData.saveData.isTutorialMode);
 	}
 

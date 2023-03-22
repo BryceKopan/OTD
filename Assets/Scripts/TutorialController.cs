@@ -30,7 +30,7 @@ public class TutorialController : MonoBehaviour
 			isWindowUsed[2] = true;
 		}
 
-		if(Time.timeScale > 0 && !isWindowUsed[3])
+		if(Time.timeScale > 0 && isWindowUsed[2] && !isWindowUsed[3])
 		{
 			tutorialWindows[3].SetActive(true);
 			isWindowUsed[3] = true;
@@ -42,7 +42,7 @@ public class TutorialController : MonoBehaviour
 			isWindowUsed[4] = true;
 		}
 
-		if(GC.planetDetail.activeSelf && !isWindowUsed[5])
+		if(GC.planetDetail.activeSelf && isWindowUsed[4] && !isWindowUsed[5])
 		{
 			tutorialWindows[5].SetActive(true);
 			isWindowUsed[5] = true;
@@ -54,7 +54,7 @@ public class TutorialController : MonoBehaviour
 			isWindowUsed[6] = true;
 		}
 
-		if(isTechResearched && !isWindowUsed[7])
+		if(isTechResearched && isWindowUsed[6] && !isWindowUsed[7])
 		{
 			tutorialWindows[7].SetActive(true);
 			isWindowUsed[7] = true;
