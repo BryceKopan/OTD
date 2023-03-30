@@ -24945,12 +24945,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32c397bfd7ddc74aa9992b51eacec05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IS_DEBUGGING: 1
+  IS_DEBUGGING: 0
   selectedObject: {fileID: 1446619343}
   lastSelectedCelestialBody: {fileID: 0}
   WC: {fileID: 1953953079}
   TC: {fileID: 1957233600}
   SC: {fileID: 1884739901}
+  tutorial: {fileID: 0}
   resources: 2
   pause: 0
   skipToNextSeason: 0
@@ -24985,6 +24986,7 @@ MonoBehaviour:
   planetDetail: {fileID: 815094292}
   planetDetailName: {fileID: 873832407}
   planetDetailPopulation: {fileID: 641131259}
+  planetDetailUnexplored: {fileID: 0}
   planetDetailResourcers: {fileID: 1203795154}
   planetDetailResearchers: {fileID: 1433654335}
   planetDetailTTPG: {fileID: 206032444}
@@ -25011,6 +25013,7 @@ MonoBehaviour:
   travelTimeScalar: 1
   populationTransferShipPrefab: {fileID: 8366567968765810700, guid: f19259e7257e02b4b9ebedc60b68c673, type: 3}
   satelliteTravelShipPrefab: {fileID: 0}
+  isMouseOverUI: 0
 --- !u!114 &1638554472
 MonoBehaviour:
   m_ObjectHideFlags: 0

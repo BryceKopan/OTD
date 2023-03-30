@@ -166,7 +166,7 @@ public class MainMenuController : MonoBehaviour
 	{
 		foreach(GameMode gm in gameModes)
 		{
-			if(SavedData.saveData.popLevel >= gm.unlockLevel)
+			if(SavedData.saveData.popLevel >= gm.unlockLevel || SavedData.IS_DEBUGGING)
 			{
 				gm.toggle.interactable = true;
 				gm.toggle.GetComponent<ToolTip>().generalToolTipText = gm.tooltipMessage;

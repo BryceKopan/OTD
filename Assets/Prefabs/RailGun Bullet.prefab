@@ -149,7 +149,7 @@ MonoBehaviour:
   hasHit: 0
   targetDirectionUnit: {x: 0, y: 0, z: 0}
   lastDeltaPosition: {x: 0, y: 0, z: 0}
-  damage: 1
+  damage: 3
   deflectionAmount: 0.1
 --- !u!54 &7256152226992836355
 Rigidbody:

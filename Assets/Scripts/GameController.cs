@@ -52,7 +52,7 @@ public class GameController : MonoBehaviour
 	public List<GameObject> tabs = new List<GameObject>();
 	public List<PopulatedBody> populatedBodies = new List<PopulatedBody>(); 
 
-	public GameObject totalHealth, planetDetail, planetDetailName, planetDetailPopulation, planetDetailResourcers, planetDetailResearchers, planetDetailTTPG, planetDetailTransferMessage;
+	public GameObject totalHealth, planetDetail, planetDetailName, planetDetailPopulation, planetDetailUnexplored, planetDetailResourcers, planetDetailResearchers, planetDetailTTPG, planetDetailTransferMessage;
 	public GameObject planetDetailTransferButton, planetDetailSatelliteButton, planetDetailArkButton, planetDetailPopulated, planetDetailUnpopulated, planetDetailUnlocks, planetDetailSatelliteSent;
 	public GameObject researchPanel;
 	public OrbitalMenu orbitalMenu;
@@ -64,6 +64,7 @@ public class GameController : MonoBehaviour
 
 	public float travelTimeScalar = 1f;
 	public GameObject populationTransferShipPrefab, satelliteTravelShipPrefab;
+	public bool isMouseOverUI = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -267,7 +268,7 @@ public class GameController : MonoBehaviour
 
 	public void LeftClick(InputAction.CallbackContext context)
 	{
-		if(context.started)
+		if(context.started && !isMouseOverUI)
 		{
 			if(unbuiltTower != null && isPlacementValid)
 			{
@@ -300,13 +301,15 @@ public class GameController : MonoBehaviour
 			else
 			{
 				Select(null);
+				planetDetail.SetActive(false);
+				researchPanel.SetActive(false);
 			}
 		}
 	}
 
 	public void RightClick(InputAction.CallbackContext context)
 	{
-		if(context.started)
+		if(context.started && !isMouseOverUI)
 		{
 			if(unbuiltTower != null)
 			{
@@ -471,6 +474,7 @@ public class GameController : MonoBehaviour
 	{
 		if(!planetDetail.activeSelf)
 		{
+			researchPanel.SetActive(false);
 			planetDetail.SetActive(true);
 			Text nameText = planetDetailName.GetComponent<Text>();
 			nameText.text = lastSelectedCelestialBody.info.displayName;
@@ -489,14 +493,23 @@ public class GameController : MonoBehaviour
 			{
 				planetDetailPopulated.SetActive(true);
 				planetDetailUnpopulated.SetActive(false);
+				planetDetailUnexplored.SetActive(false);
 				planetDetailTransferButton.SetActive(true);
+			}
+			else if(lastSelectedCelestialBody.info.isExplored)
+			{
+				planetDetailPopulated.SetActive(false);
+				planetDetailUnpopulated.SetActive(true);
+				planetDetailUnexplored.SetActive(false);
+				planetDetailTransferButton.SetActive(false);
+				planetDetailUnpopulated.transform.GetChild(0).GetComponent<Text>().text = "Max pop: " + lastSelectedCelestialBody.Habitability;
 			}
 			else
 			{
 				planetDetailPopulated.SetActive(false);
-				planetDetailUnpopulated.SetActive(true);
+				planetDetailUnpopulated.SetActive(false);
+				planetDetailUnexplored.SetActive(true);
 				planetDetailTransferButton.SetActive(false);
-				planetDetailUnpopulated.transform.GetChild(0).GetComponent<Text>().text = "Max pop: " + lastSelectedCelestialBody.Habitability;
 			}
 
 			if(lastSelectedCelestialBody.info.isExplored)
@@ -606,7 +619,10 @@ public class GameController : MonoBehaviour
 		if(researchPanel.activeSelf)
 			researchPanel.SetActive(false);
 		else
+		{
+			planetDetail.SetActive(false);
 			researchPanel.SetActive(true);
+		}
 	}
 
 	public void SkipToNextSeason()
@@ -797,6 +813,7 @@ public class GameController : MonoBehaviour
 	private void SetOriginPlanet()
 	{
 		List<PopulatedBody> popPlanets = GetPopulatedBodies();
+		bool exploreMoons = popPlanets.Count == 0;
 
 		if(SavedData.saveData.originIsEarth && popPlanets.Count == 0)
 		{
@@ -811,6 +828,18 @@ public class GameController : MonoBehaviour
 			PopulatedBody pb = tabBodies[3].GetComponent<CelestialBody>().AddPopulation(4);
 			pb.timeToPopulationGrowth = 4;
 			Select(pb.gameObject);
+		}
+
+		if(exploreMoons)
+		{
+			CelestialBody[] cbs = FindObjectsOfType<CelestialBody>();
+			foreach(CelestialBody cb in cbs)
+			{
+				if(cb.info.type == BodyType.Moon && cb.GetComponent<Orbit>().principle == populatedBodies[0].gameObject)
+				{
+					cb.info.isExplored = true;
+				}
+			}
 		}
 	}
 
